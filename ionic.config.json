@@ -1,5 +1,7 @@
 {
   "name": "EdisonLearning",
-  "integrations": {},
+  "integrations": {
+    "capacitor": {}
+  },
   "type": "angular"
 }
