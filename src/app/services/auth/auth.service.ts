@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable, of, BehaviorSubject } from 'rxjs';
 import { ApiResources } from '../../constants';
 import { environment } from '../../../environments/environment';
 import { ApiService } from '../api.service';
@@ -14,6 +14,7 @@ import { NativeStorage } from '@ionic-native/native-storage/ngx';
 export class AuthService {
   sessionData: any;
   token: string;
+  userLoggedIn = new BehaviorSubject(false);
 
   constructor(private apiService: ApiService, private nativeStorage: NativeStorage) { }
 
@@ -72,12 +73,44 @@ export class AuthService {
     }));
   }
 
-  changePassword(userId: number, oldPwd: string, newPwd: string): Observable<any> {
+  changePassword(userId: number, oldPwd: string, newPwd: string, userName: string): Observable<any> {
     const url = `${environment.apiPrefix}${ApiResources.changePassword}?userId=${userId}&oldPwd=${oldPwd}&newPwd=${newPwd}`;
     const response: Response = {
       failure: false, success: false
     };
-    return this.apiService.postData(url, null).pipe(map((result) => {
+    const body = {
+      oldPwd,
+      newPwd,
+      userId,
+      userName
+    };
+    return this.apiService.postData(url, body).pipe(map((result) => {
+      if (result instanceof HttpErrorResponse || result.error) {
+        response.error = result.message || result.error;
+        response.failure = true;
+      } else {
+        response.success = result;
+        response.result = result;
+      }
+      return response;
+    }), catchError((err: HttpErrorResponse) => {
+      response.error = err.message;
+      response.failure = true;
+      return of(response);
+    }));
+  }
+
+  forgotPassword(oldPwd: string, newPwd: string, userName: string): Observable<any> {
+    const url = `${environment.apiPrefix}${ApiResources.forgotPassword}`;
+    const response: Response = {
+      failure: false, success: false
+    };
+    const body = {
+      oldPwd,
+      newPwd,
+      userName
+    };
+    return this.apiService.postData(url, body).pipe(map((result) => {
       if (result instanceof HttpErrorResponse || result.error) {
         response.error = result.message || result.error;
         response.failure = true;
@@ -112,6 +145,10 @@ export class AuthService {
       response.failure = true;
       return of(response);
     }));
+  }
+
+  getAllRoles(): Observable<any> {
+    return of([]);
   }
 
   setToken(token: string) {

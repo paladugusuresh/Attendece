@@ -1,44 +1,52 @@
 const studentMenus = [{
     title: 'My Profile',
     url: '/profile',
-    icon: 'person-add-outline'
+    icon: 'person-add'
 }, {
     title: 'Change Password',
     url: '/change-password',
-    icon: 'key-outline'
+    icon: 'key'
 }, {
     title: 'Tasks',
     url: '/student/tasks',
-    icon: 'walk-outline'
+    icon: 'walk'
 }, {
     title: 'Rewards',
     url: '/student/rewards',
-    icon: 'ribbon-outline'
+    icon: 'ribbon'
+}, {
+    title: 'Logout',
+    url: '/logout',
+    icon: 'log-out-outline'
 }];
 
 
 const teacherMenus = [{
     title: 'My Profile',
     url: '/profile',
-    icon: 'body-outline'
+    icon: 'body'
 }, {
     title: 'Change Password',
     url: '/change-password',
-    icon: 'key-outline'
+    icon: 'key'
 },
 {
     title: 'Dashboard',
     url: '/teacher/dashboard',
-    icon: 'home-outline'
+    icon: 'home'
 },
 {
     title: 'My Children',
     url: '/teacher/my-children',
-    icon: 'people-outline'
+    icon: 'people'
 }, {
     title: 'Tasks',
     url: '/teacher/tasks',
-    icon: 'bicycle-outline'
+    icon: 'bicycle'
+}, {
+    title: 'Logout',
+    url: '/logout',
+    icon: 'log-out-outline'
 }];
 
 

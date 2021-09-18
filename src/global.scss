@@ -25,6 +25,70 @@
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
 
+ion-select {
+    /* Applies to the value and placeholder color */
+    color: #545ca7;
+    /* Set a different placeholder color */
+    --placeholder-color: #971e49;
+    /* Set full opacity on the placeholder */
+    --placeholder-opacity: 1;
+  }/* Set the width to the full container and center the content */ion-select {width: 100%; justify-content: flex-end;}/* Set the flex in order to size the text width to its content */ion-select::part(placeholder),ion-select::part(text) {flex: 0 0 auto;}/* Set the placeholder color and opacity */ion-select::part(placeholder) {opacity: 0.5;}/** Set the font of the first letter of the placeholder* Shadow parts work with pseudo-elements, too!* https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-elements*/ion-select::part(placeholder)::first-letter {font-size: inherit;font-weight: inherit;}/* Set the text color */ion-select::part(text) {color: #545ca7;}/* Set the icon color and opacity */ion-select::part(icon) {opacity: 1;}
+  
+  body {
+    --ion-toolbar-background: linear-gradient(to bottom, #004a81, #09538a, #125b93, #1a649d, #216da6);
+    --ion-toolbar-color:#ffffff;
+    
+    // background-color: darkseagreen;
+    // background-color: mediumaquamarine;
+  }
+  
+  ion-content {
+    --background: #ffffff;
+  }
+  ion-card{
+    border-radius: 5px;
+      margin:15px 10px;
+      >img {
+        width: 100%;
+    }
+    p{
+      margin: 0 0 2px;
+      font-weight: 400;
+      // line-height: 1.5;
+      color: #222;
+      font-size:1.4rem;
+    }
+  }
+  
+  ion-header ion-toolbar:first-of-type{
+    height: 100px !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  ion-segment-button {
+    --color-checked: white !important;
+    --indicator-color : linear-gradient(to bottom, #004a81, #09538a, #125b93, #1a649d, #216da6) !important;
+    padding-top:5px;
+  }
+  .signup-header{
+    --ion-color-base: var(--ion-color-danger, #eb445a) !important;
+    --ion-color-base-rgb: var(--ion-color-danger-rgb, 235, 68, 90) !important;
+    --ion-color-contrast: var(--ion-color-danger-contrast, #fff) !important;
+    --ion-color-contrast-rgb: var(--ion-color-danger-contrast-rgb, 255, 255, 255) !important;
+    --ion-color-shade: var(--ion-color-danger-shade, #cf3c4f) !important;
+    --ion-color-tint: var(--ion-color-danger-tint, #ed576b) !important;
+  
+  }
+  .item-interactive.item-has-focus, .item-interactive.ion-valid {
+    --highlight-background: #33c2ff;
+  }
+  
+  .item-interactive {
+    --border-color:var(--ion-item-border-color, var(--ion-border-color, var(--ion-color-step-150, rgba(0, 0, 0, 15))));
+  }
+  
+
 div.err-msg-box {
     color:red;
     padding: 6px;
@@ -114,3 +178,123 @@ ion-button {
 a[small] {
     font-size: 14px;
 }
+
+.inner-scroll,#background-content {
+    background-color: #FFFFFF;
+  }
+  
+  
+  .alert-head {
+     background-image: linear-gradient(to bottom, #004a81, #09538a, #125b93, #1a649d, #216da6);
+     margin-bottom:20px;
+  }
+  //this works for alertHeader when inspecting in the browser
+  // .alert-wrapper.sc-ion-alert-md, .alert-wrapper.sc-ion-alert-ios{
+  //   margin:10px;
+  // }
+  
+  .sc-ion-alert-md-h {
+    --max-width: 96% !important;
+  }
+  .alert-sub-title.sc-ion-alert-md, .alert-title.sc-ion-alert-md, .alert-sub-title.sc-ion-alert-ios, .alert-title.sc-ion-alert-ios {
+   color: white;
+  }
+  
+  .alert-radio-group.sc-ion-alert-md, .alert-checkbox-group.sc-ion-alert-md,.alert-radio-group.sc-ion-alert-ios, .alert-checkbox-group.sc-ion-alert-ios{
+    border-top:0;
+  }
+  .note {
+    color: #c5c5c5;
+    font-size: .9em!important;
+  }
+  
+  .label-title p {
+    font-size: 16px !important;
+    padding:5px 0px;
+    
+  }
+  .label-title h2 {
+    font-size: 20px !important;
+    margin: 0;
+    padding:5px 0px;
+  }
+  
+  .card-reward-content p{
+    font-size: 16px !important
+  }
+  .card-list{
+    padding:0px;
+  
+  }
+  .card-item-divider{
+    min-height: 0px !important;
+  }
+  
+  .label {
+    margin: 10px 0px 10px 0;
+  }
+  
+  ion-label {
+    margin: 0;
+    display: block;
+    overflow: hidden;
+    -webkit-box-flex: 1;
+    -webkit-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+    font-size: inherit;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .item{
+    margin: 0;
+    padding: 0;
+  }
+  
+  .item ion-icon[item-end], .item ion-icon[item-left], .item ion-icon[item-right], .item ion-icon[item-start] {
+    margin-left: 0;
+    margin-top: 11px;
+    margin-bottom: 10px;
+  }
+  
+  .item-inner>ion-icon[large], .item>ion-icon[large] {
+    min-height: 3.2rem;
+    font-size: 3.2rem;
+  } 
+  .item-inner>ion-icon[medium], .item>ion-icon[medium] {
+    min-height: 2.2rem;
+    font-size: 2.2rem;
+  } 
+  .item-inner>ion-icon[small], .item>ion-icon[small] {
+    min-height: 1.8rem;
+    font-size: 1.8rem;
+  } 
+  
+  
+  .item-inner>ion-icon:first-child, .item>ion-icon:first-child {
+    text-align: center;
+    min-width: 24px;
+  }
+  .item [item-end], .item [item-left], .item [item-right], .item [item-start] {
+    margin: 9px 8px 9px 0;
+  }
+  
+  .icon-subtle {
+    color: #444;
+  }
+
+
+  .resetpwd-logo{
+    text-align: center;
+    h1,h2,h3,p{
+      opacity: 0.7;
+    }
+  }
+
+  .changepwd-logo{
+    text-align: center;
+  }
+  .custom-toast{
+    margin-top:75px;
+    padding:5px;
+  }

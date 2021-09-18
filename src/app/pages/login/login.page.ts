@@ -23,6 +23,8 @@ export class LoginPage implements OnInit {
     // if (this.sharedService.activeModuleId) {
     //   this.moduleId = this.sharedService.activeModuleId.toUpperCase().substring(0, 1) + this.sharedService.activeModuleId.substring(1);
     // }
+    localStorage.clear();
+    this.sharedService.clear();
   }
 
   ngOnInit() {
@@ -39,10 +41,12 @@ export class LoginPage implements OnInit {
           this.authService.setToken(res.result.token);
           if (res.result.role === 'Student') {
             this.sharedService.activeAppPages = AppConfig.sideMenu.student;
+            this.authService.userLoggedIn.next(true);
             this.router.navigate([`/profile`]);
           }
           else {
             this.sharedService.activeAppPages = AppConfig.sideMenu.teacher;
+            this.authService.userLoggedIn.next(true);
             this.router.navigate([`/profile`]);
           }
         } else {

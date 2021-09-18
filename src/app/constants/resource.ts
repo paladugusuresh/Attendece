@@ -3,6 +3,7 @@ export const apiResources = {
     registerUser: 'RegisterUser',
     changePassword: 'ChangePassword',
     updateProfile: 'UpdateProfile',
+    forgotPassword: 'ForgotPassword',
     getRoles: 'GetRoles',
     getRolesById: 'GetRoles'
 };

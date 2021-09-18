@@ -117,3 +117,12 @@ ion-note {
 ion-item.selected {
   --color: var(--ion-color-primary);
 }
+
+.pointer-cursor {
+  cursor: pointer;
+  color: var(--color-activated);
+}
+
+.pointer-cursor ion-icon {
+  color: var(--color-activated);
+}
