@@ -6,7 +6,6 @@ import { ApiService } from '../api.service';
 import { catchError, map } from 'rxjs/operators';
 import { Response } from '../../models';
 import { HttpErrorResponse } from '@angular/common/http';
-import { NativeStorage } from '@ionic-native/native-storage/ngx';
 
 @Injectable({
   providedIn: 'root'
@@ -16,11 +15,11 @@ export class AuthService {
   token: string;
   userLoggedIn = new BehaviorSubject(false);
 
-  constructor(private apiService: ApiService, private nativeStorage: NativeStorage) { }
+  constructor(private apiService: ApiService) { }
 
-  async isLoggedIn(): Promise<boolean> {
-    const val = await this.nativeStorage.getItem('token');
-    return !!val;
+  isLoggedIn(): Promise<boolean> {
+    const val = localStorage.getItem('token');
+    return Promise.resolve(!!val);
   }
 
   login(userName: string, password: string): Observable<any> {

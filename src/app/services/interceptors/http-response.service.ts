@@ -37,6 +37,10 @@ export class HttpResponseService implements HttpInterceptor {
                 return this.createUser(req);
             case req.url.endsWith('/ForgotPassword'):
                 return this.forgotPassword(req);
+            case req.url.indexOf('/GetLastDayAttendanceById') > -1:
+                return this.getLastDayAttendanceByStudentId(req);
+            case req.url.indexOf('/GetCoursesById') > -1:
+                return this.getCoursesByStudentId(req);
             default:
                 return next.handle(req);
         }
@@ -110,5 +114,42 @@ export class HttpResponseService implements HttpInterceptor {
             res = `Password for User with ${user.userName} updated successfully`;
         }
         return of(new HttpResponse({ status: res === null ? 400 : 200, body: res }));
+    }
+
+    getLastDayAttendanceByStudentId(req: HttpRequest<any>): Observable<HttpResponse<any>> {
+        const result = {
+            averageAttendance: 74.5,
+            history: [{
+                id: 1,
+                course: 'Maths',
+                attendedDate: '2021-09-03'
+            }, {
+                id: 2,
+                course: 'Physics',
+                attendedDate: '2021-09-03'
+            }, {
+                id: 3,
+                course: 'Chemistry',
+                attendedDate: '2021-09-03'
+            }]
+        };
+        return of(new HttpResponse({ status: 200, body: result}));
+    }
+
+    getCoursesByStudentId(req: HttpRequest<any>): Observable<HttpResponse<any>> {
+        const result = [{
+            name: 'Maths',
+            image: '/assets/imgs/maths.jpeg',
+            id: 2
+        }, {
+            id: 3,
+            name: 'Physics',
+            image: '/assets/imgs/physics.jpeg'
+        }, {
+            id: 4,
+            name: 'Chemistry',
+            image: '/assets/imgs/chemistry.jpeg'
+        }];
+        return of(new HttpResponse({ status: 200, body: result}));
     }
 }

@@ -8,7 +8,6 @@ import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpConfigService, HttpResponseService } from './services';
-import { NativeStorage } from '@ionic-native/native-storage/ngx';
 
 @NgModule({
   declarations: [AppComponent],
@@ -32,8 +31,7 @@ import { NativeStorage } from '@ionic-native/native-storage/ngx';
       provide: HTTP_INTERCEPTORS,
       useClass: HttpResponseService,
       multi: true
-    },
-    NativeStorage
+    }
   ],
   bootstrap: [AppComponent],
 })

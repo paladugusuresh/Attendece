@@ -7,9 +7,9 @@ const studentMenus = [{
     url: '/change-password',
     icon: 'key'
 }, {
-    title: 'Tasks',
-    url: '/student/tasks',
-    icon: 'walk'
+    title: 'Dashboard',
+    url: '/student/dashboard',
+    icon: 'home'
 }, {
     title: 'Rewards',
     url: '/student/rewards',

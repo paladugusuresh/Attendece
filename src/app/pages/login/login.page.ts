@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { NativeStorage } from '@ionic-native/native-storage/ngx';
 import { AppConfig } from '../../constants';
 import { AuthService, SharedService } from '../../services';
 @Component({
@@ -15,7 +14,7 @@ export class LoginPage implements OnInit {
   moduleId: any;
 
   constructor(private router: Router, private fb: FormBuilder,
-    private authService: AuthService, private sharedService: SharedService, private nativeStorage: NativeStorage) {
+    private authService: AuthService, private sharedService: SharedService) {
     this.loginForm = this.fb.group({
       userName: new FormControl('', Validators.required),
       password: new FormControl('', Validators.required)
@@ -42,7 +41,7 @@ export class LoginPage implements OnInit {
           if (res.result.role === 'Student') {
             this.sharedService.activeAppPages = AppConfig.sideMenu.student;
             this.authService.userLoggedIn.next(true);
-            this.router.navigate([`/profile`]);
+            this.router.navigate([`/student/dashboard`]);
           }
           else {
             this.sharedService.activeAppPages = AppConfig.sideMenu.teacher;

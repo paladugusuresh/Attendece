@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { NativeStorage } from '@ionic-native/native-storage/ngx';
 
 @Injectable({
   providedIn: 'root'
@@ -11,14 +10,14 @@ export class SharedService {
   isTaskUpdated = false;
 
   get activeModuleId(): any {
-    return this.nativeStorage.getItem('activeModule').then((res: string) => res);
+    return localStorage.getItem('activeModule');
   }
 
   set activeModuleId(val: any) {
-    this.nativeStorage.setItem('activeModule', val).then(() => {});
+    localStorage.setItem('activeModule', val);
   }
 
-  constructor(private nativeStorage: NativeStorage) { }
+  constructor() { }
 
   getProfile(): any {
     if (this.activeProfile) {

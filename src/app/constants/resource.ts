@@ -5,5 +5,9 @@ export const apiResources = {
     updateProfile: 'UpdateProfile',
     forgotPassword: 'ForgotPassword',
     getRoles: 'GetRoles',
-    getRolesById: 'GetRoles'
+    getRolesById: 'GetRoles',
+    getCoursesByStudentId: 'GetCoursesById',
+    getAttendanceById: 'GetAttendanceById',
+    getLastDayAttendanceByStudentId: 'GetLastDayAttendanceById',
+    getAttendanceByCourseId: 'GetAttendanceByCourseId'
 };
