@@ -1,0 +1,45 @@
+.fs-2 {
+    font-size: 2em !important;
+}
+
+.fs-22 {
+    font-size: 22px !important;
+}
+
+.pl-2 {
+    padding-left: 0.2em;
+}
+
+.back-color {
+    --background: var(--ion-toolbar-background, var(--ion-background-color, #fff));
+}
+
+.pre-align {
+    font-family: var(--ion-font-family, inherit);
+    font-size: 2.9em;
+    font-weight: bolder;
+    margin-left: 0.99em;
+    color: whitesmoke;
+    text-overflow: clip;
+    white-space: pre-line;
+    text-align: center;
+}
+
+.mb-5 {
+    margin-bottom: -0.5em;
+}
+
+ion-img {
+    height: 18em;
+}
+
+.label-title {
+    color: #000;
+    opacity: 0.9 !important;
+}
+
+@media (max-width: 370px) {
+    .pre-align {
+        margin-left: 0.5em;
+    }
+}

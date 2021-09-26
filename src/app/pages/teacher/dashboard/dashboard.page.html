@@ -7,5 +7,60 @@
   </ion-toolbar>
 </ion-header>
 <ion-content [fullscreen]="true" class="ion-padding-top">
-  Page is under construction.
+  <ion-row>
+    <ion-col size="12" class="fs-22">
+      <h1 class="fs-2 pl-2">Welcome {{ profile?.firstName }}</h1>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col size="12">
+      <ion-card class="back-color">
+        <ion-card-content>
+          <ion-label class="pre-align">
+            {{schoolName}}
+          </ion-label>
+        </ion-card-content>
+      </ion-card>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col>
+      <h3 class="pl-2 mb-5">My Courses</h3>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col size="12">
+      <ion-slides [options]="slideOptions" [mode]="'ios'">
+        <ion-slide *ngFor="let course of courses">
+          <ion-card>
+            <ion-card-header>
+              <ion-img [src]="course.image || ''"></ion-img>
+            </ion-card-header>
+          </ion-card>
+        </ion-slide>
+      </ion-slides>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col>
+      <h3 class="pl-2 mb-5">My Students</h3>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col *ngIf="students.length > 0">
+      <ion-card>
+        <ion-list lines="full">
+          <ion-item *ngFor="let student of students; let index = index" [lines]="index+1 === students.length ? 'none' : 'full'">
+            <ion-label class="label label-title" slot="start">
+              <h2>{{ student?.firstName}}</h2>
+            </ion-label>
+            <ion-toggle slot="end" disabled="true" [checked]="true"></ion-toggle>
+          </ion-item>
+        </ion-list>
+      </ion-card>
+    </ion-col>
+    <ion-col *ngIf="students.length === 0">
+      <p>Students not assigned currently</p>
+    </ion-col>
+  </ion-row>
 </ion-content>

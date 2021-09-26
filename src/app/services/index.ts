@@ -5,4 +5,6 @@ export { HttpConfigService } from './interceptors/http-config.service';
 export { HttpResponseService } from './interceptors/http-response.service';
 export { AttendanceService } from './attendance/attendance.service';
 export { CourseService } from './course/course.service';
+export { HolidayService } from './holiday/holiday.service';
+export { StudentService } from './student/student.service';
 

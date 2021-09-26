@@ -9,5 +9,8 @@ export const apiResources = {
     getCoursesByStudentId: 'GetCoursesById',
     getAttendanceById: 'GetAttendanceById',
     getLastDayAttendanceByStudentId: 'GetLastDayAttendanceById',
-    getAttendanceByCourseId: 'GetAttendanceByCourseId'
+    getAttendanceByCourseId: 'GetAttendanceByCourseId',
+    getCoursesByTeacherId: 'GetCoursesByTeacherId',
+    getStudentsByTeacherId: 'GetStudentsByTeacherId',
+    getAllHolidays: 'GetAllHolidays',
 };

@@ -37,7 +37,7 @@ export class AuthService {
         response.failure = true;
       } else {
         result.userName = userName;
-        result.fullName = result.fullName || `${result.first_Name} ${result.last_Name || ''}`;
+        result.fullName = result.fullName || `${result.firstName} ${result.lastName || ''}`;
         response.success = true;
         response.result = result;
         localStorage.setItem('sessionData', JSON.stringify(result));

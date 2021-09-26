@@ -12,8 +12,9 @@ export class HttpResponseService implements HttpInterceptor {
         lastName: 'Paladugu',
         userName: 'sureshP',
         role: 'Teacher',
-        email: 'stummala@gmail.com',
-        dob: new Date(1989, 6, 5)
+        email: 'sureshp@gmail.com',
+        dob: new Date(1989, 5, 5),
+        school: 'Princeton School'
     }, {
         userId: 2,
         firstName: 'Aditya',
@@ -21,6 +22,7 @@ export class HttpResponseService implements HttpInterceptor {
         userName: 'adityaT',
         role: 'Student',
         email: 'stummala@gmail.com',
+        school: '',
         dob: new Date(1991, 8, 16)
     }, {
         userId: 3,
@@ -28,6 +30,7 @@ export class HttpResponseService implements HttpInterceptor {
         lastName: 'C',
         userName: 'krithik234',
         role: 'Student',
+        school: '',
         email: 'krithik.c@gmail.com',
         dob: new Date(2011, 11, 20)
     }];
@@ -49,6 +52,12 @@ export class HttpResponseService implements HttpInterceptor {
                 return this.getLastDayAttendanceByStudentId(req);
             case req.url.indexOf('/GetCoursesById') > -1:
                 return this.getCoursesByStudentId(req);
+            case req.url.indexOf('/GetCoursesByTeacherId') > -1:
+                return this.getCoursesByTeacherId(req);
+            case req.url.indexOf('/GetStudentsByTeacherId') > -1:
+                return this.getStudentsByTeacherId(req);
+            case req.url.endsWith('/GetAllHolidays'):
+                return this.getAllHolidays(req);
             default:
                 return next.handle(req);
         }
@@ -157,6 +166,61 @@ export class HttpResponseService implements HttpInterceptor {
             id: 4,
             name: 'Chemistry',
             image: '/assets/imgs/chemistry.jpeg'
+        }];
+        return of(new HttpResponse({ status: 200, body: result}));
+    }
+
+    getCoursesByTeacherId(req: HttpRequest<any>): Observable<HttpResponse<any>> {
+        const result = [{
+            name: 'Maths',
+            image: '/assets/imgs/maths.jpeg',
+            id: 2
+        }, {
+            id: 3,
+            name: 'Physics',
+            image: '/assets/imgs/physics.jpeg'
+        }, {
+            id: 4,
+            name: 'Chemistry',
+            image: '/assets/imgs/chemistry.jpeg'
+        }];
+        return of(new HttpResponse({ status: 200, body: result}));
+    }
+
+    getStudentsByTeacherId(req: HttpRequest<any>): Observable<HttpResponse<any>> {
+        const result = this.users.filter((user) => user.role === 'Student');
+        return of(new HttpResponse({ status: 200, body: result}));
+    }
+
+    getAllHolidays(req: HttpRequest<any>): Observable<HttpResponse<any>> {
+        const result = [{
+            holidayDate: '2021-01-14',
+            occassion: 'Pongal',
+            type: 'General'
+        }, {
+            holidayDate: '2021-01-26',
+            occassion: 'Republic Day',
+            type: 'General'
+        }, {
+            holidayDate: '2021-03-29',
+            occassion: 'Holi',
+            type: 'General'
+        }, {
+            holidayDate: '2021-04-02',
+            occassion: 'Good Friday',
+            type: 'Optional'
+        }, {
+            holidayDate: '2021-05-01',
+            occassion: 'May Day',
+            type: 'General'
+        }, {
+            holidayDate: '2021-08-16',
+            occassion: 'Independence Day',
+            type: 'General'
+        }, {
+            holidayDate: '2021-10-02',
+            occassion: 'Gandhi Jayanthi',
+            type: 'General'
         }];
         return of(new HttpResponse({ status: 200, body: result}));
     }

@@ -7,5 +7,19 @@
   </ion-toolbar>
 </ion-header>
 <ion-content [fullscreen]="true" class="ion-padding-top">
-  Page is under construction.
+  <ion-list>
+    <ion-item-group *ngFor="let holidayGroup of holidayList">
+      <ion-item-divider>
+        <ion-label>
+          <h2><b>{{holidayGroup.month}}</b></h2>
+        </ion-label>
+      </ion-item-divider>
+      <ion-item *ngFor="let holiday of holidayGroup.holidays; let index = index" [lines]="index+1 === holidayGroup.holidays.length ? 'none' : 'inset'">
+        <ion-label class="child-item-label">
+          <h2>{{holiday.occassion}}</h2>
+          <p>{{holiday.holidayDate | date: 'MMM d, yyyy'}}</p>
+        </ion-label>
+      </ion-item>
+    </ion-item-group>
+  </ion-list>
 </ion-content>
