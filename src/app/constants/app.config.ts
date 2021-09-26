@@ -11,9 +11,13 @@ const studentMenus = [{
     url: '/student/dashboard',
     icon: 'home'
 }, {
-    title: 'Rewards',
-    url: '/student/rewards',
-    icon: 'ribbon'
+    title: 'Holidays',
+    url: '/holidays',
+    icon: 'reader'
+}, {
+    title: 'My Attendance',
+    url: '/student/attendance',
+    icon: 'document-text'
 }, {
     title: 'Logout',
     url: '/logout',
@@ -24,25 +28,23 @@ const studentMenus = [{
 const teacherMenus = [{
     title: 'My Profile',
     url: '/profile',
-    icon: 'body'
+    icon: 'person-add'
 }, {
     title: 'Change Password',
     url: '/change-password',
     icon: 'key'
-},
-{
+}, {
     title: 'Dashboard',
     url: '/teacher/dashboard',
     icon: 'home'
-},
-{
-    title: 'My Children',
-    url: '/teacher/my-children',
-    icon: 'people'
 }, {
-    title: 'Tasks',
-    url: '/teacher/tasks',
-    icon: 'bicycle'
+    title: 'My Students',
+    url: '/teacher/students',
+    icon: 'school'
+}, {
+    title: 'Holidays',
+    url: '/holidays',
+    icon: 'reader'
 }, {
     title: 'Logout',
     url: '/logout',

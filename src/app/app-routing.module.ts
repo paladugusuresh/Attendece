@@ -33,7 +33,27 @@ const routes: Routes = [
   },
   {
     path: 'student/dashboard',
-    loadChildren: () => import('./pages/students/dashboard/dashboard.module').then( m => m.DashboardPageModule)
+    loadChildren: () => import('./pages/student/dashboard/dashboard.module').then( m => m.DashboardPageModule)
+  },
+  {
+    path: 'teacher/dashboard',
+    loadChildren: () => import('./pages/teacher/dashboard/dashboard.module').then( m => m.DashboardPageModule)
+  },
+  {
+    path: 'holidays',
+    loadChildren: () => import('./pages/holidays/holidays.module').then( m => m.HolidaysPageModule)
+  },
+  {
+    path: 'student/attendance',
+    loadChildren: () => import('./pages/student/attendance/attendance.module').then( m => m.AttendancePageModule)
+  },
+  {
+    path: 'teacher/attendance-marking',
+    loadChildren: () => import('./pages/teacher/attendance-marking/attendance-marking.module').then( m => m.AttendanceMarkingPageModule)
+  },
+  {
+    path: 'teacher/students',
+    loadChildren: () => import('./pages/teacher/students/students.module').then( m => m.StudentsPageModule)
   }
 ];
 

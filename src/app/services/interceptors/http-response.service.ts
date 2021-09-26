@@ -21,7 +21,15 @@ export class HttpResponseService implements HttpInterceptor {
         userName: 'adityaT',
         role: 'Student',
         email: 'stummala@gmail.com',
-        dob: new Date(1991, 9, 16)
+        dob: new Date(1991, 8, 16)
+    }, {
+        userId: 3,
+        firstName: 'Krithik',
+        lastName: 'C',
+        userName: 'krithik234',
+        role: 'Student',
+        email: 'krithik.c@gmail.com',
+        dob: new Date(2011, 11, 20)
     }];
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         return this.handleRoute(req, next);
