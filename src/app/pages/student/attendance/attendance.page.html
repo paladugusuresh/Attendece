@@ -7,5 +7,16 @@
   </ion-toolbar>
 </ion-header>
 <ion-content [fullscreen]="true" class="ion-padding">
-  Page is under construction.
+  <ion-tabs>
+    <ion-tab-bar slot="bottom">
+      <ion-tab-button tab="day-wise-attendance">
+        <ion-icon name="calendar-number-outline"></ion-icon>
+        <ion-label>Day</ion-label>
+      </ion-tab-button>
+      <ion-tab-button tab="course-wise-attendance">
+        <ion-icon name="book-outline"></ion-icon>
+        <ion-label>Course</ion-label>
+      </ion-tab-button>
+    </ion-tab-bar>
+  </ion-tabs>
 </ion-content>
