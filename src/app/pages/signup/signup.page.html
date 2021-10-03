@@ -1,21 +1,11 @@
 <ion-content [fullscreen]="true">
-  <ion-grid class="loginGrid">
-    <ion-row class="gridRow1">
-      <ion-col class="img-container">
-      </ion-col>
-    </ion-row>
-    <ion-row class="gridRow2">
-      <ion-col>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
-  <ion-slide class="slide-signup login-ion-slide">
-    <div class="contaier-login">
+  <ion-slide class="signup-ion-slide">
+    <div class="signup-container">
       <form [formGroup]="registerForm" (ngSubmit)="register()">
         <ion-grid>
           <ion-row>
             <ion-col>
-              <h2>Sign Up</h2>
+              <h1 class="heading-title">Sign up</h1>
             </ion-col>
           </ion-row>
           <ion-row>
@@ -24,48 +14,39 @@
                 <ion-label class="err-msg">{{errorMsg}}</ion-label>
               </div>
               <ion-list class="loginList">
-                <ion-item class="loginItem">
-                  <ion-input type="text" formControlName="firstName" name="first_Name" required
-                    placeholder="First Name *"></ion-input>
+                <ion-row>
+                  <ion-col size="6">
+                    <ion-label align="left" class="input-label">{{ 'First Name *' }}</ion-label>
+                    <ion-item>
+                      <ion-input type="text" formControlName="firstName" name="firstName" required
+                        placeholder="First Name"></ion-input>
+                    </ion-item>
+                  </ion-col>
+                  <ion-col size="6">
+                    <ion-label align="left" class="input-label">{{ 'Last Name *' }}</ion-label>
+                    <ion-item>
+                      <ion-input type="text" formControlName="lastName" name="lastName" required
+                        placeholder="Last Name"></ion-input>
+                    </ion-item>
+                  </ion-col>
+                </ion-row>
+                <ion-label align="left" class="input-label">{{ 'User Name *' }}</ion-label>
+                <ion-item>
+                  <ion-input type="text" formControlName="userName" name="userName" maxlength="12" required
+                    placeholder="User Name"></ion-input>
                 </ion-item>
+                <ion-label align="left" class="input-label">{{ 'Password *' }}</ion-label>
                 <ion-item class="loginItem">
-                  <ion-input type="text" formControlName="middleName" name="middle_Name" placeholder="Middle Name">
+                  <ion-input type="password" formControlName="password" name="password" required placeholder="Password">
                   </ion-input>
                 </ion-item>
-                <ion-item class="loginItem">
-                  <ion-input type="text" formControlName="lastName" name="last_Name" required
-                    placeholder="Last Name *"></ion-input>
-                </ion-item>
-                <ion-item class="loginItem">
-                  <ion-input type="tel" formControlName="mobileNumber" name="mobilenumber" maxlength="10" required
-                    placeholder="Mobile No. *"></ion-input>
-                </ion-item>
-                <ion-item class="loginItem">
-                  <ion-input type="text" formControlName="email" name="email" required placeholder="Email *">
-                  </ion-input>
-                </ion-item>
-                <ion-item class="loginItem">
-                  <ion-input type="password" formControlName="password" name="password" required
-                    placeholder="Password *"></ion-input>
-                </ion-item>
-                <ion-item class="loginItem">
-                  <ion-input type="password" formControlName="confirmPassword" name="cnfpassword" required
-                    placeholder="Confirm Password *"></ion-input>
-                </ion-item>
-                <!-- <ion-item class="loginItem">
-                  <ion-label class="loginItem-ion-label">I am *</ion-label>
-                  <ion-select formControlName="roleId" required>
-                    <ion-select-option *ngFor="let role of lstRoles" [value]="role.roleID">{{role.roleName}}
-                    </ion-select-option>
-                  </ion-select>
-                </ion-item> -->
               </ion-list>
             </ion-col>
           </ion-row>
           <ion-row>
             <ion-col>
-              <ion-button type="submit" color="danger" expand="block">Sign Up</ion-button>
-              <ion-button type="button" color="medium" expand="block" (click)="navigateToLogin()">
+              <ion-button type="submit" class="btn-signup" expand="block">Sign up</ion-button>
+              <ion-button type="button" color="medium" class="btn-cancel" expand="block" (click)="navigateToLogin()">
                 Cancel
               </ion-button>
             </ion-col>

@@ -70,11 +70,11 @@ export class ForgotPasswordPage implements OnInit {
     else if (this.fpForm.controls.password.value !== this.fpForm.controls.confirmPassword.value) {
       this.errorMsg = 'Password and Confirm Password doesn\'t match';
       toast.message = this.errorMsg;
-      toast.present();
+      //toast.present();
     } else {
       this.errorMsg = 'Please fill all the madatory(*) fields';
       toast.message = this.errorMsg;
-      toast.present();
+      //toast.present();
     }
   }
 }
