@@ -1,0 +1,42 @@
+ion-item {
+    --border-width: 2px;
+    --border-color: var(--border-color, var(--border-color,#ededed));
+    --border-color:#ededed;
+    --border-radius: 8px;
+    --inner-border-width: 0;
+    --background: #EDEDED;
+    --full-highlight-height: none;
+
+    &.ion-dirty.ion-invalid.ion-touched {
+        --border-color: red;
+    }
+    ion-input[type='text'] {
+        font-family: 'Poppins';
+    }
+}
+
+.input-label {
+    font-size: 14px !important;
+    color: #030303 !important;
+    font-family: Poppins;
+}
+
+.btn-login {
+    --background: #166186;
+    height: 55px;
+    text-transform: none;
+    font-size: 16px;
+    font-family: 'Poppins';
+}
+
+a[small].signup {
+    color: #030303;
+    text-decoration: none;
+    font-family: 'Poppins';
+}
+
+a[small].fg-pwd {
+    color: #C1C1C1;
+    text-decoration: none;
+    font-family: 'Red Hat Display';
+}

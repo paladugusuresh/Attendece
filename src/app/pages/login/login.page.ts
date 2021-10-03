@@ -19,14 +19,15 @@ export class LoginPage implements OnInit {
       userName: new FormControl('', Validators.required),
       password: new FormControl('', Validators.required)
     });
-    // if (this.sharedService.activeModuleId) {
-    //   this.moduleId = this.sharedService.activeModuleId.toUpperCase().substring(0, 1) + this.sharedService.activeModuleId.substring(1);
-    // }
     localStorage.clear();
     this.sharedService.clear();
   }
 
   ngOnInit() {
+  }
+
+  ionViewWillEnter() {
+    this.loginForm.reset();
   }
 
   login() {

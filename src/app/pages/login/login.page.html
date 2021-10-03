@@ -1,26 +1,14 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>Login</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content>
-  <ion-grid class="loginGrid">
-    <ion-row class="gridRow1">
-      <ion-col class="img-container">
-        <!-- <ion-icon name="ribbon-outline"></ion-icon><br /> -->
-        <ion-label>E-Learning</ion-label>
-      </ion-col>
-    </ion-row>
-
-    <ion-row class="gridRow2">
-      <ion-col></ion-col>
-    </ion-row>
-
-  </ion-grid>
   <ion-slide class="login-ion-slide">
-    <div class="container-login">
-      <form [formGroup]="loginForm" (ngSubmit)="login()" novalidate class="ion-padding-top">
+    <div class="login-container">
+      <ion-row>
+        <ion-col>
+          <ion-label>
+            <h1 class="heading-title">Log in</h1>
+          </ion-label>
+        </ion-col>
+      </ion-row>
+      <form [formGroup]="loginForm" (ngSubmit)="login()" novalidate >
         <ion-grid>
           <ion-row>
             <ion-col>
@@ -28,38 +16,36 @@
                 <ion-label class="err-msg">{{loginErrMsg}}</ion-label>
               </div>
               <ion-list class="loginList">
-                <ion-item class="loginItem">
-                  <ion-icon name="person" class="icon-login"></ion-icon>
-                  <ion-input type="text" formControlName="userName" name="userName" required
-                    placeholder="User Name">
+                <ion-label align="left" class="input-label">User Name</ion-label>
+                <ion-item>
+                  <ion-input type="text" formControlName="userName" name="userName" required placeholder="User Name">
                   </ion-input>
                 </ion-item>
-                <br />
-                <ion-item class="loginItem">
-                  <ion-icon name="lock-closed" class="icon-login"></ion-icon>
+                <br/>
+                <ion-label align="left" class="input-label">Password</ion-label>
+                <ion-item>
                   <ion-input type="password" formControlName="password" name="password" required placeholder="Password">
                   </ion-input>
                 </ion-item>
-
               </ion-list>
             </ion-col>
           </ion-row>
           <ion-row>
             <ion-col>
-              <!-- <ion-button type="submit" color="primary" expand="block">login</ion-button> -->
-              <ion-button type="submit" color="primary" expand="block">
-                Login
-              </ion-button>
-              <ion-button type="button" color="danger" expand="block" (click)="navigateToSignup()">
-                Sign Up
-              </ion-button>
+              <ion-label align="left">
+                <a [routerLink]="['/forgot-password']" small class="fg-pwd">
+                  Forgot your password?
+                </a>
+              </ion-label>
             </ion-col>
           </ion-row>
           <ion-row>
             <ion-col>
+              <ion-button class="btn-login" type="submit" expand="block">
+                Log in
+              </ion-button>
               <ion-label>
-                <a [routerLink]="['/forgot-password']" small>Forgot
-                  Password?</a>
+                <a (click)="navigateToSignup()" small class="signup">Sign Up</a>
               </ion-label>
             </ion-col>
           </ion-row>

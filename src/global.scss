@@ -78,16 +78,13 @@ ion-select {
     --ion-color-contrast-rgb: var(--ion-color-danger-contrast-rgb, 255, 255, 255) !important;
     --ion-color-shade: var(--ion-color-danger-shade, #cf3c4f) !important;
     --ion-color-tint: var(--ion-color-danger-tint, #ed576b) !important;
-  
-  }
-  .item-interactive.item-has-focus, .item-interactive.ion-valid {
-    --highlight-background: #33c2ff;
   }
   
-  .item-interactive {
-    --border-color:var(--ion-item-border-color, var(--ion-border-color, var(--ion-color-step-150, rgba(0, 0, 0, 15))));
-  }
-  
+.heading-title {
+  font-family: 'Red Hat Display';
+  font-size: 36px !important;
+  color: #030303;
+}
 
 div.err-msg-box {
     color:red;
@@ -113,23 +110,11 @@ ion-content {
     padding: 0px;
   }
   
-.container-login {
+.login-container {
     width: 90%;
     padding: 10px;
     background: #FFFFFF;
     border-radius: 5px;
-    -webkit-box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.75);
-    -moz-box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.75);
-    box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.75);
-}
-  
-.gridRow1 {
-    height: 50%;
-    background-image: linear-gradient(to bottom, #004a81, #09538a, #125b93, #1a649d, #216da6);
-}
-  
-.gridRow2 {
-    height: 50%;
 }
   
 .loginItem ion-icon {
@@ -139,7 +124,7 @@ ion-content {
 ion-button {
     margin-top: 5px;
     margin-bottom: 15px;
-    --border-radius: 20px;
+    --border-radius: 6px;
 }
   
 .login-ion-slide {
@@ -149,20 +134,12 @@ ion-button {
     top: 0px !important;
 }
   
-.loginList {
-    background-color: #FFFFFF !important;
-}
-
-.loginItem {
-    background-color: #FFFFFF  !important;
-}
-  
-.loginItem-ion-label {
-    opacity: 0.5;
+.loginList .item {
+    border-radius: 4px;
 }
   
 .img-container {
-    padding-top:30px;
+    padding-top:10px;
     justify-content: center;
     text-align: center;
     color: #FFFFFF;
