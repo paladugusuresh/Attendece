@@ -67,7 +67,7 @@ export class ChangePasswordPage implements OnInit {
           else {
             this.errorMsg = 'Incorrect old password';
             toast.message = this.errorMsg;
-            toast.present();
+            //toast.present();
           }
         });
 

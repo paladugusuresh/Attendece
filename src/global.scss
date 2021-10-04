@@ -65,7 +65,13 @@ ion-select {
     display: flex;
     align-items: center;
     justify-content: center;
+    --ion-toolbar-background: #FFFFFF !important;
   }
+
+  ion-toolbar ion-menu-button {
+    color:  #000000 !important;
+  }
+
   ion-segment-button {
     --color-checked: white !important;
     --indicator-color : linear-gradient(to bottom, #004a81, #09538a, #125b93, #1a649d, #216da6) !important;
