@@ -3,50 +3,46 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>My Profile</ion-title>
   </ion-toolbar>
 </ion-header>
-<ion-content [fullscreen]="true" class="ion-padding">
-  <div class="ion-padding-top" *ngIf="errorMsg">
-    <div class="err-msg-box">
-      <ion-label class="err-msg">{{errorMsg}}</ion-label>
-    </div>
-  </div>
-  <form [formGroup]="profileForm" (ngSubmit)="updateProfile()" novalidate>
-    <ion-item class="ion-no-padding">
-      <ion-label position="floating">{{ 'First Name *' }}</ion-label>
-      <ion-input type="text" formControlName="firstName" name="firstName" required></ion-input>
-    </ion-item>
-    <ion-item class="ion-no-padding">
-      <ion-label position="floating">{{ 'Middle Name' }}</ion-label>
-      <ion-input type="text" formControlName="middleName" name="middleName"></ion-input>
-    </ion-item>
-    <ion-item class="ion-no-padding">
-      <ion-label position="floating">{{ 'Last Name *' }}</ion-label>
-      <ion-input type="text" formControlName="lastName" name="lastName" required></ion-input>
-    </ion-item>
-    <ion-item class="ion-no-padding">
-      <ion-label position="floating">{{'Date Of Birth *'}}</ion-label>
-      <ion-datetime displayFormat="MMM D, YYYY" formControlName="dob"></ion-datetime>
-    </ion-item>
-    <ion-item class="ion-no-padding">
-      <ion-label position="floating">{{ 'Email *' }}</ion-label>
-      <ion-input type="text" formControlName="email" name="email" required></ion-input>
-    </ion-item>
-    <!-- <ion-item class="ion-margin-start ion-margin-end">
-      <ion-label>Gender </ion-label>
-      <ion-select formControlName="gender" required>
-        <ion-select-option value="M">Male</ion-select-option>
-        <ion-select-option value="F">Female</ion-select-option>
-        <ion-select-option value="O">Other</ion-select-option>
-      </ion-select>
-    </ion-item> 
-    <ion-item class="ion-margin-start ion-margin-end">
-      <ion-label position="floating">{{ 'Mobile Number' }}</ion-label>
-      <ion-input type="tel" formControlName="mobileNumber" name="mobilenumber" maxlength="10" required></ion-input>
-    </ion-item>-->
-    <div class="ion-padding-top">
-      <ion-button type="submit" color="primary" expand="block">Update</ion-button>
-    </div>
-  </form>
+<ion-content [fullscreen]="true">
+  <ion-slide class="profile-ion-slide">
+    <ion-grid class="profile-container">
+      <ion-row>
+        <ion-col>
+          <ion-label>
+            <h1 class="heading-title">My Profile</h1>
+          </ion-label>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col class="ion-padding">
+          <div class="ion-padding-top" *ngIf="errorMsg">
+            <div class="err-msg-box">
+              <ion-label class="err-msg">{{errorMsg}}</ion-label>
+            </div>
+          </div>
+          <form [formGroup]="profileForm" (ngSubmit)="updateProfile()" novalidate>
+            <ion-list class="profile-list">
+              <ion-label align="left" class="input-label">{{ 'First Name *' }}</ion-label>
+              <ion-item>
+                <ion-input type="text" formControlName="firstName" name="firstName" placeholder="First Name" required></ion-input>
+              </ion-item>
+              <ion-label align="left" class="input-label">{{ 'Last Name *' }}</ion-label>
+              <ion-item>
+                <ion-input type="text" formControlName="lastName" name="lastName" placeholder="Last Name" required></ion-input>
+              </ion-item>
+              <ion-label align="left" class="input-label">{{ 'Email *' }}</ion-label>
+              <ion-item>
+                <ion-input type="text" formControlName="email" name="email" placeholder="Email" required></ion-input>
+              </ion-item>
+            </ion-list>
+            <div class="ion-padding-top">
+              <ion-button type="submit" class="btn-reset" expand="block">Update</ion-button>
+            </div>
+          </form>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-slide>
 </ion-content>

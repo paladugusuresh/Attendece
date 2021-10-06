@@ -8,26 +8,35 @@
 </ion-header>
 <ion-content [fullscreen]="true" class="ion-padding-top">
   <ion-row>
-    <ion-col size="12" class="fs-22">
-      <h1 class="fs-2 pl-2">Welcome back {{ profile?.firstName }}</h1>
+    <ion-col size="8" class="fs-22">
+      <h1 class="fs-2 pl-2 welcome-msg">Welcome back {{ profile?.firstName }}</h1>
     </ion-col>
   </ion-row>
   <ion-row>
-    <ion-col size="12">
-      <ion-card class="back-color">
+    <ion-col size="6">
+      <ion-card class="attendance-card">
         <ion-card-content>
-          <pre class="pre-align">
-              Average
-           Attendance
-               {{avgAttendance}}
-         </pre>
+          <ion-label>
+            <h2 class="grade-card-heading">Attendance</h2>
+            <h1 class="grade-card-content">{{avgAttendance}}</h1>
+          </ion-label>
+        </ion-card-content>
+      </ion-card>
+    </ion-col>
+    <ion-col size="6">
+      <ion-card class="grade-card">
+        <ion-card-content>
+          <ion-label>
+            <h2 class="grade-card-heading">Grade</h2>
+            <h1 class="grade-card-content">{{grade}}%</h1>
+          </ion-label>
         </ion-card-content>
       </ion-card>
     </ion-col>
   </ion-row>
   <ion-row>
     <ion-col>
-      <h3 class="pl-2 mb-5">My Courses</h3>
+      <h3 class="pl-2 mb-5 my-courses">My Courses</h3>
     </ion-col>
   </ion-row>
   <ion-row>
@@ -45,17 +54,17 @@
   </ion-row>
   <ion-row>
     <ion-col>
-      <h3 class="pl-2 mb-5">My Attendance</h3>
+      <h3 class="pl-2 mb-5 my-attendance">My Attendance</h3>
     </ion-col>
   </ion-row>
   <ion-row>
     <ion-col *ngIf="attendanceHistory.length > 0">
       <ion-card>
         <ion-list>
-          <ion-item *ngFor="let history of attendanceHistory">
+          <ion-item *ngFor="let history of attendanceHistory; let index = index" [lines]="index+1 === attendanceHistory.length ? 'none' : 'full'">
             <ion-label class="label label-title">
-              <h2>{{ history.attendedDate | date: 'MM/dd/YYYY'}}</h2>
-              <p>{{ history.course }}</p>
+              <p>{{ history.attendedDate | date: 'MM/dd/YYYY'}}</p>
+              <h2>{{ history.course }}</h2>
             </ion-label>
           </ion-item>
         </ion-list>

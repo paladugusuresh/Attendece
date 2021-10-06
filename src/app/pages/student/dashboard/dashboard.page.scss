@@ -11,14 +11,13 @@
 }
 
 .back-color {
-    --background: var(--ion-toolbar-background, var(--ion-background-color, #fff));
+    --background: #166186;
 }
 
 .pre-align {
-    font-family: var(--ion-font-family, inherit);
-    font-size: 1.4em;
+    font-family: "Red Hat Display";
+    font-size: 18px;
     font-weight: bolder;
-    margin-left: 1.99em;
     color: whitesmoke;
 }
 
@@ -27,7 +26,64 @@
 }
 
 ion-img {
-    height: 18em;
+    height: 144px;
+    width: 140px;
+    //height:18em;
+}
+
+.welcome-msg {
+    font-family: 'Red Hat Display';
+    font-size: 36px !important;
+    color: #030303;
+}
+
+.attendance-card {
+    --background: #166186;
+    color: #ffffff;
+    font-family: 'Red Hat Display';
+    padding-bottom: 2.8rem;
+}
+
+.grade-card {
+    --background: #168617;
+    color: #ffffff;
+    font-family: 'Red Hat Display';
+    padding-bottom: 2.8rem;
+}
+
+.grade-card-heading {
+    font-size: 20px;
+    text-align: center;
+    margin-bottom: 0.5rem;
+}
+
+.grade-card-content {
+    font-size: 36px;
+}
+
+.my-courses {
+    font-family: 'Red Hat Display';
+    font-size: 36px;
+}
+
+.my-attendance {
+    font-family: 'Red Hat Display';
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.label-title {
+    p, h2 {
+        font-size: 16px !important;
+        padding:5px 0px;
+        font-family: 'Red Hat Display';
+    }
+    p {
+        color: #c1c1c1 !important;
+    }
+    h2 {
+        color: #030303 !important;
+    }
 }
 
 @media (max-width: 370px) {

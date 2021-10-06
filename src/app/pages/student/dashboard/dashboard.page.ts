@@ -9,12 +9,13 @@ import { AttendanceService, CourseService, SharedService } from '../../../servic
 export class DashboardPage implements OnInit {
   courses = [];
   avgAttendance = 0;
+  grade = 0;
   attendanceHistory = [];
   profile = null;
   slideOptions= {
     speed: 400,
     spaceBetween: 0,
-    autoPlay: false
+    autoPlay: false,
   };
   constructor(private attendanceService: AttendanceService, private courseService: CourseService, private sharedService: SharedService) { }
 
@@ -45,8 +46,10 @@ export class DashboardPage implements OnInit {
           console.log(res.error);
           this.attendanceHistory = [];
           this.avgAttendance = 0;
+          this.grade = 0;
         } else {
           this.attendanceHistory = res.result.history;
+          this.grade = res.result.grade;
           this.avgAttendance = res.result.averageAttendance;
         }
       });

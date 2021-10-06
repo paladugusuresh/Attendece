@@ -136,6 +136,7 @@ export class HttpResponseService implements HttpInterceptor {
     getLastDayAttendanceByStudentId(req: HttpRequest<any>): Observable<HttpResponse<any>> {
         const result = {
             averageAttendance: 74.5,
+            grade: 84,
             history: [{
                 id: 1,
                 course: 'Maths',

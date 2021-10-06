@@ -22,13 +22,10 @@ export class ProfilePage implements OnInit {
       userId: new FormControl(''),
       userName: new FormControl('', Validators.required),
       firstName: new FormControl('', Validators.required),
-      middleName: new FormControl(''),
       lastName: new FormControl('', Validators.required),
-      dob: new FormControl('', Validators.required),
+      dob: new FormControl(''),
       email: new FormControl('', [Validators.required,
         Validators.pattern(/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/)]),
-      //gender: new FormControl('', Validators.required),
-      //mobileNumber: new FormControl('', [Validators.required, Validators.pattern('^[6-9][0-9]{9}$')]),
     });
   }
 
@@ -69,22 +66,20 @@ export class ProfilePage implements OnInit {
           profile.middleName = user.middleName;
           profile.lastName = user.lastName;
           profile.fullName = `${user.firstName} ${user.lastName}`;
-          // this.sharedService.activeProfile.mobileNumber = user.mobileNumber;
           profile.dob = user.dob;
           profile.email = user.email;
           this.sharedService.setProfile(profile);
-          // this.sharedService.activeProfile.gender = user.gender;
         } else {
           this.errorMsg = 'Unable to update profile';
           toast.message = this.errorMsg;
-          toast.present();
+          //toast.present();
         }
       });
     }
     else {
       this.errorMsg = 'Please fill all the mandatory(*) fields';
       toast.message = this.errorMsg;
-      toast.present();
+      //toast.present();
     }
   }
 
