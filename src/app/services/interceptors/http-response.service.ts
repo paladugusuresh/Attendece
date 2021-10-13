@@ -58,6 +58,10 @@ export class HttpResponseService implements HttpInterceptor {
                 return this.getStudentsByTeacherId(req);
             case req.url.endsWith('/GetAllHolidays'):
                 return this.getAllHolidays(req);
+            case req.url.indexOf('/GetAttendanceByStudentIdandCourseId') > -1:
+                return this.getAttendanceByStudentIdandCourse(req);
+            case req.url.indexOf('/GetAttendanceByStudentIdandDate') > -1:
+                return this.getAttendanceByStudentIdandDate(req);
             default:
                 return next.handle(req);
         }
@@ -223,6 +227,53 @@ export class HttpResponseService implements HttpInterceptor {
             occassion: 'Gandhi Jayanthi',
             type: 'General'
         }];
+        return of(new HttpResponse({ status: 200, body: result}));
+    }
+
+    getAttendanceByStudentIdandCourse(req: HttpRequest<any>): Observable<HttpResponse<any>> {
+       const courseId = req.url.split('&')[1].split('=')[1];
+       let courseName = '';
+       switch(courseId) {
+           case '2': courseName = 'Maths'; break;
+           case '3': courseName = 'Physics'; break;
+           case '4': courseName = 'Chemistry'; break;
+           default: break;
+       }
+        const result = {
+            history: courseName !== '' ? [{
+                id: 1,
+                course: courseName,
+                attendedDate: '2021-09-03'
+            }, {
+                id: 2,
+                course: courseName,
+                attendedDate: '2021-09-03'
+            }, {
+                id: 3,
+                course: courseName,
+                attendedDate: '2021-09-03'
+            }] : []
+        };
+        return of(new HttpResponse({ status: 200, body: result}));
+    }
+
+    getAttendanceByStudentIdandDate(req: HttpRequest<any>): Observable<HttpResponse<any>> {
+        const date = req.url.split('&')[1].split('=')[1];
+        const result = {
+            history: date ? [{
+                id: 1,
+                course: 'Maths',
+                attendedDate: date
+            },{
+                id: 2,
+                course: 'Physics',
+                attendedDate: date
+            },{
+                id: 3,
+                course: 'Chemistry',
+                attendedDate: date
+            }] : []
+        };
         return of(new HttpResponse({ status: 200, body: result}));
     }
 }

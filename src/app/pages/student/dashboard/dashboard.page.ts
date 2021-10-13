@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
+import { NavController } from '@ionic/angular';
 import { AttendanceService, CourseService, SharedService } from '../../../services';
 
 @Component({
@@ -12,12 +14,14 @@ export class DashboardPage implements OnInit {
   grade = 0;
   attendanceHistory = [];
   profile = null;
-  slideOptions= {
+  slideOptions = {
     speed: 400,
     spaceBetween: 0,
     autoPlay: false,
   };
-  constructor(private attendanceService: AttendanceService, private courseService: CourseService, private sharedService: SharedService) { }
+  constructor(private attendanceService: AttendanceService, private courseService: CourseService,
+    private sharedService: SharedService, private router: Router, private activatedRoute: ActivatedRoute,
+    private navController: NavController) { }
 
   ngOnInit() { }
 
@@ -53,6 +57,13 @@ export class DashboardPage implements OnInit {
           this.avgAttendance = res.result.averageAttendance;
         }
       });
+  }
+
+  navigateToCourseWiseAttendance(courseId: number) {
+    this.router.navigate(['/student/attendance/course-wise-attendance'], {
+      queryParams: { courseId },
+      relativeTo: this.activatedRoute
+    });
   }
 
 }

@@ -34,4 +34,46 @@ export class AttendanceService {
       return of(response);
     }));
   }
+
+  getAttendanceByStudentIdandCourseId(id: number, courseId: number): Observable<Response> {
+    const url = `${environment.apiPrefix}${ApiResources.getAttendanceByStudentIdandCourseId}?studentId=${id}&courseId=${courseId}`;
+    const response: Response = {
+      failure: false, success: false
+    };
+    return this.apiService.getData(url, null).pipe(map((result) => {
+      if (result instanceof HttpErrorResponse || result.error) {
+        response.error = result.message || result.error;
+        response.failure = true;
+      } else {
+        response.result = result;
+        response.success = true;
+      }
+      return response;
+    }), catchError((err: HttpErrorResponse) => {
+      response.error = err.message;
+      response.failure = true;
+      return of(response);
+    }));
+  }
+
+  getAttendanceByStudentIdandDate(id: number, date: string): Observable<Response> {
+    const url = `${environment.apiPrefix}${ApiResources.getAttendanceByStudentIdandDate}?studentId=${id}&date=${date}`;
+    const response: Response = {
+      failure: false, success: false
+    };
+    return this.apiService.getData(url, null).pipe(map((result) => {
+      if (result instanceof HttpErrorResponse || result.error) {
+        response.error = result.message || result.error;
+        response.failure = true;
+      } else {
+        response.result = result;
+        response.success = true;
+      }
+      return response;
+    }), catchError((err: HttpErrorResponse) => {
+      response.error = err.message;
+      response.failure = true;
+      return of(response);
+    }));
+  }
 }

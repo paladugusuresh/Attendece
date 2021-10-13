@@ -13,4 +13,6 @@ export const apiResources = {
     getCoursesByTeacherId: 'GetCoursesByTeacherId',
     getStudentsByTeacherId: 'GetStudentsByTeacherId',
     getAllHolidays: 'GetAllHolidays',
+    getAttendanceByStudentIdandCourseId: 'GetAttendanceByStudentIdandCourseId',
+    getAttendanceByStudentIdandDate: 'GetAttendanceByStudentIdandDate'
 };

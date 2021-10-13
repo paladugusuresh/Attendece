@@ -86,6 +86,13 @@ ion-img {
     }
 }
 
+ion-col .empty-data {
+    font-family: 'Red Hat Display';
+    padding: 5px 0px;
+    font-size: 14px !important;
+    color: #c1c1c1 !important;
+}
+
 @media (max-width: 370px) {
     .pre-align {
         margin-left: 0.9em;

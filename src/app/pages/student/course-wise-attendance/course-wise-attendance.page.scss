@@ -1,0 +1,63 @@
+.heading-title {
+    white-space: initial;
+}
+
+.cw-col .item {
+    border-radius: 4px;
+    margin: 14px 10px;
+}
+
+ion-item {
+    --border-width: 2px;
+    --border-color:#ffffff;
+    --border-radius: 8px;
+    --inner-border-width: 0;
+    --background: #ffffff;
+    --full-highlight-height: none;
+}
+
+ion-content {
+    --background: whitesmoke;
+}
+
+ion-select {
+    /* Applies to the value and placeholder color */
+    color: #030303;
+  
+    /* Set a different placeholder color */
+    --placeholder-color: #030303;
+  
+    /* Set full opacity on the placeholder */
+    --placeholder-opacity: 1;
+
+    font-family: 'Roboto';
+
+    font-size: 16px;
+}
+
+.my-attendance {
+    font-family: 'Red Hat Display';
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.label-title {
+    p, h2 {
+        font-size: 16px !important;
+        padding:5px 0px;
+        font-family: 'Red Hat Display';
+    }
+    p {
+        color: #c1c1c1 !important;
+    }
+    h2 {
+        color: #030303 !important;
+    }
+}
+
+ion-col .empty-data {
+    font-family: 'Red Hat Display';
+    font-size: 17px !important;
+    color: #030303 !important;
+    text-align: center;
+}

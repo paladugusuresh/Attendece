@@ -3,7 +3,6 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>Dashboard</ion-title>
   </ion-toolbar>
 </ion-header>
 <ion-content [fullscreen]="true" class="ion-padding-top">
@@ -42,7 +41,7 @@
   <ion-row>
     <ion-col size="12">
       <ion-slides [options]="slideOptions" [mode]="'ios'">
-        <ion-slide *ngFor="let course of courses">
+        <ion-slide *ngFor="let course of courses" (click)="navigateToCourseWiseAttendance(course.id)">
           <ion-card>
             <ion-card-header>
               <ion-img [src]="course.image || ''"></ion-img>
@@ -71,7 +70,7 @@
       </ion-card>
     </ion-col>
     <ion-col *ngIf="attendanceHistory.length === 0">
-      <p>
+      <p class="empty-data">
         Welcome for your first day
       </p>
     </ion-col>
