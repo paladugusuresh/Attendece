@@ -3,13 +3,22 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>Dashboard</ion-title>
   </ion-toolbar>
 </ion-header>
 <ion-content [fullscreen]="true" class="ion-padding-top">
   <ion-row>
     <ion-col size="12" class="fs-22">
       <h1 class="fs-2 pl-2">Welcome {{ profile?.firstName }}</h1>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col>
+      <ion-item>
+        <ion-select interface="popover" [(ngModel)]="schoolId" (ionChange)="onSchoolChange($event)"
+          placeholder="Select Course">
+          <ion-select-option [value]="school.id + ''" *ngFor="let school of schools">{{school.name}}</ion-select-option>
+        </ion-select>
+      </ion-item>
     </ion-col>
   </ion-row>
   <ion-row>

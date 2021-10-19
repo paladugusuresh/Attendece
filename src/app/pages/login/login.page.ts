@@ -47,7 +47,7 @@ export class LoginPage implements OnInit {
           else {
             this.sharedService.activeAppPages = AppConfig.sideMenu.teacher;
             this.authService.userLoggedIn.next(true);
-            this.router.navigate([`/profile`]);
+            this.router.navigate([`/teacher/search-school-page`]);
           }
         } else {
           this.loginErrMsg = 'Invalid Credentials';

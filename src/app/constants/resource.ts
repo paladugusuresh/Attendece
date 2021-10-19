@@ -14,5 +14,6 @@ export const apiResources = {
     getStudentsByTeacherId: 'GetStudentsByTeacherId',
     getAllHolidays: 'GetAllHolidays',
     getAttendanceByStudentIdandCourseId: 'GetAttendanceByStudentIdandCourseId',
-    getAttendanceByStudentIdandDate: 'GetAttendanceByStudentIdandDate'
+    getAttendanceByStudentIdandDate: 'GetAttendanceByStudentIdandDate',
+    getSchoolsMappedToTeacher: 'GetSchoolsMappedToTeacher'
 };

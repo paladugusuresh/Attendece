@@ -62,6 +62,8 @@ export class HttpResponseService implements HttpInterceptor {
                 return this.getAttendanceByStudentIdandCourse(req);
             case req.url.indexOf('/GetAttendanceByStudentIdandDate') > -1:
                 return this.getAttendanceByStudentIdandDate(req);
+            case req.url.indexOf('/GetSchoolsMappedToTeacher') > -1:
+                return this.getSchoolsMappedToTeacher(req);
             default:
                 return next.handle(req);
         }
@@ -275,5 +277,19 @@ export class HttpResponseService implements HttpInterceptor {
             }] : []
         };
         return of(new HttpResponse({ status: 200, body: result}));
+    }
+
+    getSchoolsMappedToTeacher(req: HttpRequest<any>): Observable<HttpResponse<any>> {
+        const mappedSchools = [{
+            id: 1,
+            name: 'Princeton School'
+        }, {
+            id: 2,
+            name: 'St. Georgia School'
+        }, {
+            id: 3,
+            name: 'St. Mary\'s School'
+        }];
+        return of(new HttpResponse({ status: 200, body: mappedSchools }));
     }
 }

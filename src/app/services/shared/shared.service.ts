@@ -33,6 +33,17 @@ export class SharedService {
     localStorage.setItem('sessionData', JSON.stringify(val));
   }
 
+  get teacherPreferredSchoolId(): number {
+    if (localStorage.getItem('teacherPreferredSchoolId')) {
+      return +localStorage.getItem('teacherPreferredSchoolId');
+    }
+    return 0;
+  }
+
+  set teacherPreferredSchoolId(id: number) {
+    localStorage.setItem('teacherPreferredSchoolId', `${id}`);
+  }
+
   clear() {
     this.activeAppPages = [];
     this.activeProfile = null;

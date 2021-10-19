@@ -1,0 +1,32 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+  </ion-toolbar>
+</ion-header>
+<ion-content [fullscreen]="true" class="ion-padding-top">
+  <ion-slide class="school-ion-slide">
+    <ion-grid class="school-container">
+      <ion-row>
+        <ion-col class="ion-padding">
+          <div class="ion-padding-top" *ngIf="errorMsg">
+            <div class="err-msg-box">
+              <ion-label class="err-msg">{{errorMsg}}</ion-label>
+            </div>
+          </div>
+          <form [formGroup]="schoolForm" (ngSubmit)="validateAndNavigateToDashboard()" novalidate>
+            <ion-list class="school-list">
+              <ion-item>
+                <ion-select interface="popover" formControlName="schoolId" placeholder="Select School">
+                  <ion-select-option [value]="school.id + ''" *ngFor="let school of schools">{{school.name}}
+                  </ion-select-option>
+                </ion-select>
+              </ion-item>
+            </ion-list>
+            <div>
+              <ion-button type="submit" class="btn-reset" expand="block">Submit</ion-button>
+            </div>
+          </form>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-slide>
+</ion-content>

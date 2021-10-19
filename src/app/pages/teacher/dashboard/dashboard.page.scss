@@ -10,6 +10,14 @@
     padding-left: 0.2em;
 }
 
+ion-select {
+    color: #030303;
+    --placeholder-color: #030303;
+    --placeholder-opacity: 1;
+    font-family: 'Roboto';
+    font-size: 16px;
+}
+
 .back-color {
     --background: var(--ion-toolbar-background, var(--ion-background-color, #fff));
 }

@@ -1,6 +1,6 @@
 const studentMenus = [{
     title: 'My Profile',
-    url: '/profile',
+    url: '/student/profile',
     icon: 'person-add'
 }, {
     title: 'Change Password',
@@ -27,7 +27,7 @@ const studentMenus = [{
 
 const teacherMenus = [{
     title: 'My Profile',
-    url: '/profile',
+    url: '/teacher/home/profile',
     icon: 'person-add'
 }, {
     title: 'Change Password',
@@ -35,7 +35,7 @@ const teacherMenus = [{
     icon: 'key'
 }, {
     title: 'Dashboard',
-    url: '/teacher/dashboard',
+    url: '/teacher/home',
     icon: 'home'
 }, {
     title: 'My Students',
