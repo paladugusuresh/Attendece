@@ -38,6 +38,24 @@
             font-family: Poppins;
         }
 
+        ion-list-header {
+            margin: 0 0 -10px -10px;
+        }
+
+        .radio-item {
+            --background: #ffffff;
+            --border-color: #ffffff;
+            width: calc(100%/2);
+            display: inline-flex;
+            .radio-label {
+                font-family: 'Red Hat Display';
+                font-size: 14px;
+            }
+            ion-radio {
+                margin-inline-end: 15px;
+            }
+        }
+
         .btn-signup {
             --background: #166186;
             height: 55px;

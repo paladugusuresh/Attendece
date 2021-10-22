@@ -60,11 +60,6 @@ const routes: Routes = [
     loadChildren: () => import('./pages/teacher/students/students.module').then(m => m.StudentsPageModule)
   },
   {
-    path: 'teacher/search-school-page',
-    canActivate: [AuthGuard],
-    loadChildren: () => import('./pages/teacher/search-school-page/search-school-page.module').then(m => m.SearchSchoolPagePageModule)
-  },
-  {
     path: 'teacher/home',
     canActivate: [AuthGuard],
     loadChildren: () => import('./pages/teacher/home/home.module').then( m => m.HomePageModule)

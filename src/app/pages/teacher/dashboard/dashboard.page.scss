@@ -18,16 +18,35 @@ ion-select {
     font-size: 16px;
 }
 
+.welcome-msg {
+    font-family: 'Red Hat Display';
+    font-size: 36px !important;
+    color: #030303;
+}
+
 .back-color {
-    --background: var(--ion-toolbar-background, var(--ion-background-color, #fff));
+    --background: #166186;
+    color: #ffffff;
+}
+
+.my-courses {
+    font-family: 'Red Hat Display';
+    font-size: 20px;
+    font-weight: bold;
+    color: #030303;
+}
+
+.my-students {
+    font-family: 'Red Hat Display';
+    font-size: 20px;
+    font-weight: bold;
+    color: #030303;
 }
 
 .pre-align {
-    font-family: var(--ion-font-family, inherit);
     font-size: 2.9em;
     font-weight: bolder;
     margin-left: 0.99em;
-    color: whitesmoke;
     text-overflow: clip;
     white-space: pre-line;
     text-align: center;
@@ -42,8 +61,25 @@ ion-img {
 }
 
 .label-title {
-    color: #000;
-    opacity: 0.9 !important;
+    opacity: 1 !important;
+    p, h2 {
+        font-size: 16px !important;
+        padding: 5px 0px;
+        font-family: 'Red Hat Display';
+    }
+    p {
+        color: #c1c1c1 !important;
+    }
+    h2 {
+        color: #030303 !important;
+    }
+}
+
+ion-col .empty-data {
+    font-family: 'Red Hat Display';
+    padding: 5px 0px;
+    font-size: 14px !important;
+    color: #c1c1c1 !important;
 }
 
 @media (max-width: 370px) {

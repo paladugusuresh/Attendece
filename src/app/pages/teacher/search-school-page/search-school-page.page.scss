@@ -2,12 +2,41 @@ ion-content {
     --background: whitesmoke;
 }
 
+.segment-title {
+    color: #030303;
+    font-family: 'Red Hat Display';
+    font-size: 20px;
+    flex: 0.5;
+    text-transform: none;
+}
+
 ion-select {
     color: #030303;
     --placeholder-color: #030303;
     --placeholder-opacity: 1;
     font-family: 'Roboto';
     font-size: 16px;
+}
+
+.label-title {
+    p, h2 {
+        font-size: 20px !important;
+        padding: 5px 0px;
+        font-family: 'Red Hat Display';
+    }
+    p {
+        color: #c1c1c1 !important;
+    }
+    h2 {
+        color: #030303 !important;
+    }
+}
+
+.student-list-background, .student-list-background.list-md {
+    background-color: whitesmoke !important;
+    ion-item {
+        --background: whitesmoke;
+    }
 }
 
 .school-ion-slide {

@@ -44,6 +44,14 @@ export class SharedService {
     localStorage.setItem('teacherPreferredSchoolId', `${id}`);
   }
 
+  get teacherSearchPageActiveTab() {
+    return localStorage.getItem('teacherSearchPageActiveTab');
+  }
+
+  set teacherSearchPageActiveTab(activeTab: string) {
+    localStorage.setItem('teacherSearchPageActiveTab', activeTab);
+  }
+
   clear() {
     this.activeAppPages = [];
     this.activeProfile = null;

@@ -147,7 +147,24 @@ export class AuthService {
   }
 
   getAllRoles(): Observable<any> {
-    return of([]);
+    const url = `${environment.apiPrefix}${ApiResources.getRoles}`;
+    const response: Response = {
+      failure: false, success: false
+    };
+    return this.apiService.getData(url, null).pipe(map((result) => {
+      if (result instanceof HttpErrorResponse || result.error) {
+        response.error = result.message || result.error;
+        response.failure = true;
+      } else {
+        response.success = true;
+        response.result = result;
+      }
+      return response;
+    }), catchError((err: HttpErrorResponse) => {
+      response.error = err.message;
+      response.failure = true;
+      return of(response);
+    }));
   }
 
   setToken(token: string) {

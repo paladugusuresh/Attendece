@@ -33,6 +33,73 @@ export class HttpResponseService implements HttpInterceptor {
         school: '',
         email: 'krithik.c@gmail.com',
         dob: new Date(2011, 11, 20)
+    }, {
+        userId: 4,
+        firstName: 'Abhishek',
+        lastName: 'C',
+        userName: 'abhishekc234',
+        role: 'Student',
+        school: '',
+        email: 'abhishek.c@gmail.com',
+        dob: new Date(2011, 11, 20)
+    }, {
+        userId: 5,
+        firstName: 'Abhishek',
+        lastName: 'K',
+        userName: 'abhishekk234',
+        role: 'Student',
+        school: '',
+        email: 'abhishek.k@gmail.com',
+        dob: new Date(2011, 11, 20)
+    }, {
+        userId: 6,
+        firstName: 'Abhi',
+        lastName: 'M',
+        userName: 'abhim234',
+        role: 'Student',
+        school: '',
+        email: 'abhi.m@gmail.com',
+        dob: new Date(2011, 11, 20)
+    }, {
+        userId: 7,
+        firstName: 'Krishna',
+        lastName: 'C',
+        userName: 'krishnac234',
+        role: 'Student',
+        school: '',
+        email: 'krishna.c@gmail.com',
+        dob: new Date(2011, 11, 20)
+    }];
+    attendance = [{
+        userId: 2,
+        firstName: 'Aditya',
+        lastName: 'T',
+        attendancePercentage: '56'
+    }, {
+        userId: 3,
+        firstName: 'Krithik',
+        lastName: 'C',
+        attendancePercentage: '58'
+    }, {
+        userId: 4,
+        firstName: 'Abhishek',
+        lastName: 'C',
+        attendancePercentage: '60'
+    }, {
+        userId: 5,
+        firstName: 'Abhishek',
+        lastName: 'K',
+        attendancePercentage: '69'
+    }, {
+        userId: 6,
+        firstName: 'Abhi',
+        lastName: 'M',
+        attendancePercentage: '60'
+    }, {
+        userId: 7,
+        firstName: 'Krishna',
+        lastName: 'C',
+        attendancePercentage: '59'
     }];
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         return this.handleRoute(req, next);
@@ -64,9 +131,23 @@ export class HttpResponseService implements HttpInterceptor {
                 return this.getAttendanceByStudentIdandDate(req);
             case req.url.indexOf('/GetSchoolsMappedToTeacher') > -1:
                 return this.getSchoolsMappedToTeacher(req);
+            case req.url.indexOf('/ChangePassword') > -1:
+                return of(new HttpResponse({ status: 200, body: 'Password updated successfully' }));
+            case req.url.endsWith('GetRoles'):
+                return this.getAllRoles(req);
             default:
                 return next.handle(req);
         }
+    }
+    getAllRoles(req: HttpRequest<any>): Observable<HttpEvent<any>> {
+        const roles = [{
+            id: 1,
+            name: 'Teacher'
+        }, {
+            id: 2,
+            name: 'Student'
+        }];
+        return of(new HttpResponse({ status: 200, body: roles }));
     }
 
     authenticateUser(req: HttpRequest<any>): Observable<HttpResponse<any>> {
@@ -195,7 +276,7 @@ export class HttpResponseService implements HttpInterceptor {
     }
 
     getStudentsByTeacherId(req: HttpRequest<any>): Observable<HttpResponse<any>> {
-        const result = this.users.filter((user) => user.role === 'Student');
+        const result = this.attendance;
         return of(new HttpResponse({ status: 200, body: result}));
     }
 

@@ -30,16 +30,28 @@
                     </ion-item>
                   </ion-col>
                 </ion-row>
+                <br/>
                 <ion-label align="left" class="input-label">{{ 'User Name *' }}</ion-label>
                 <ion-item>
                   <ion-input type="text" formControlName="userName" name="userName" maxlength="12" required
                     placeholder="User Name"></ion-input>
                 </ion-item>
+                <br/>
                 <ion-label align="left" class="input-label">{{ 'Password *' }}</ion-label>
                 <ion-item class="loginItem">
                   <ion-input type="password" formControlName="password" name="password" required placeholder="Password">
                   </ion-input>
                 </ion-item>
+                <br/>
+                <ion-radio-group formControlName="role">
+                  <ion-list-header>
+                    <ion-label align="left" class="input-label">{{ 'Role'}}</ion-label>
+                  </ion-list-header>
+                  <ion-item *ngFor="let data of lstRoles" class="radio-item">
+                    <ion-label class="radio-label">{{data.name}}</ion-label>
+                    <ion-radio [value]="data.name" slot="start"></ion-radio>
+                  </ion-item>
+                </ion-radio-group>
               </ion-list>
             </ion-col>
           </ion-row>

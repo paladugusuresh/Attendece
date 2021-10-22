@@ -57,11 +57,11 @@ export class ChangePasswordPage implements OnInit {
             toast.message = 'Password updated successfully';
             toast.present();
             this.cpForm.reset();
-            if (this.sharedService.activeProfile.role === 'Child') {
+            if (this.sharedService.activeProfile.role === 'Student') {
               this.router.navigate([`/student/dashboard`]);
             }
             else {
-              this.router.navigate([`/teacher/dashboard`]);
+              this.router.navigate([`/teacher/home/dashboard`]);
             }
           }
           else {
@@ -77,7 +77,7 @@ export class ChangePasswordPage implements OnInit {
       toast.message = this.errorMsg;
       toast.present();
     } else {
-      this.errorMsg = 'Please fill all the madatory(*) fields';
+      this.errorMsg = 'Please fill all the mandatory(*) fields';
       toast.message = this.errorMsg;
       toast.present();
     }

@@ -20,18 +20,22 @@ export class SignupPage implements OnInit {
       firstName: new FormControl('', Validators.required),
       lastName: new FormControl('', Validators.required),
       userName: new FormControl('', Validators.required),
-      password: new FormControl('', Validators.required)
+      password: new FormControl('', Validators.required),
+      role: new FormControl('')
     });
   }
 
-  ngOnInit() {
+  ngOnInit() { }
+
+  ionViewWillEnter() {
     this.getRoles();
   }
 
   getRoles() {
     this.authService.getAllRoles().subscribe(res => {
       if (res.success) {
-        this.lstRoles = res.result.filter(x => x.roleName.toUpperCase() !== 'CHILD');
+        this.lstRoles = res.result;
+        this.registerForm.controls.role.setValue(this.lstRoles.find(x => x.name.toLowerCase() === 'student').name);
       }
     });
   }
@@ -57,7 +61,6 @@ export class SignupPage implements OnInit {
     });
     if (this.registerForm.valid) {
       const user = this.registerForm.value;
-      user.role = 'teacher';
       this.authService.registerUser(user).subscribe((res) => {
         if (res.success) {
           toast.present();

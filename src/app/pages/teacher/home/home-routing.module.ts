@@ -17,6 +17,10 @@ const routes: Routes = [
         loadChildren: () => import('../../profile/profile.module').then(m => m.ProfilePageModule)
       },
       {
+        path: 'search-school-page',
+        loadChildren: () => import('../search-school-page/search-school-page.module').then(m => m.SearchSchoolPagePageModule)
+      },
+      {
         path: '',
         pathMatch: 'full',
         redirectTo: 'dashboard'

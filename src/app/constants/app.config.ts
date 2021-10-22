@@ -39,7 +39,7 @@ const teacherMenus = [{
     icon: 'home'
 }, {
     title: 'My Students',
-    url: '/teacher/students',
+    url: '/teacher/home/search-school-page',
     icon: 'school'
 }, {
     title: 'Holidays',
@@ -56,5 +56,9 @@ export const appConfig = {
     sideMenu: {
         student: studentMenus,
         teacher: teacherMenus
+    },
+    teacherSearchPageTabs: {
+        students: 'students',
+        schools: 'schools'
     }
 };

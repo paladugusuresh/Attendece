@@ -40,6 +40,7 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   logout() {
+    document.getElementById('main-content').className = document.getElementById('main-content').className.replace('menu-content-open', '');
     localStorage.clear();
     this.sharedService.clear();
     this.router.navigate(['/login']);

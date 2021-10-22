@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
+import { AppConfig } from 'src/app/constants';
 import { StudentService, CourseService, SharedService, SchoolService } from '../../../services';
 
 @Component({
@@ -23,10 +24,11 @@ export class DashboardPage implements OnInit {
   constructor(private studentService: StudentService, private courseService: CourseService,
     private sharedService: SharedService, private router: Router,
     private activatedRoute: ActivatedRoute, private schoolService: SchoolService) {
-      if (!this.sharedService.teacherPreferredSchoolId) {
-        this.router.navigate(['/teacher/search-school-page'], { relativeTo: this.activatedRoute });
-      }
+    if (!this.sharedService.teacherPreferredSchoolId) {
+      this.router.navigate(['/teacher/home/search-school-page'],
+        { relativeTo: this.activatedRoute, queryParams: { tab: AppConfig.teacherSearchPageTabs.schools } });
     }
+  }
 
   ngOnInit() {
   }

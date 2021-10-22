@@ -29,5 +29,7 @@ Below are the commands to install native storage to install native storage for i
   Sometimes even after following above steps of cocoapods still we may face issue for fresh project setup using ionic cli then try to follow the below steps:
     1. Move the path to ios/App/ from root directory of project inside terminal(Give permissions to navigating path in MAC).
     2. Run the command "pod install".
+  Signing Key alias name is focalpoint
+  Key user name is FPAdmin@123.
 </pre>
 </div>
