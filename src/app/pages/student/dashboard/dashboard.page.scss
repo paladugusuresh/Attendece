@@ -73,6 +73,7 @@ ion-img {
 }
 
 .label-title {
+    opacity: 1 !important;
     p, h2 {
         font-size: 16px !important;
         padding: 5px 0px;
@@ -91,6 +92,25 @@ ion-col .empty-data {
     padding: 5px 0px;
     font-size: 14px !important;
     color: #c1c1c1 !important;
+}
+
+div.course-img-wrapper {
+    overflow-x: scroll;
+    display: inline-flex;
+    white-space: nowrap;
+    width: 100%;
+
+    div.course-img-container {
+        margin-left: 5px;
+        margin-right: 5px;
+        flex: 33%;
+    }
+}
+
+ion-slide {
+    ion-card {
+        width: 100%;
+    }
 }
 
 @media (max-width: 370px) {

@@ -101,6 +101,134 @@ export class HttpResponseService implements HttpInterceptor {
         lastName: 'C',
         attendancePercentage: '59'
     }];
+    date = new Date();
+    attendanceHistory = [{
+        id: 1,
+        course: 'Maths',
+        attendedDate: this.populateDate(this.date),
+        isAcknowledged: false,
+        enableAcknowledgement: true
+    }, {
+        id: 2,
+        course: 'Physics',
+        attendedDate: this.populateDate(this.date),
+        isAcknowledged: false,
+        enableAcknowledgement: true
+    }, {
+        id: 3,
+        course: 'Chemistry',
+        attendedDate: this.populateDate(this.date),
+        isAcknowledged: false,
+        enableAcknowledgement: true
+    }, {
+        id: 4,
+        course: 'Maths',
+        attendedDate: this.populateDate(new Date(new Date().setDate(this.date.getDate() - 1))),
+        isAcknowledged: true,
+        enableAcknowledgement: false
+    }, {
+        id: 5,
+        course: 'Physics',
+        attendedDate: this.populateDate(new Date(new Date().setDate(this.date.getDate() - 1))),
+        isAcknowledged: true,
+        enableAcknowledgement: false
+    }, {
+        id: 6,
+        course: 'Chemistry',
+        attendedDate: this.populateDate(new Date(new Date().setDate(this.date.getDate() - 1))),
+        isAcknowledged: true,
+        enableAcknowledgement: false
+    }, {
+        id: 7,
+        course: 'Maths',
+        attendedDate: this.populateDate(new Date(new Date().setDate(this.date.getDate() - 2))),
+        isAcknowledged: false,
+        enableAcknowledement: false
+    }, {
+        id: 8,
+        course: 'Physics',
+        attendedDate: this.populateDate(new Date(new Date().setDate(this.date.getDate() - 2))),
+        isAcknowledged: true,
+        enableAcknowledgement: false
+    }, {
+        id: 9,
+        course: 'Chemistry',
+        attendedDate: this.populateDate(new Date(new Date().setDate(this.date.getDate() - 2))),
+        isAcknowledged: false,
+        enableAcknowledgement: false
+    }, {
+        id: 10,
+        course: 'Maths',
+        attendedDate: this.populateDate(new Date(new Date().setDate(this.date.getDate() - 3))),
+        isAcknowledged: true,
+        enableAcknowledgement: false
+    }, {
+        id: 11,
+        course: 'Physics',
+        attendedDate: this.populateDate(new Date(new Date().setDate(this.date.getDate() - 3))),
+        isAcknowledged: false,
+        enableAcknowledgement: false
+    }, {
+        id: 12,
+        course: 'Chemistry',
+        attendedDate: this.populateDate(new Date(new Date().setDate(this.date.getDate() - 3))),
+        isAcknowledged: true,
+        enableAcknowledgement: false
+    }, {
+        id: 13,
+        course: 'Maths',
+        attendedDate: this.populateDate(new Date(new Date().setDate(this.date.getDate() - 4))),
+        isAcknowledged: true,
+        enableAcknowledgement: false
+    }, {
+        id: 14,
+        course: 'Physics',
+        attendedDate: this.populateDate(new Date(new Date().setDate(this.date.getDate() - 4))),
+        isAcknowledged: true,
+        enableAcknowledgement: false
+    }, {
+        id: 15,
+        course: 'Chemistry',
+        attendedDate: this.populateDate(new Date(new Date().setDate(this.date.getDate() - 4))),
+        isAcknowledged: true,
+        enableAcknowledgement: false
+    }, {
+        id: 16,
+        course: 'Maths',
+        attendedDate: this.populateDate(new Date(new Date().setDate(this.date.getDate() - 5))),
+        isAcknowledged: true,
+        enableAcknowledgement: false
+    }, {
+        id: 17,
+        course: 'Physics',
+        attendedDate: this.populateDate(new Date(new Date().setDate(this.date.getDate() - 5))),
+        isAcknowledged: true,
+        enableAcknowledgement: false
+    }, {
+        id: 18,
+        course: 'Chemistry',
+        attendedDate: this.populateDate(new Date(new Date().setDate(this.date.getDate() - 5))),
+        isAcknowledged: true,
+        enableAcknowledgement: false
+    }, {
+        id: 19,
+        course: 'Maths',
+        attendedDate: this.populateDate(new Date(new Date().setDate(this.date.getDate() - 6))),
+        isAcknowledged: true,
+        enableAcknowledgement: false
+    }, {
+        id: 20,
+        course: 'Physics',
+        attendedDate: this.populateDate(new Date(new Date().setDate(this.date.getDate() - 6))),
+        isAcknowledged: true,
+        enableAcknowledgement: false
+    }, {
+        id: 21,
+        course: 'Chemistry',
+        attendedDate: this.populateDate(new Date(new Date().setDate(this.date.getDate() - 6))),
+        isAcknowledged: true,
+        enableAcknowledgement: false
+    }];
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         return this.handleRoute(req, next);
     }
@@ -135,6 +263,10 @@ export class HttpResponseService implements HttpInterceptor {
                 return of(new HttpResponse({ status: 200, body: 'Password updated successfully' }));
             case req.url.endsWith('GetRoles'):
                 return this.getAllRoles(req);
+            case req.url.endsWith('/UpdateAcknowledgement'):
+                return this.updateAcknowledgement(req);
+            case req.url.indexOf('/GetAttendanceReportData') > -1:
+                return this.getAttendanceReportData(req);
             default:
                 return next.handle(req);
         }
@@ -187,7 +319,7 @@ export class HttpResponseService implements HttpInterceptor {
         if (existingUser) {
             res = 'User already exists with user name, Try again with different user name';
         } else {
-            user.id = this.users.sort((a,b) => a.userId - b.userId)[0].userId + 1;
+            user.id = this.users.sort((a, b) => a.userId - b.userId)[0].userId + 1;
             this.users.push(user);
             res = `User with ${user.userName} created successfully, log into the application`;
         }
@@ -224,38 +356,29 @@ export class HttpResponseService implements HttpInterceptor {
         const result = {
             averageAttendance: 74.5,
             grade: 84,
-            history: [{
-                id: 1,
-                course: 'Maths',
-                attendedDate: '2021-09-03'
-            }, {
-                id: 2,
-                course: 'Physics',
-                attendedDate: '2021-09-03'
-            }, {
-                id: 3,
-                course: 'Chemistry',
-                attendedDate: '2021-09-03'
-            }]
+            history: this.attendanceHistory
         };
-        return of(new HttpResponse({ status: 200, body: result}));
+        return of(new HttpResponse({ status: 200, body: result }));
     }
 
     getCoursesByStudentId(req: HttpRequest<any>): Observable<HttpResponse<any>> {
         const result = [{
             name: 'Maths',
             image: '/assets/imgs/maths.jpeg',
+            avgAttendance: '70',
             id: 2
         }, {
             id: 3,
             name: 'Physics',
+            avgAttendance: '50',
             image: '/assets/imgs/physics.jpeg'
         }, {
             id: 4,
             name: 'Chemistry',
+            avgAttendance: '60',
             image: '/assets/imgs/chemistry.jpeg'
         }];
-        return of(new HttpResponse({ status: 200, body: result}));
+        return of(new HttpResponse({ status: 200, body: result }));
     }
 
     getCoursesByTeacherId(req: HttpRequest<any>): Observable<HttpResponse<any>> {
@@ -272,12 +395,12 @@ export class HttpResponseService implements HttpInterceptor {
             name: 'Chemistry',
             image: '/assets/imgs/chemistry.jpeg'
         }];
-        return of(new HttpResponse({ status: 200, body: result}));
+        return of(new HttpResponse({ status: 200, body: result }));
     }
 
     getStudentsByTeacherId(req: HttpRequest<any>): Observable<HttpResponse<any>> {
         const result = this.attendance;
-        return of(new HttpResponse({ status: 200, body: result}));
+        return of(new HttpResponse({ status: 200, body: result }));
     }
 
     getAllHolidays(req: HttpRequest<any>): Observable<HttpResponse<any>> {
@@ -310,54 +433,45 @@ export class HttpResponseService implements HttpInterceptor {
             occassion: 'Gandhi Jayanthi',
             type: 'General'
         }];
-        return of(new HttpResponse({ status: 200, body: result}));
+        return of(new HttpResponse({ status: 200, body: result }));
     }
 
     getAttendanceByStudentIdandCourse(req: HttpRequest<any>): Observable<HttpResponse<any>> {
-       const courseId = req.url.split('&')[1].split('=')[1];
-       let courseName = '';
-       switch(courseId) {
-           case '2': courseName = 'Maths'; break;
-           case '3': courseName = 'Physics'; break;
-           case '4': courseName = 'Chemistry'; break;
-           default: break;
-       }
+        const courseId = req.url.split('&')[1].split('=')[1];
+        let courseName = '';
+        switch (courseId) {
+            case '2': courseName = 'Maths'; break;
+            case '3': courseName = 'Physics'; break;
+            case '4': courseName = 'Chemistry'; break;
+            default: break;
+        }
         const result = {
-            history: courseName !== '' ? [{
-                id: 1,
-                course: courseName,
-                attendedDate: '2021-09-03'
-            }, {
-                id: 2,
-                course: courseName,
-                attendedDate: '2021-09-03'
-            }, {
-                id: 3,
-                course: courseName,
-                attendedDate: '2021-09-03'
-            }] : []
+            history: courseName !== '' ? this.attendanceHistory.filter((history) => history.course === courseName) : []
         };
-        return of(new HttpResponse({ status: 200, body: result}));
+        return of(new HttpResponse({ status: 200, body: result }));
     }
 
     getAttendanceByStudentIdandDate(req: HttpRequest<any>): Observable<HttpResponse<any>> {
-        const date = req.url.split('&')[1].split('=')[1];
+        const date = req.url.split('&')[2].split('=')[1];
+        const courseId = req.url.split('&')[1].split('=')[1];
+        let courseName = '';
+        let history = [];
+        switch (courseId) {
+            case '2': courseName = 'Maths'; break;
+            case '3': courseName = 'Physics'; break;
+            case '4': courseName = 'Chemistry'; break;
+            default: break;
+        }
+        if (courseName) {
+            // eslint-disable-next-line @typescript-eslint/no-shadow
+            history = date ? this.attendanceHistory.filter((history) => history.attendedDate === date && history.course === courseName)
+                : [];
+        }
         const result = {
-            history: date ? [{
-                id: 1,
-                course: 'Maths',
-                attendedDate: date
-            },{
-                id: 2,
-                course: 'Physics',
-                attendedDate: date
-            },{
-                id: 3,
-                course: 'Chemistry',
-                attendedDate: date
-            }] : []
+            // eslint-disable-next-line @typescript-eslint/no-shadow
+            history: date && history.length === 0 ? this.attendanceHistory.filter((history) => history.attendedDate === date) : history
         };
-        return of(new HttpResponse({ status: 200, body: result}));
+        return of(new HttpResponse({ status: 200, body: result }));
     }
 
     getSchoolsMappedToTeacher(req: HttpRequest<any>): Observable<HttpResponse<any>> {
@@ -372,5 +486,28 @@ export class HttpResponseService implements HttpInterceptor {
             name: 'St. Mary\'s School'
         }];
         return of(new HttpResponse({ status: 200, body: mappedSchools }));
+    }
+
+    updateAcknowledgement(req: HttpRequest<any>): Observable<HttpResponse<any>> {
+        const { body } = req;
+        const history = this.attendanceHistory.find(t => t.id === body.id);
+        history.enableAcknowledgement = false;
+        history.isAcknowledged = body.isAcknowledged;
+        return of(new HttpResponse({
+            status: 200,
+            body: 'Your acknowledgement is received and attendance information is updated successfully'
+        }));
+    }
+
+    getAttendanceReportData(req: HttpRequest<any>): Observable<HttpEvent<any>> {
+        const attendanceData = [65, 59, 80, 81, 56, 55, 40, 30, 20, 40, 60, 70];
+        return of(new HttpResponse({ status: 200, body: attendanceData }));
+    }
+
+    private populateDate(date: Date) {
+        const month = `${date.getMonth() + 1 < 10 ? ('0' + (date.getMonth() + 1)) : date.getMonth() + 1}`;
+        const day = `${date.getDate() < 10 ? ('0' + date.getDate()) : date.getDate()}`;
+        const dateFormat = `${date.getFullYear()}-${month}-${day}`;
+        return dateFormat;
     }
 }

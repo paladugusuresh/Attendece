@@ -41,6 +41,10 @@ ion-select {
     color: #030303;
   }
 
+  :host(.toggle-disabled) {
+    opacity: 1 !important;
+  }
+
   body {
     --ion-toolbar-background: linear-gradient(to bottom, #004a81, #09538a, #125b93, #1a649d, #216da6);
     --ion-toolbar-color:#ffffff;

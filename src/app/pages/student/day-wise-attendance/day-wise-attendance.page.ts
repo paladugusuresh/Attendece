@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Response } from '../../../models';
-import { AttendanceService, SharedService } from '../../../services';
+import { AttendanceService, SharedService, CourseService } from '../../../services';
+import { ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-day-wise-attendance',
@@ -9,29 +10,98 @@ import { AttendanceService, SharedService } from '../../../services';
 })
 export class DayWiseAttendancePage implements OnInit {
   attendanceHistory = [];
+  courses = [];
+  courseId = 0;
   attendedDate = null;
-  constructor(private attendanceService: AttendanceService, private sharedService: SharedService) { }
+  maxDate = '';
+  isDataLoading = true;
+  displayNoData = false;
+  constructor(private attendanceService: AttendanceService, private sharedService: SharedService,
+    private courseService: CourseService, private toastCtrl: ToastController) { }
 
   ngOnInit() {
   }
 
   ionViewWillEnter() {
-    //this.getAttendanceByStudentIdandDate();
+    const date = new Date();
+    const month = `${date.getMonth() + 1 < 10 ? ('0' + (date.getMonth() + 1)) : date.getMonth() + 1}`;
+    const day = `${date.getDate() < 10 ? ('0' + date.getDate()) : date.getDate()}`;
+    this.maxDate = `${date.getFullYear()}-${month}-${day}`;
   }
 
-  getAttendanceByStudentIdandDate() {
+  getAttendanceByStudentCourseandDate(courseId: number) {
+    this.courseId = courseId;
+    this.isDataLoading = true;
     this.attendanceService
-      .getAttendanceByStudentIdandDate(
+      .getAttendanceByStudentCourseandDate(
         this.sharedService.activeProfile.userId,
+        courseId,
         this.attendedDate.substr(0, this.attendedDate.indexOf('T')))
       .subscribe((res: Response) => {
         if (res.failure) {
           console.log(res.error);
+          this.displayNoData = true;
           this.attendanceHistory = [];
         } else {
+          this.displayNoData = false;
           this.attendanceHistory = res.result.history;
         }
       });
+  }
+
+  getCoursesByStudentIdandDate() {
+    this.displayNoData = false;
+    this.courseService.getCourseByStudentIdandDate(
+      this.sharedService.activeProfile.userId,
+      this.attendedDate.substr(0, this.attendedDate.indexOf('T')))
+      .subscribe((res: Response) => {
+        if (res.failure) {
+          this.courses = [];
+        } else {
+          this.courses = res.result;
+        }
+      });
+  }
+
+  onDateChange() {
+    this.getAttendanceByStudentCourseandDate(0);
+    this.getCoursesByStudentIdandDate();
+  }
+
+  onFocus() {
+    this.isDataLoading = false;
+  }
+
+  async updateAcknowledgement(history: any) {
+    const toast = await this.toastCtrl.create({
+      message: '',
+      duration: 3000,
+      position: 'top',
+      color: 'danger',
+      cssClass: 'custom-toast',
+      buttons: [
+        {
+          side: 'end',
+          icon: 'close',
+          text: '',
+          role: 'cancel',
+          handler: () => {
+          }
+        }
+      ]
+    });
+    if (!this.isDataLoading && history.isAcknowledged) {
+      this.attendanceService.updateAcknowledement(history).subscribe((res: Response) => {
+        if (res.failure) {
+          console.log(res.error);
+        } else {
+          toast.color = 'success';
+          toast.message = res.result;
+          toast.present();
+          this.getAttendanceByStudentCourseandDate(this.courseId);
+        }
+      });
+    }
   }
 
 }

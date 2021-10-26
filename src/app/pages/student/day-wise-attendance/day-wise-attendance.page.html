@@ -16,9 +16,24 @@
   <ion-row>
     <ion-col class="dw-col">
       <ion-item>
-        <ion-datetime displayFormat="MMM DD YYYY" min="1930" [(ngModel)]="attendedDate" placeholder="Select Date"
-          (ionChange)="getAttendanceByStudentIdandDate()"></ion-datetime>
+        <ion-datetime displayFormat="MMM DD YYYY" min="1930" [max]="maxDate" [(ngModel)]="attendedDate" placeholder="Select Date"
+          (ionChange)="onDateChange()"></ion-datetime>
       </ion-item>
+    </ion-col>
+  </ion-row>
+  <ion-row *ngIf="courses.length > 0">
+    <ion-col>
+      <h3 class="pl-2 mb-5 my-courses">My Courses</h3>
+    </ion-col>
+  </ion-row>
+  <ion-row *ngIf="courses.length > 0">
+    <ion-col size="12">
+      <div class="course-img-wrapper">
+        <div class="course-img-container" *ngFor="let course of courses"
+          (click)="getAttendanceByStudentCourseandDate(course.id)">
+          <ion-img [src]="course.image || ''"></ion-img>
+        </div>
+      </div>
     </ion-col>
   </ion-row>
   <ion-row>
@@ -31,11 +46,12 @@
               <p>{{ history.attendedDate | date: 'MM/dd/YYYY'}}</p>
               <h2>{{ history.course }}</h2>
             </ion-label>
+            <ion-toggle slot="end" color="success" (ionFocus)="onFocus()" (ionChange)="updateAcknowledgement(history)" [(ngModel)]="history.isAcknowledged" [disabled]="!history.enableAcknowledgement" [checked]="history.isAcknowledged"></ion-toggle>
           </ion-item>
         </ion-list>
       </ion-card>
     </ion-col>
-    <ion-col *ngIf="attendanceHistory.length === 0">
+    <ion-col *ngIf="displayNoData">
       <p class="empty-data">
         No data available
       </p>

@@ -1,10 +1,5 @@
-.heading-title {
-    white-space: initial;
-}
-
-.cw-col .item {
-    border-radius: 4px;
-    margin: 14px 10px;
+ion-content {
+    --background: whitesmoke;
 }
 
 ion-item {
@@ -16,29 +11,13 @@ ion-item {
     --full-highlight-height: none;
 }
 
-ion-content {
-    --background: whitesmoke;
-}
-
-ion-select {
-    /* Applies to the value and placeholder color */
-    color: #030303;
-  
-    /* Set a different placeholder color */
-    --placeholder-color: #030303;
-  
-    /* Set full opacity on the placeholder */
-    --placeholder-opacity: 1;
-
-    font-family: 'Roboto';
-
-    font-size: 16px;
-}
-
-.my-attendance {
+.box-title {
     font-family: 'Red Hat Display';
-    font-size: 20px;
     font-weight: bold;
+}
+
+.box-sub-title {
+    font-family: 'Red Hat Display';
 }
 
 .label-title {

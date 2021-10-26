@@ -56,8 +56,50 @@ export class AttendanceService {
     }));
   }
 
-  getAttendanceByStudentIdandDate(id: number, date: string): Observable<Response> {
-    const url = `${environment.apiPrefix}${ApiResources.getAttendanceByStudentIdandDate}?studentId=${id}&date=${date}`;
+  getAttendanceByStudentCourseandDate(id: number, courseId: number, date: string): Observable<Response> {
+    const url = `${environment.apiPrefix}${ApiResources.getAttendanceByStudentIdandDate}?studentId=${id}&courseId=${courseId}&date=${date}`;
+    const response: Response = {
+      failure: false, success: false
+    };
+    return this.apiService.getData(url, null).pipe(map((result) => {
+      if (result instanceof HttpErrorResponse || result.error) {
+        response.error = result.message || result.error;
+        response.failure = true;
+      } else {
+        response.result = result;
+        response.success = true;
+      }
+      return response;
+    }), catchError((err: HttpErrorResponse) => {
+      response.error = err.message;
+      response.failure = true;
+      return of(response);
+    }));
+  }
+
+  updateAcknowledement(req: any): Observable<Response> {
+    const url = `${environment.apiPrefix}${ApiResources.updateStudentAcknowledgement}`;
+    const response: Response = {
+      failure: false, success: false
+    };
+    return this.apiService.updateData(url, req).pipe(map((result) => {
+      if (result instanceof HttpErrorResponse || result.error) {
+        response.error = result.message || result.error;
+        response.failure = true;
+      } else {
+        response.result = result;
+        response.success = true;
+      }
+      return response;
+    }), catchError((err: HttpErrorResponse) => {
+      response.error = err.message;
+      response.failure = true;
+      return of(response);
+    }));
+  }
+
+  getAttendanceReportData(id: number): Observable<Response> {
+    const url = `${environment.apiPrefix}${ApiResources.getAttendanceReportData}?studentId=${id}`;
     const response: Response = {
       failure: false, success: false
     };

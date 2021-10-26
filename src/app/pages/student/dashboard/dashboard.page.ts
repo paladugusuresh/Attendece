@@ -14,6 +14,7 @@ export class DashboardPage implements OnInit {
   grade = 0;
   attendanceHistory = [];
   profile = null;
+  historyDates = [];
   slideOptions = {
     speed: 400,
     spaceBetween: 0,
@@ -55,8 +56,20 @@ export class DashboardPage implements OnInit {
           this.attendanceHistory = res.result.history;
           this.grade = res.result.grade;
           this.avgAttendance = res.result.averageAttendance;
+          this.populateAttendaceHistory();
         }
       });
+  }
+
+  populateAttendaceHistory() {
+    this.attendanceHistory.forEach((history) => {
+      const existingHistory = this.historyDates.find(t => t.attendedDate === history.attendedDate);
+      if (!existingHistory) {
+        this.historyDates.push({ attendedDate: history.attendedDate, historyData: [history] });
+      } else {
+        existingHistory.historyData.push(history);
+      }
+    });
   }
 
   navigateToCourseWiseAttendance(courseId: number) {
@@ -64,6 +77,10 @@ export class DashboardPage implements OnInit {
       queryParams: { courseId },
       relativeTo: this.activatedRoute
     });
+  }
+
+  navigateToReport() {
+    this.router.navigate(['/student/attendance-report'], { relativeTo: this.activatedRoute });
   }
 
 }

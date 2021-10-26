@@ -63,6 +63,10 @@ const routes: Routes = [
     path: 'teacher/home',
     canActivate: [AuthGuard],
     loadChildren: () => import('./pages/teacher/home/home.module').then( m => m.HomePageModule)
+  },
+  {
+    path: 'student/attendance-report',
+    loadChildren: () => import('./pages/student/attendance-report/attendance-report.module').then( m => m.AttendanceReportPageModule)
   }
 ];
 

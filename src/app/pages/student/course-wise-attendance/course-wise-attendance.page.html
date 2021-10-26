@@ -33,6 +33,7 @@
               <p>{{ history.attendedDate | date: 'MM/dd/YYYY'}}</p>
               <h2>{{ history.course }}</h2>
             </ion-label>
+            <ion-toggle slot="end" color="success" (ionChange)="updateAcknowledgement(history)" [(ngModel)]="history.isAcknowledged" [disabled]="!history.enableAcknowledgement" [checked]="history.isAcknowledged"></ion-toggle>
           </ion-item>
         </ion-list>
       </ion-card>

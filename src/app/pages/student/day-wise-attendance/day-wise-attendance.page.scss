@@ -27,6 +27,37 @@ ion-content {
     --background: whitesmoke;
 }
 
+.pl-2 {
+    padding-left: 0.2em;
+}
+
+.mb-5 {
+    margin-bottom: -0.2em;
+}
+
+.my-courses {
+    font-family: 'Red Hat Display';
+    font-size: 36px;
+}
+
+ion-img {
+    height: 144px;
+    width: 140px;
+}
+
+div.course-img-wrapper {
+    overflow-x: scroll;
+    display: inline-flex;
+    white-space: nowrap;
+    width: 100%;
+
+    div.course-img-container {
+        margin-left: 5px;
+        margin-right: 5px;
+        flex: 33%;
+    }
+}
+
 .my-attendance {
     font-family: 'Red Hat Display';
     font-size: 20px;
@@ -34,6 +65,7 @@ ion-content {
 }
 
 .label-title {
+    opacity: 1 !important;
     p, h2 {
         font-size: 16px !important;
         padding:5px 0px;
