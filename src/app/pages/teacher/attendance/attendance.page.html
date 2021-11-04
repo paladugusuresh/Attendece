@@ -1,0 +1,21 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content [fullscreen]="true" class="ion-padding">
+  <ion-tabs>
+    <ion-tab-bar slot="bottom">
+      <ion-tab-button tab="day-wise-attendance">
+        <ion-icon name="calendar-number-outline"></ion-icon>
+        <ion-label>Day</ion-label>
+      </ion-tab-button>
+      <ion-tab-button tab="course-wise-attendance">
+        <ion-icon name="book-outline"></ion-icon>
+        <ion-label>Course</ion-label>
+      </ion-tab-button>
+    </ion-tab-bar>
+  </ion-tabs>
+</ion-content>

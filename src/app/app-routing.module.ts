@@ -67,6 +67,10 @@ const routes: Routes = [
   {
     path: 'student/attendance-report',
     loadChildren: () => import('./pages/student/attendance-report/attendance-report.module').then( m => m.AttendanceReportPageModule)
+  },
+  {
+    path: 'teacher/attendance',
+    loadChildren: () => import('./pages/teacher/attendance/attendance.module').then( m => m.AttendancePageModule)
   }
 ];
 

@@ -23,12 +23,7 @@ export class DashboardPage implements OnInit {
 
   constructor(private studentService: StudentService, private courseService: CourseService,
     private sharedService: SharedService, private router: Router,
-    private activatedRoute: ActivatedRoute, private schoolService: SchoolService) {
-    if (!this.sharedService.teacherPreferredSchoolId) {
-      this.router.navigate(['/teacher/home/search-school-page'],
-        { relativeTo: this.activatedRoute, queryParams: { tab: AppConfig.teacherSearchPageTabs.schools } });
-    }
-  }
+    private activatedRoute: ActivatedRoute, private schoolService: SchoolService) { }
 
   ngOnInit() {
   }
@@ -73,7 +68,12 @@ export class DashboardPage implements OnInit {
           this.schoolName = '';
         } else {
           this.schools = response.result;
-          this.schoolName = (this.schools.find(t => t.id === +this.schoolId) || {}).name;
+          if (this.schoolId && this.schoolId !== '0') {
+            this.schoolName = (this.schools.find(t => t.id === +this.schoolId) || {}).name;
+          } else {
+            this.schoolId = `${this.schools.length > 0 ? this.schools[0].id : ''}`;
+            this.onSchoolChange(null);
+          }
         }
       });
   }
@@ -85,6 +85,13 @@ export class DashboardPage implements OnInit {
     } else {
       this.schoolName = '';
     }
+  }
+
+  navigateToCourseWiseAttendance(courseId: number) {
+    this.router.navigate(['/teacher/attendance/course-wise-attendance'], {
+      queryParams: { courseId },
+      relativeTo: this.activatedRoute
+    });
   }
 
 }

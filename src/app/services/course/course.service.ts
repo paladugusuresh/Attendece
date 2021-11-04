@@ -97,4 +97,25 @@ export class CourseService {
       return of(response);
     }));
   }
+
+  getCourseByTeacherandMonth(id: number, month: number): Observable<Response> {
+    const url = environment.apiPrefix + ApiResources.getCoursesByStudentId + '/' + id;
+    const response: Response = {
+      failure: false, success: false
+    };
+    return this.apiService.getData(url, null).pipe(map((result) => {
+      if (result instanceof HttpErrorResponse || result.error) {
+        response.error = result.message || result.error;
+        response.failure = true;
+      } else {
+        response.result = result;
+        response.success = true;
+      }
+      return response;
+    }), catchError((err: HttpErrorResponse) => {
+      response.error = err.message;
+      response.failure = true;
+      return of(response);
+    }));
+  }
 }

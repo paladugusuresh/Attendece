@@ -75,6 +75,19 @@ ion-img {
     }
 }
 
+div.course-img-wrapper {
+    overflow-x: scroll;
+    display: inline-flex;
+    white-space: nowrap;
+    width: 100%;
+
+    div.course-img-container {
+        margin-left: 5px;
+        margin-right: 5px;
+        flex: 33%;
+    }
+}
+
 ion-col .empty-data {
     font-family: 'Red Hat Display';
     padding: 5px 0px;

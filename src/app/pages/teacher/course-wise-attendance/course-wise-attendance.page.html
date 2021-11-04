@@ -16,7 +16,7 @@
   <ion-row>
     <ion-col class="cw-col">
       <ion-item>
-        <ion-select interface="popover" [(ngModel)]="courseId" (ionChange)="getAttendanceByStudentIdandCourse($event)"
+        <ion-select interface="popover" [(ngModel)]="courseId" (ionChange)="getStudentsAttendanceByCourseandDate($event)"
           placeholder="Select Course">
           <ion-select-option [value]="course.id + ''" *ngFor="let course of courses">{{course.name}}</ion-select-option>
         </ion-select>
@@ -30,10 +30,10 @@
           <ion-item *ngFor="let history of attendanceHistory; let index = index"
             [lines]="index+1 === attendanceHistory.length ? 'none' : 'full'">
             <ion-label class="label label-title">
+              <h2>{{history?.firstName}}</h2>
               <p>{{ history.attendedDate | date: 'MM/dd/YYYY'}}</p>
-              <h2>{{ history.course }}</h2>
             </ion-label>
-            <ion-toggle slot="end" color="success" (ionFocus)="onFocus()" (ionChange)="updateAcknowledgement(history)" [(ngModel)]="history.isAcknowledged" [disabled]="!history.enableAcknowledgement" [checked]="history.isAcknowledged"></ion-toggle>
+            <ion-toggle slot="end" color="success" (ionFocus)="onFocus()" (ionChange)="updateStudentAttendanceByTeacher(history)" [(ngModel)]="history.isTeacherAcknowledged" [disabled]="!history.enableTeacherAcknowledgement" [checked]="history.isTeacherAcknowledged"></ion-toggle>
           </ion-item>
         </ion-list>
       </ion-card>

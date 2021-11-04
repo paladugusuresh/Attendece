@@ -27,7 +27,6 @@ export class AttendanceReportPage implements OnInit {
     },
   ];
   public lineChartLegend = true;
-  public lineChartType = 'line';
   public lineChartPlugins = [];
 
   constructor(private attendanceService: AttendanceService, private courseService: CourseService, private sharedService: SharedService) { }

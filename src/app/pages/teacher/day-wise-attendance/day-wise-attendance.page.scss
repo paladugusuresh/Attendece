@@ -1,0 +1,87 @@
+.heading-title {
+    white-space: initial;
+}
+
+.dw-col .item {
+    border-radius: 4px;
+    margin: 14px 10px;
+}
+
+ion-item {
+    --border-width: 2px;
+    --border-color:#ffffff;
+    --border-radius: 8px;
+    --inner-border-width: 0;
+    --background: #ffffff;
+    --full-highlight-height: none;
+}
+
+ion-datetime {
+    --placeholder-color: #030303;
+    --placeholder-opacity: 1;
+    font-family: 'Roboto';
+    font-size: 16px;
+}
+
+ion-content {
+    --background: whitesmoke;
+}
+
+.pl-2 {
+    padding-left: 0.2em;
+}
+
+.mb-5 {
+    margin-bottom: -0.2em;
+}
+
+.my-courses {
+    font-family: 'Red Hat Display';
+    font-size: 36px;
+}
+
+ion-img {
+    height: 144px;
+    width: 140px;
+}
+
+div.course-img-wrapper {
+    overflow-x: scroll;
+    display: inline-flex;
+    white-space: nowrap;
+    width: 100%;
+
+    div.course-img-container {
+        margin-left: 5px;
+        margin-right: 5px;
+        flex: 33%;
+    }
+}
+
+.my-attendance {
+    font-family: 'Red Hat Display';
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.label-title {
+    opacity: 1 !important;
+    p, h2 {
+        font-size: 16px !important;
+        padding:5px 0px;
+        font-family: 'Red Hat Display';
+    }
+    p {
+        color: #c1c1c1 !important;
+    }
+    h2 {
+        color: #030303 !important;
+    }
+}
+
+ion-col .empty-data {
+  font-family: 'Red Hat Display';
+  font-size: 17px !important;
+  color: #030303 !important;
+  text-align: center;
+}

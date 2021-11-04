@@ -107,127 +107,463 @@ export class HttpResponseService implements HttpInterceptor {
         course: 'Maths',
         attendedDate: this.populateDate(this.date),
         isAcknowledged: false,
-        enableAcknowledgement: true
+        enableAcknowledgement: false,
+        userId: 2,
+        firstName: 'Aditya',
+        lastName: 'T',
+        isTeacherAcknowledged: false,
+        enableTeacherAcknowledgement: true
     }, {
         id: 2,
         course: 'Physics',
         attendedDate: this.populateDate(this.date),
         isAcknowledged: false,
-        enableAcknowledgement: true
+        enableAcknowledgement: false,
+        userId: 2,
+        firstName: 'Aditya',
+        lastName: 'T',
+        isTeacherAcknowledged: false,
+        enableTeacherAcknowledgement: true
     }, {
         id: 3,
         course: 'Chemistry',
         attendedDate: this.populateDate(this.date),
         isAcknowledged: false,
-        enableAcknowledgement: true
+        enableAcknowledgement: false,
+        userId: 2,
+        firstName: 'Aditya',
+        lastName: 'T',
+        isTeacherAcknowledged: false,
+        enableTeacherAcknowledgement: true
     }, {
         id: 4,
         course: 'Maths',
         attendedDate: this.populateDate(new Date(new Date().setDate(this.date.getDate() - 1))),
         isAcknowledged: true,
-        enableAcknowledgement: false
+        enableAcknowledgement: false,
+        userId: 2,
+        firstName: 'Aditya',
+        lastName: 'T',
+        isTeacherAcknowledged: true,
+        enableTeacherAcknowledgement: false
     }, {
         id: 5,
         course: 'Physics',
         attendedDate: this.populateDate(new Date(new Date().setDate(this.date.getDate() - 1))),
         isAcknowledged: true,
-        enableAcknowledgement: false
+        enableAcknowledgement: false,
+        userId: 2,
+        firstName: 'Aditya',
+        lastName: 'T',
+        isTeacherAcknowledged: true,
+        enableTeacherAcknowledgement: false
     }, {
         id: 6,
         course: 'Chemistry',
         attendedDate: this.populateDate(new Date(new Date().setDate(this.date.getDate() - 1))),
         isAcknowledged: true,
-        enableAcknowledgement: false
+        enableAcknowledgement: false,
+        userId: 2,
+        firstName: 'Aditya',
+        lastName: 'T',
+        isTeacherAcknowledged: true,
+        enableTeacherAcknowledgement: false
     }, {
         id: 7,
         course: 'Maths',
         attendedDate: this.populateDate(new Date(new Date().setDate(this.date.getDate() - 2))),
         isAcknowledged: false,
-        enableAcknowledement: false
+        enableAcknowledgement: false,
+        userId: 2,
+        firstName: 'Aditya',
+        lastName: 'T',
+        isTeacherAcknowledged: true,
+        enableTeacherAcknowledgement: false
     }, {
         id: 8,
         course: 'Physics',
         attendedDate: this.populateDate(new Date(new Date().setDate(this.date.getDate() - 2))),
-        isAcknowledged: true,
-        enableAcknowledgement: false
+        isAcknowledged: false,
+        enableAcknowledgement: false,
+        userId: 2,
+        firstName: 'Aditya',
+        lastName: 'T',
+        isTeacherAcknowledged: true,
+        enableTeacherAcknowledgement: false
     }, {
         id: 9,
         course: 'Chemistry',
         attendedDate: this.populateDate(new Date(new Date().setDate(this.date.getDate() - 2))),
         isAcknowledged: false,
-        enableAcknowledgement: false
+        enableAcknowledgement: false,
+        userId: 2,
+        firstName: 'Aditya',
+        lastName: 'T',
+        isTeacherAcknowledged: false,
+        enableTeacherAcknowledgement: true
     }, {
         id: 10,
         course: 'Maths',
         attendedDate: this.populateDate(new Date(new Date().setDate(this.date.getDate() - 3))),
-        isAcknowledged: true,
-        enableAcknowledgement: false
+        isAcknowledged: false,
+        enableAcknowledgement: false,
+        userId: 2,
+        firstName: 'Aditya',
+        lastName: 'T',
+        isTeacherAcknowledged: false,
+        enableTeacherAcknowledgement: true
     }, {
         id: 11,
         course: 'Physics',
         attendedDate: this.populateDate(new Date(new Date().setDate(this.date.getDate() - 3))),
         isAcknowledged: false,
-        enableAcknowledgement: false
+        enableAcknowledgement: false,
+        userId: 2,
+        firstName: 'Aditya',
+        lastName: 'T',
+        isTeacherAcknowledged: false,
+        enableTeacherAcknowledgement: true
     }, {
         id: 12,
         course: 'Chemistry',
         attendedDate: this.populateDate(new Date(new Date().setDate(this.date.getDate() - 3))),
         isAcknowledged: true,
-        enableAcknowledgement: false
+        enableAcknowledgement: false,
+        userId: 2,
+        firstName: 'Aditya',
+        lastName: 'T',
+        isTeacherAcknowledged: true,
+        enableTeacherAcknowledgement: false
     }, {
         id: 13,
         course: 'Maths',
         attendedDate: this.populateDate(new Date(new Date().setDate(this.date.getDate() - 4))),
         isAcknowledged: true,
-        enableAcknowledgement: false
+        enableAcknowledgement: false,
+        userId: 2,
+        firstName: 'Aditya',
+        lastName: 'T',
+        isTeacherAcknowledged: true,
+        enableTeacherAcknowledgement: false
     }, {
         id: 14,
         course: 'Physics',
         attendedDate: this.populateDate(new Date(new Date().setDate(this.date.getDate() - 4))),
         isAcknowledged: true,
-        enableAcknowledgement: false
+        enableAcknowledgement: false,
+        userId: 2,
+        firstName: 'Aditya',
+        lastName: 'T',
+        isTeacherAcknowledged: true,
+        enableTeacherAcknowledgement: false
     }, {
         id: 15,
         course: 'Chemistry',
         attendedDate: this.populateDate(new Date(new Date().setDate(this.date.getDate() - 4))),
         isAcknowledged: true,
-        enableAcknowledgement: false
+        enableAcknowledgement: false,
+        userId: 2,
+        firstName: 'Aditya',
+        lastName: 'T',
+        isTeacherAcknowledged: true,
+        enableTeacherAcknowledgement: false
     }, {
         id: 16,
         course: 'Maths',
         attendedDate: this.populateDate(new Date(new Date().setDate(this.date.getDate() - 5))),
         isAcknowledged: true,
-        enableAcknowledgement: false
+        enableAcknowledgement: false,
+        userId: 2,
+        firstName: 'Aditya',
+        lastName: 'T',
+        isTeacherAcknowledged: true,
+        enableTeacherAcknowledgement: false
     }, {
         id: 17,
         course: 'Physics',
         attendedDate: this.populateDate(new Date(new Date().setDate(this.date.getDate() - 5))),
         isAcknowledged: true,
-        enableAcknowledgement: false
+        enableAcknowledgement: false,
+        userId: 2,
+        firstName: 'Aditya',
+        lastName: 'T',
+        isTeacherAcknowledged: true,
+        enableTeacherAcknowledgement: false
     }, {
         id: 18,
         course: 'Chemistry',
         attendedDate: this.populateDate(new Date(new Date().setDate(this.date.getDate() - 5))),
         isAcknowledged: true,
-        enableAcknowledgement: false
+        enableAcknowledgement: false,
+        userId: 2,
+        firstName: 'Aditya',
+        lastName: 'T',
+        isTeacherAcknowledged: true,
+        enableTeacherAcknowledgement: false
     }, {
         id: 19,
         course: 'Maths',
         attendedDate: this.populateDate(new Date(new Date().setDate(this.date.getDate() - 6))),
         isAcknowledged: true,
-        enableAcknowledgement: false
+        enableAcknowledgement: false,
+        userId: 2,
+        firstName: 'Aditya',
+        lastName: 'T',
+        isTeacherAcknowledged: true,
+        enableTeacherAcknowledgement: false
     }, {
         id: 20,
         course: 'Physics',
         attendedDate: this.populateDate(new Date(new Date().setDate(this.date.getDate() - 6))),
         isAcknowledged: true,
-        enableAcknowledgement: false
+        enableAcknowledgement: false,
+        userId: 2,
+        firstName: 'Aditya',
+        lastName: 'T',
+        isTeacherAcknowledged: true,
+        enableTeacherAcknowledgement: false
     }, {
         id: 21,
         course: 'Chemistry',
         attendedDate: this.populateDate(new Date(new Date().setDate(this.date.getDate() - 6))),
         isAcknowledged: true,
-        enableAcknowledgement: false
+        enableAcknowledgement: false,
+        userId: 2,
+        firstName: 'Aditya',
+        lastName: 'T',
+        isTeacherAcknowledged: true,
+        enableTeacherAcknowledgement: false
+    }, {
+        id: 22,
+        course: 'Maths',
+        attendedDate: this.populateDate(this.date),
+        isAcknowledged: false,
+        enableAcknowledgement: false,
+        userId: 3,
+        firstName: 'Krithik',
+        lastName: 'C',
+        isTeacherAcknowledged: false,
+        enableTeacherAcknowledgement: true
+    }, {
+        id: 23,
+        course: 'Physics',
+        attendedDate: this.populateDate(this.date),
+        isAcknowledged: false,
+        enableAcknowledgement: false,
+        userId: 3,
+        firstName: 'Krithik',
+        lastName: 'C',
+        isTeacherAcknowledged: false,
+        enableTeacherAcknowledgement: true
+    }, {
+        id: 24,
+        course: 'Chemistry',
+        attendedDate: this.populateDate(this.date),
+        isAcknowledged: false,
+        enableAcknowledgement: false,
+        userId: 3,
+        firstName: 'Krithik',
+        lastName: 'C',
+        isTeacherAcknowledged: false,
+        enableTeacherAcknowledgement: true
+    }, {
+        id: 25,
+        course: 'Maths',
+        attendedDate: this.populateDate(new Date(new Date().setDate(this.date.getDate() - 1))),
+        isAcknowledged: true,
+        enableAcknowledgement: false,
+        userId: 3,
+        firstName: 'Krithik',
+        lastName: 'C',
+        isTeacherAcknowledged: true,
+        enableTeacherAcknowledgement: false
+    }, {
+        id: 26,
+        course: 'Physics',
+        attendedDate: this.populateDate(new Date(new Date().setDate(this.date.getDate() - 1))),
+        isAcknowledged: true,
+        enableAcknowledgement: false,
+        userId: 3,
+        firstName: 'Krithik',
+        lastName: 'C',
+        isTeacherAcknowledged: true,
+        enableTeacherAcknowledgement: false
+    }, {
+        id: 27,
+        course: 'Chemistry',
+        attendedDate: this.populateDate(new Date(new Date().setDate(this.date.getDate() - 1))),
+        isAcknowledged: true,
+        enableAcknowledgement: false,
+        userId: 3,
+        firstName: 'Krithik',
+        lastName: 'C',
+        isTeacherAcknowledged: true,
+        enableTeacherAcknowledgement: false
+    }, {
+        id: 28,
+        course: 'Maths',
+        attendedDate: this.populateDate(new Date(new Date().setDate(this.date.getDate() - 2))),
+        isAcknowledged: false,
+        enableAcknowledgement: false,
+        userId: 3,
+        firstName: 'Krithik',
+        lastName: 'C',
+        isTeacherAcknowledged: true,
+        enableTeacherAcknowledgement: false
+    }, {
+        id: 29,
+        course: 'Physics',
+        attendedDate: this.populateDate(new Date(new Date().setDate(this.date.getDate() - 2))),
+        isAcknowledged: true,
+        enableAcknowledgement: false,
+        userId: 3,
+        firstName: 'Krithik',
+        lastName: 'C',
+        isTeacherAcknowledged: true,
+        enableTeacherAcknowledgement: false
+    }, {
+        id: 30,
+        course: 'Chemistry',
+        attendedDate: this.populateDate(new Date(new Date().setDate(this.date.getDate() - 2))),
+        isAcknowledged: false,
+        enableAcknowledgement: false,
+        userId: 3,
+        firstName: 'Krithik',
+        lastName: 'C',
+        isTeacherAcknowledged: false,
+        enableTeacherAcknowledgement: true
+    }, {
+        id: 31,
+        course: 'Maths',
+        attendedDate: this.populateDate(new Date(new Date().setDate(this.date.getDate() - 3))),
+        isAcknowledged: true,
+        enableAcknowledgement: false,
+        userId: 3,
+        firstName: 'Krithik',
+        lastName: 'C',
+        isTeacherAcknowledged: false,
+        enableTeacherAcknowledgement: true
+    }, {
+        id: 32,
+        course: 'Physics',
+        attendedDate: this.populateDate(new Date(new Date().setDate(this.date.getDate() - 3))),
+        isAcknowledged: false,
+        enableAcknowledgement: false,
+        userId: 3,
+        firstName: 'Krithik',
+        lastName: 'C',
+        isTeacherAcknowledged: false,
+        enableTeacherAcknowledgement: true
+    }, {
+        id: 33,
+        course: 'Chemistry',
+        attendedDate: this.populateDate(new Date(new Date().setDate(this.date.getDate() - 3))),
+        isAcknowledged: true,
+        enableAcknowledgement: false,
+        userId: 3,
+        firstName: 'Krithik',
+        lastName: 'C',
+        isTeacherAcknowledged: true,
+        enableTeacherAcknowledgement: false
+    }, {
+        id: 34,
+        course: 'Maths',
+        attendedDate: this.populateDate(new Date(new Date().setDate(this.date.getDate() - 4))),
+        isAcknowledged: true,
+        enableAcknowledgement: false,
+        userId: 3,
+        firstName: 'Krithik',
+        lastName: 'C',
+        isTeacherAcknowledged: true,
+        enableTeacherAcknowledgement: false
+    }, {
+        id: 35,
+        course: 'Physics',
+        attendedDate: this.populateDate(new Date(new Date().setDate(this.date.getDate() - 4))),
+        isAcknowledged: true,
+        enableAcknowledgement: false,
+        userId: 3,
+        firstName: 'Krithik',
+        lastName: 'C',
+        isTeacherAcknowledged: true,
+        enableTeacherAcknowledgement: false
+    }, {
+        id: 36,
+        course: 'Chemistry',
+        attendedDate: this.populateDate(new Date(new Date().setDate(this.date.getDate() - 4))),
+        isAcknowledged: true,
+        enableAcknowledgement: false,
+        userId: 3,
+        firstName: 'Krithik',
+        lastName: 'C',
+        isTeacherAcknowledged: true,
+        enableTeacherAcknowledgement: false
+    }, {
+        id: 37,
+        course: 'Maths',
+        attendedDate: this.populateDate(new Date(new Date().setDate(this.date.getDate() - 5))),
+        isAcknowledged: true,
+        enableAcknowledgement: false,
+        userId: 3,
+        firstName: 'Krithik',
+        lastName: 'C',
+        isTeacherAcknowledged: true,
+        enableTeacherAcknowledgement: false
+    }, {
+        id: 38,
+        course: 'Physics',
+        attendedDate: this.populateDate(new Date(new Date().setDate(this.date.getDate() - 5))),
+        isAcknowledged: true,
+        enableAcknowledgement: false,
+        userId: 3,
+        firstName: 'Krithik',
+        lastName: 'C',
+        isTeacherAcknowledged: true,
+        enableTeacherAcknowledgement: false
+    }, {
+        id: 39,
+        course: 'Chemistry',
+        attendedDate: this.populateDate(new Date(new Date().setDate(this.date.getDate() - 5))),
+        isAcknowledged: true,
+        enableAcknowledgement: false,
+        userId: 3,
+        firstName: 'Krithik',
+        lastName: 'C',
+        isTeacherAcknowledged: true,
+        enableTeacherAcknowledgement: false
+    }, {
+        id: 40,
+        course: 'Maths',
+        attendedDate: this.populateDate(new Date(new Date().setDate(this.date.getDate() - 6))),
+        isAcknowledged: true,
+        enableAcknowledgement: false,
+        userId: 3,
+        firstName: 'Krithik',
+        lastName: 'C',
+        isTeacherAcknowledged: true,
+        enableTeacherAcknowledgement: false
+    }, {
+        id: 41,
+        course: 'Physics',
+        attendedDate: this.populateDate(new Date(new Date().setDate(this.date.getDate() - 6))),
+        isAcknowledged: true,
+        enableAcknowledgement: false,
+        userId: 3,
+        firstName: 'Krithik',
+        lastName: 'C',
+        isTeacherAcknowledged: true,
+        enableTeacherAcknowledgement: false
+    }, {
+        id: 42,
+        course: 'Chemistry',
+        attendedDate: this.populateDate(new Date(new Date().setDate(this.date.getDate() - 6))),
+        isAcknowledged: true,
+        enableAcknowledgement: false,
+        userId: 3,
+        firstName: 'Krithik',
+        lastName: 'C',
+        isTeacherAcknowledged: true,
+        enableTeacherAcknowledgement: false
     }];
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         return this.handleRoute(req, next);
@@ -267,6 +603,10 @@ export class HttpResponseService implements HttpInterceptor {
                 return this.updateAcknowledgement(req);
             case req.url.indexOf('/GetAttendanceReportData') > -1:
                 return this.getAttendanceReportData(req);
+            case req.url.indexOf('/GetStudentsAttendanceByCourseandDate') > -1:
+                return this.getStudentsAttendanceByCourseandDate(req);
+            case req.url.indexOf('/UpdateStudentAttendanceByTeacher') > -1:
+                return this.updateStudentAttendanceByTeacher(req);
             default:
                 return next.handle(req);
         }
@@ -438,6 +778,7 @@ export class HttpResponseService implements HttpInterceptor {
 
     getAttendanceByStudentIdandCourse(req: HttpRequest<any>): Observable<HttpResponse<any>> {
         const courseId = req.url.split('&')[1].split('=')[1];
+        const studentId = req.url.split('?')[1].split('&')[0].split('=')[1];
         let courseName = '';
         switch (courseId) {
             case '2': courseName = 'Maths'; break;
@@ -446,13 +787,17 @@ export class HttpResponseService implements HttpInterceptor {
             default: break;
         }
         const result = {
-            history: courseName !== '' ? this.attendanceHistory.filter((history) => history.course === courseName) : []
+            history: courseName !== ''
+                ? this.attendanceHistory
+                    .filter((history) => history.course === courseName && history.userId === +studentId)
+                : []
         };
         return of(new HttpResponse({ status: 200, body: result }));
     }
 
     getAttendanceByStudentIdandDate(req: HttpRequest<any>): Observable<HttpResponse<any>> {
         const date = req.url.split('&')[2].split('=')[1];
+        const studentId = req.url.split('?')[1].split('&')[0].split('=')[1];
         const courseId = req.url.split('&')[1].split('=')[1];
         let courseName = '';
         let history = [];
@@ -464,12 +809,15 @@ export class HttpResponseService implements HttpInterceptor {
         }
         if (courseName) {
             // eslint-disable-next-line @typescript-eslint/no-shadow
-            history = date ? this.attendanceHistory.filter((history) => history.attendedDate === date && history.course === courseName)
+            history = date ? this.attendanceHistory.filter((history) =>
+                history.attendedDate === date && history.course === courseName && history.userId === +studentId)
                 : [];
         }
         const result = {
             // eslint-disable-next-line @typescript-eslint/no-shadow
-            history: date && history.length === 0 ? this.attendanceHistory.filter((history) => history.attendedDate === date) : history
+            history: date && history.length === 0 ? this.attendanceHistory.filter((history) =>
+                history.attendedDate === date && history.userId === +studentId)
+                : history
         };
         return of(new HttpResponse({ status: 200, body: result }));
     }
@@ -502,6 +850,45 @@ export class HttpResponseService implements HttpInterceptor {
     getAttendanceReportData(req: HttpRequest<any>): Observable<HttpEvent<any>> {
         const attendanceData = [65, 59, 80, 81, 56, 55, 40, 30, 20, 40, 60, 70];
         return of(new HttpResponse({ status: 200, body: attendanceData }));
+    }
+
+    updateStudentAttendanceByTeacher(req: HttpRequest<any>): Observable<HttpEvent<any>> {
+        const { body } = req;
+        const history = this.attendanceHistory.find(t => t.id === body.id);
+        history.enableAcknowledgement = true;
+        history.isTeacherAcknowledged = body.isTeacherAcknowledged;
+        history.enableTeacherAcknowledgement = false;
+        const user = this.users.find(t => t.userId === history.userId);
+        return of(new HttpResponse({
+            status: 200,
+            body: `${user.firstName}'s attendance information updated successfully`
+        }));
+    }
+
+    getStudentsAttendanceByCourseandDate(req: HttpRequest<any>): Observable<HttpResponse<any>> {
+        const date = req.url.split('&')[1].split('=')[1];
+        const courseId = req.url.split('?')[1].split('&')[0].split('=')[1];
+        let courseName = '';
+        let history = [];
+        switch (courseId) {
+            case '2': courseName = 'Maths'; break;
+            case '3': courseName = 'Physics'; break;
+            case '4': courseName = 'Chemistry'; break;
+            default: break;
+        }
+        if (courseName) {
+            // eslint-disable-next-line @typescript-eslint/no-shadow
+            history = date ? this.attendanceHistory.filter((history) =>
+                history.attendedDate === date && history.course === courseName)
+                : [];
+        }
+        const result = {
+            // eslint-disable-next-line @typescript-eslint/no-shadow
+            history: date && history.length === 0 ? this.attendanceHistory.filter((history) =>
+                history.attendedDate === date)
+                : history
+        };
+        return of(new HttpResponse({ status: 200, body: result }));
     }
 
     private populateDate(date: Date) {
