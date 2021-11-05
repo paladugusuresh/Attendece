@@ -886,7 +886,9 @@ export class HttpResponseService implements HttpInterceptor {
             // eslint-disable-next-line @typescript-eslint/no-shadow
             history: date && history.length === 0 ? this.attendanceHistory.filter((history) =>
                 history.attendedDate === date)
-                : history
+                : history,
+            total: date && history.length === 0 ? this.attendanceHistory.filter((t) =>
+                t.attendedDate === date).length : history.length
         };
         return of(new HttpResponse({ status: 200, body: result }));
     }

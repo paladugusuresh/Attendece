@@ -39,12 +39,20 @@
   </ion-row>
   <ion-row>
     <ion-col size="12">
-      <div class="course-img-wrapper">
+      <div class="course-img-wrapper mb-5">
         <div class="course-img-container" *ngFor="let course of courses"
-          (click)="navigateToCourseWiseAttendance(course.id)">
+          (click)="getAttendanceByStudentCourseandDate(course.id)">
           <ion-img [src]="course.image || ''"></ion-img>
         </div>
       </div>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col class="dw-col mb-5">
+      <ion-item>
+        <ion-datetime displayFormat="MMM DD YYYY" min="1930" [max]="maxDate" [(ngModel)]="attendedDate" placeholder="Select Date"
+          (ionChange)="onDateChange()"></ion-datetime>
+      </ion-item>
     </ion-col>
   </ion-row>
   <ion-row>
@@ -53,20 +61,28 @@
     </ion-col>
   </ion-row>
   <ion-row>
-    <ion-col *ngIf="students.length > 0">
+    <ion-col *ngIf="attendanceHistory.length > 0">
       <ion-card>
-        <ion-list lines="full">
-          <ion-item *ngFor="let student of students; let index = index" [lines]="index+1 === students.length ? 'none' : 'full'">
-            <ion-label class="label label-title" slot="start">
-              <h2>{{ student?.firstName}}</h2>
+        <ion-list>
+          <ion-item *ngFor="let history of attendanceHistory; let index = index"
+            [lines]="index+1 === attendanceHistory.length ? 'none' : 'full'">
+            <ion-label class="label label-title">
+              <p>{{ history.attendedDate | date: 'MM/dd/YYYY'}}</p>
+              <h2>{{history?.firstName}} <br/>({{ history.course }})</h2>
             </ion-label>
-            <ion-toggle slot="end" disabled="true" [checked]="true"></ion-toggle>
+            <ion-toggle slot="end" color="success" (ionFocus)="onFocus()" (ionChange)="updateStudentAttendanceByTeacher(history)" [(ngModel)]="history.isTeacherAcknowledged" [disabled]="!history.enableTeacherAcknowledgement" [checked]="history.isTeacherAcknowledged"></ion-toggle>
           </ion-item>
         </ion-list>
+        <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
+          <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
+          </ion-infinite-scroll-content>
+        </ion-infinite-scroll>
       </ion-card>
     </ion-col>
-    <ion-col *ngIf="students.length === 0">
-      <p class="empty-data">Students not assigned currently</p>
+    <ion-col *ngIf="displayNoData">
+      <p class="empty-data">
+        No data available
+      </p>
     </ion-col>
   </ion-row>
 </ion-content>

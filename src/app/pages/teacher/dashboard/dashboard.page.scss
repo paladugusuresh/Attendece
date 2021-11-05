@@ -1,3 +1,7 @@
+ion-content {
+    --background: whitesmoke;
+}
+
 .fs-2 {
     font-size: 2em !important;
 }
@@ -57,7 +61,15 @@ ion-select {
 }
 
 ion-img {
-    height: 18em;
+    height: 144px;
+    width: 140px;
+}
+
+ion-datetime {
+    --placeholder-color: #030303;
+    --placeholder-opacity: 1;
+    font-family: 'Roboto';
+    font-size: 16px;
 }
 
 .label-title {
@@ -73,6 +85,11 @@ ion-img {
     h2 {
         color: #030303 !important;
     }
+}
+
+.dw-col .item {
+    border-radius: 4px;
+    margin: 14px 10px;
 }
 
 div.course-img-wrapper {
