@@ -111,6 +111,7 @@ export class DashboardPage implements OnInit {
       this.sharedService.teacherPreferredSchoolId = +this.schoolId;
       this.schoolName = (this.schools.find(t => t.id === +this.schoolId) || {}).name;
       this.isDataLoading = true;
+      this.attendedDate = this.maxDate;
       if (this.courseId > 0) {
         this.courseId = 0;
         this.isAttendanceDataLoadingCompleted = false;

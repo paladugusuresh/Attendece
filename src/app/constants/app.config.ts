@@ -2,11 +2,13 @@ const studentMenus = [{
     title: 'My Profile',
     url: '/student/profile',
     icon: 'person-add'
-}, {
-    title: 'Change Password',
-    url: '/change-password',
-    icon: 'key'
-}, {
+},
+// {
+//     title: 'Change Password',
+//     url: '/change-password',
+//     icon: 'key'
+// },
+{
     title: 'Dashboard',
     url: '/student/dashboard',
     icon: 'home'
@@ -29,11 +31,13 @@ const teacherMenus = [{
     title: 'My Profile',
     url: '/teacher/home/profile',
     icon: 'person-add'
-}, {
-    title: 'Change Password',
-    url: '/change-password',
-    icon: 'key'
-}, {
+},
+// {
+//     title: 'Change Password',
+//     url: '/change-password',
+//     icon: 'key'
+// },
+{
     title: 'Dashboard',
     url: '/teacher/home',
     icon: 'home'
