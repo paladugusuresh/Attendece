@@ -696,7 +696,10 @@ export class HttpResponseService implements HttpInterceptor {
         const result = {
             averageAttendance: 74.5,
             grade: 84,
-            history: this.attendanceHistory
+            history: this.attendanceHistory,
+            totalDays: 64,
+            daysPresent: 50,
+            daysAbsent: 14
         };
         return of(new HttpResponse({ status: 200, body: result }));
     }

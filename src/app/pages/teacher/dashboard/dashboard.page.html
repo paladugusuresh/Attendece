@@ -15,7 +15,7 @@
     <ion-col>
       <ion-item>
         <ion-select interface="popover" [(ngModel)]="schoolId" (ionChange)="onSchoolChange($event)"
-          placeholder="Select Course">
+          placeholder="Select Course" [mode]="'ios'">
           <ion-select-option [value]="school.id + ''" *ngFor="let school of schools">{{school.name}}</ion-select-option>
         </ion-select>
       </ion-item>

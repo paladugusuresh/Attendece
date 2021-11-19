@@ -1,3 +1,7 @@
+ion-content {
+    --background: whitesmoke;
+}
+
 .fs-2 {
     font-size: 2em !important;
 }
@@ -42,6 +46,14 @@ ion-img {
     color: #ffffff;
     font-family: 'Red Hat Display';
     padding-bottom: 2.8rem;
+    ion-item {
+        --background: #166186;
+        --border-color: #166186;
+        font-family: 'Red Hat Display';
+        ion-label > p, ion-label > h2, ion-label > h1 {
+            color: #ffffff !important;
+        }
+    }
 }
 
 .grade-card {
@@ -53,7 +65,7 @@ ion-img {
 
 .grade-card-heading {
     font-size: 20px;
-    text-align: center;
+    text-align: left;
     margin-bottom: 0.5rem;
 }
 
@@ -61,9 +73,18 @@ ion-img {
     font-size: 36px;
 }
 
+ion-select {
+    color: #030303;
+    --placeholder-color: #030303;
+    --placeholder-opacity: 1;
+    font-family: 'Roboto';
+    font-size: 16px;
+}
+
 .my-courses {
     font-family: 'Red Hat Display';
-    font-size: 36px;
+    font-size: 20px;
+    font-weight: bold;
 }
 
 .my-attendance {
@@ -85,6 +106,10 @@ ion-img {
     h2 {
         color: #030303 !important;
     }
+}
+
+.mlt {
+    margin-left: -2.9em;
 }
 
 ion-col .empty-data {
@@ -116,5 +141,9 @@ ion-slide {
 @media (max-width: 370px) {
     .pre-align {
         margin-left: 0.9em;
+    }
+
+    .mlt {
+        margin-left: -4.9em;
     }
 }

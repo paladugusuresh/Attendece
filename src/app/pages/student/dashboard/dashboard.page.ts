@@ -12,6 +12,10 @@ export class DashboardPage implements OnInit {
   courses = [];
   avgAttendance = 0;
   grade = 0;
+  totalDays = 0;
+  daysPresent = 0;
+  daysAbsent = 0;
+  academicYears = [];
   attendanceHistory = [];
   profile = null;
   historyDates = [];
@@ -30,6 +34,20 @@ export class DashboardPage implements OnInit {
     this.profile = this.sharedService.activeProfile;
     this.getCoursesByStudentId();
     this.getLastDayAttendanceByStudentId();
+    this.getAcademicYears();
+  }
+
+  getAcademicYears() {
+    this.academicYears = [{
+      name: 'Sep\'21-Jun\'22',
+      id: 1
+    }, {
+      name: 'Sep\'20-June\'21',
+      id: 2
+    }, {
+      name: 'Sep\'19-June\'20',
+      id: 3
+    }];
   }
 
   getCoursesByStudentId() {
@@ -52,10 +70,15 @@ export class DashboardPage implements OnInit {
           this.attendanceHistory = [];
           this.avgAttendance = 0;
           this.grade = 0;
+          this.totalDays = 0;
+          this.daysAbsent = this.daysPresent = 0;
         } else {
           this.attendanceHistory = res.result.history;
           this.grade = res.result.grade;
           this.avgAttendance = res.result.averageAttendance;
+          this.totalDays = res.result.totalDays;
+          this.daysPresent = res.result.daysPresent;
+          this.daysAbsent = res.result.daysAbsent;
           this.populateAttendaceHistory();
         }
       });
@@ -78,6 +101,8 @@ export class DashboardPage implements OnInit {
       relativeTo: this.activatedRoute
     });
   }
+
+  onAcademicYearChange(ev: any) {}
 
   navigateToReport() {
     this.router.navigate(['/student/attendance-report'], { relativeTo: this.activatedRoute });

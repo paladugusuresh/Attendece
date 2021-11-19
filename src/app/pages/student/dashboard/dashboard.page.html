@@ -12,17 +12,34 @@
     </ion-col>
   </ion-row>
   <ion-row>
-    <ion-col size="6" (click)="navigateToReport()">
+    <ion-col>
+      <ion-item>
+        <ion-select interface="popover" [(ngModel)]="academicId" (ionChange)="onAcademicYearChange($event)" class="academic-year"
+          placeholder="Select Academic Year" [mode]="'ios'">
+          <ion-select-option [value]="academicYear.id + ''" *ngFor="let academicYear of academicYears">{{academicYear.name}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col size="12" (click)="navigateToReport()">
       <ion-card class="attendance-card">
         <ion-card-content>
-          <ion-label>
-            <h2 class="grade-card-heading">Attendance</h2>
-            <h1 class="grade-card-content">{{avgAttendance}}</h1>
-          </ion-label>
+          <ion-item>
+            <ion-label slot="start">
+              <h2 class="grade-card-heading">Attendance</h2>
+              <h1 class="grade-card-content">{{avgAttendance}}</h1>
+            </ion-label>
+            <ion-label slot="end" class="mlt">
+              <p>Total Days: {{totalDays}}</p>
+              <p>Present: {{daysPresent}}</p>
+              <p>Absent: {{daysAbsent}}</p>
+            </ion-label>
+          </ion-item>
         </ion-card-content>
       </ion-card>
     </ion-col>
-    <ion-col size="6">
+    <!-- <ion-col size="6">
       <ion-card class="grade-card">
         <ion-card-content>
           <ion-label>
@@ -31,7 +48,7 @@
           </ion-label>
         </ion-card-content>
       </ion-card>
-    </ion-col>
+    </ion-col> -->
   </ion-row>
   <ion-row>
     <ion-col>
