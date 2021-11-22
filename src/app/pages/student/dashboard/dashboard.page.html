@@ -13,22 +13,27 @@
   </ion-row>
   <ion-row>
     <ion-col>
+      School Year
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col>
       <ion-item>
         <ion-select interface="popover" [(ngModel)]="academicId" (ionChange)="onAcademicYearChange($event)" class="academic-year"
-          placeholder="Select Academic Year" [mode]="'ios'">
+          placeholder="Select School Year" [mode]="'ios'">
           <ion-select-option [value]="academicYear.id + ''" *ngFor="let academicYear of academicYears">{{academicYear.name}}</ion-select-option>
         </ion-select>
       </ion-item>
     </ion-col>
   </ion-row>
   <ion-row>
-    <ion-col size="12" (click)="navigateToReport()">
-      <ion-card class="attendance-card">
+    <ion-col size="12">
+      <ion-card class="attendance-card" (click)="navigateToReport()" (focus)="onFocus()">
         <ion-card-content>
           <ion-item>
             <ion-label slot="start">
               <h2 class="grade-card-heading">Attendance</h2>
-              <h1 class="grade-card-content">{{avgAttendance}}</h1>
+              <h1 class="grade-card-content">{{avgAttendance}}%</h1>
             </ion-label>
             <ion-label slot="end" class="mlt">
               <p>Total Days: {{totalDays}}</p>
@@ -71,23 +76,65 @@
     </ion-col>
   </ion-row>
   <ion-row>
-    <ion-col *ngIf="attendanceHistory.length > 0">
-      <ion-slides [options]="slideOptions" [mode]="'ios'" [pager]="true">
+    <ion-col class="pt-1">
+      <ion-segment [(ngModel)]="segment" (ionChange)="onCalendarOptionChange(segment)">
+        <ion-segment-button [value]="'weekly'" [mode]="'ios'">
+          <ion-label class="segment-title">Weekly</ion-label>
+        </ion-segment-button>
+        <ion-segment-button [value]="'monthly'" [mode]="'ios'">
+          <ion-label class="segment-title">Monthly</ion-label>
+        </ion-segment-button>
+      </ion-segment>
+    </ion-col>
+  </ion-row>
+  <!-- <ion-row>
+    <ion-col class="pt-1">
+      <ion-calendar [(ngModel)]="calendarDate"
+      (select)="onDateChange($event)"
+      [options]="calendarOptions"
+      [type]="calenderDateType"
+      [format]="'YYYY-MM-DD'">
+    </ion-calendar>
+    </ion-col>
+  </ion-row> -->
+  <ion-row>
+    <ion-col *ngIf="segment === 'weekly' && attendanceHistory.length > 0">
+      <!-- <ion-slides [options]="slideOptions" [mode]="'ios'" [pager]="true">
         <ion-slide *ngFor="let existingHistory of historyDates">
-          <ion-card>
-            <ion-list>
-              <ion-item *ngFor="let history of existingHistory.historyData; let index = index"
-                [lines]="index+1 === existingHistory.historyData.length ? 'none' : 'full'">
-                <ion-label class="label label-title">
-                  <p>{{ history.attendedDate | date: 'MM/dd/YYYY'}}</p>
-                  <h2>{{ history.course }}</h2>
-                </ion-label>
-                <ion-toggle slot="end" color="success" disabled="true" [checked]="history.isAcknowledged"></ion-toggle>
-              </ion-item>
-            </ion-list>
-          </ion-card>
+         
         </ion-slide>
-      </ion-slides>
+      </ion-slides> -->
+      <ion-card>
+        <ion-list>
+          <ion-item *ngFor="let history of attendanceHistory; let index = index"
+            [lines]="index+1 === attendanceHistory.length ? 'none' : 'full'">
+            <ion-label class="label label-title">
+              <p>{{ history.attendedDate | date: 'MM/dd/YYYY'}}</p>
+              <h2>{{ history.course }}</h2>
+            </ion-label>
+            <ion-toggle slot="end" color="success" [disabled]="!history.enableAcknowledgement && !history.isSelfAcknowledged" [(ngModel)]="history.isAcknowledged" (ionFocus)="onFocus()" (ionChange)="updateAcknowledgement(history)" [checked]="history.isAcknowledged"></ion-toggle>
+          </ion-item>
+        </ion-list>
+      </ion-card>
+    </ion-col>
+    <ion-col *ngIf="segment === 'monthly' && attendanceHistory.length > 0">
+      <!-- <ion-slides [options]="slideOptions" [mode]="'ios'" [pager]="true">
+        <ion-slide *ngFor="let existingHistory of historyDates">
+         
+        </ion-slide>
+      </ion-slides> -->
+      <ion-card>
+        <ion-list>
+          <ion-item *ngFor="let history of attendanceHistory; let index = index"
+            [lines]="index+1 === attendanceHistory.length ? 'none' : 'full'">
+            <ion-label class="label label-title">
+              <p>{{ history.attendedDate | date: 'MM/dd/YYYY'}}</p>
+              <h2>{{ history.course }}</h2>
+            </ion-label>
+            <ion-toggle slot="end" color="success" [disabled]="!history.enableAcknowledgement && !history.isSelfAcknowledged" [(ngModel)]="history.isAcknowledged" (ionFocus)="onFocus()" (ionChange)="updateAcknowledgement(history)" [checked]="history.isAcknowledged"></ion-toggle>
+          </ion-item>
+        </ion-list>
+      </ion-card>
     </ion-col>
     <ion-col *ngIf="attendanceHistory.length === 0">
       <p class="empty-data">

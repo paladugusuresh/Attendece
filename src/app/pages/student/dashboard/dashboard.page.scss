@@ -29,6 +29,10 @@ ion-content {
     margin-bottom: -0.5em;
 }
 
+.pt-1 {
+    padding-top: 1em;
+}
+
 ion-img {
     height: 144px;
     width: 140px;
@@ -93,6 +97,24 @@ ion-select {
     font-weight: bold;
 }
 
+ion-segment {
+    background-color: #ffffff;
+    width: 95%;
+    margin-left: 2%;
+}
+
+ion-segment-button {
+    padding-top: 10px !important;
+}
+
+.segment-title {
+    color: inherit;
+    font-family: 'Red Hat Display';
+    font-size: 20px;
+    // flex: 0.5;
+    text-transform: none;
+}
+
 .label-title {
     opacity: 1 !important;
     p, h2 {
@@ -145,5 +167,12 @@ ion-slide {
 
     .mlt {
         margin-left: -4.9em;
+    }
+}
+
+@media (min-width: 750px) {
+    ion-segment {
+        width: 97%;
+        margin-left: 1%;
     }
 }

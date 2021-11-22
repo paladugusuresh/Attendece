@@ -12,15 +12,18 @@ const studentMenus = [{
     title: 'Dashboard',
     url: '/student/dashboard',
     icon: 'home'
-}, {
-    title: 'Holidays',
-    url: '/holidays',
-    icon: 'reader'
-}, {
-    title: 'My Attendance',
-    url: '/student/attendance',
-    icon: 'document-text'
-}, {
+},
+// {
+//     title: 'Holidays',
+//     url: '/holidays',
+//     icon: 'reader'
+// },
+// {
+//     title: 'My Attendance',
+//     url: '/student/attendance',
+//     icon: 'document-text'
+// },
+{
     title: 'Logout',
     url: '/logout',
     icon: 'log-out-outline'

@@ -112,7 +112,8 @@ export class HttpResponseService implements HttpInterceptor {
         firstName: 'Aditya',
         lastName: 'T',
         isTeacherAcknowledged: false,
-        enableTeacherAcknowledgement: true
+        enableTeacherAcknowledgement: true,
+        isSelfAcknowledged: false
     }, {
         id: 2,
         course: 'Physics',
@@ -123,7 +124,8 @@ export class HttpResponseService implements HttpInterceptor {
         firstName: 'Aditya',
         lastName: 'T',
         isTeacherAcknowledged: false,
-        enableTeacherAcknowledgement: true
+        enableTeacherAcknowledgement: true,
+        isSelfAcknowledged: true
     }, {
         id: 3,
         course: 'Chemistry',
@@ -134,7 +136,8 @@ export class HttpResponseService implements HttpInterceptor {
         firstName: 'Aditya',
         lastName: 'T',
         isTeacherAcknowledged: false,
-        enableTeacherAcknowledgement: true
+        enableTeacherAcknowledgement: true,
+        isSelfAcknowledged: true
     }, {
         id: 4,
         course: 'Maths',
@@ -145,7 +148,8 @@ export class HttpResponseService implements HttpInterceptor {
         firstName: 'Aditya',
         lastName: 'T',
         isTeacherAcknowledged: true,
-        enableTeacherAcknowledgement: false
+        enableTeacherAcknowledgement: false,
+        isSelfAcknowledged: false
     }, {
         id: 5,
         course: 'Physics',
@@ -156,7 +160,8 @@ export class HttpResponseService implements HttpInterceptor {
         firstName: 'Aditya',
         lastName: 'T',
         isTeacherAcknowledged: true,
-        enableTeacherAcknowledgement: false
+        enableTeacherAcknowledgement: false,
+        isSelfAcknowledged: false
     }, {
         id: 6,
         course: 'Chemistry',
@@ -167,7 +172,8 @@ export class HttpResponseService implements HttpInterceptor {
         firstName: 'Aditya',
         lastName: 'T',
         isTeacherAcknowledged: true,
-        enableTeacherAcknowledgement: false
+        enableTeacherAcknowledgement: false,
+        isSelfAcknowledged: false
     }, {
         id: 7,
         course: 'Maths',
@@ -178,7 +184,8 @@ export class HttpResponseService implements HttpInterceptor {
         firstName: 'Aditya',
         lastName: 'T',
         isTeacherAcknowledged: true,
-        enableTeacherAcknowledgement: false
+        enableTeacherAcknowledgement: false,
+        isSelfAcknowledged: false
     }, {
         id: 8,
         course: 'Physics',
@@ -189,7 +196,8 @@ export class HttpResponseService implements HttpInterceptor {
         firstName: 'Aditya',
         lastName: 'T',
         isTeacherAcknowledged: true,
-        enableTeacherAcknowledgement: false
+        enableTeacherAcknowledgement: false,
+        isSelfAcknowledged: false
     }, {
         id: 9,
         course: 'Chemistry',
@@ -200,7 +208,8 @@ export class HttpResponseService implements HttpInterceptor {
         firstName: 'Aditya',
         lastName: 'T',
         isTeacherAcknowledged: false,
-        enableTeacherAcknowledgement: true
+        enableTeacherAcknowledgement: false,
+        isSelfAcknowledged: false
     }, {
         id: 10,
         course: 'Maths',
@@ -211,7 +220,8 @@ export class HttpResponseService implements HttpInterceptor {
         firstName: 'Aditya',
         lastName: 'T',
         isTeacherAcknowledged: false,
-        enableTeacherAcknowledgement: true
+        enableTeacherAcknowledgement: false,
+        isSelfAcknowledged: false
     }, {
         id: 11,
         course: 'Physics',
@@ -222,7 +232,8 @@ export class HttpResponseService implements HttpInterceptor {
         firstName: 'Aditya',
         lastName: 'T',
         isTeacherAcknowledged: false,
-        enableTeacherAcknowledgement: true
+        enableTeacherAcknowledgement: false,
+        isSelfAcknowledged: false
     }, {
         id: 12,
         course: 'Chemistry',
@@ -233,7 +244,8 @@ export class HttpResponseService implements HttpInterceptor {
         firstName: 'Aditya',
         lastName: 'T',
         isTeacherAcknowledged: true,
-        enableTeacherAcknowledgement: false
+        enableTeacherAcknowledgement: false,
+        isSelfAcknowledged: false
     }, {
         id: 13,
         course: 'Maths',
@@ -244,7 +256,8 @@ export class HttpResponseService implements HttpInterceptor {
         firstName: 'Aditya',
         lastName: 'T',
         isTeacherAcknowledged: true,
-        enableTeacherAcknowledgement: false
+        enableTeacherAcknowledgement: false,
+        isSelfAcknowledged: false
     }, {
         id: 14,
         course: 'Physics',
@@ -255,7 +268,8 @@ export class HttpResponseService implements HttpInterceptor {
         firstName: 'Aditya',
         lastName: 'T',
         isTeacherAcknowledged: true,
-        enableTeacherAcknowledgement: false
+        enableTeacherAcknowledgement: false,
+        isSelfAcknowledged: false
     }, {
         id: 15,
         course: 'Chemistry',
@@ -266,7 +280,8 @@ export class HttpResponseService implements HttpInterceptor {
         firstName: 'Aditya',
         lastName: 'T',
         isTeacherAcknowledged: true,
-        enableTeacherAcknowledgement: false
+        enableTeacherAcknowledgement: false,
+        isSelfAcknowledged: false
     }, {
         id: 16,
         course: 'Maths',
@@ -277,7 +292,8 @@ export class HttpResponseService implements HttpInterceptor {
         firstName: 'Aditya',
         lastName: 'T',
         isTeacherAcknowledged: true,
-        enableTeacherAcknowledgement: false
+        enableTeacherAcknowledgement: false,
+        isSelfAcknowledged: false
     }, {
         id: 17,
         course: 'Physics',
@@ -288,7 +304,8 @@ export class HttpResponseService implements HttpInterceptor {
         firstName: 'Aditya',
         lastName: 'T',
         isTeacherAcknowledged: true,
-        enableTeacherAcknowledgement: false
+        enableTeacherAcknowledgement: false,
+        isSelfAcknowledged: false
     }, {
         id: 18,
         course: 'Chemistry',
@@ -299,7 +316,8 @@ export class HttpResponseService implements HttpInterceptor {
         firstName: 'Aditya',
         lastName: 'T',
         isTeacherAcknowledged: true,
-        enableTeacherAcknowledgement: false
+        enableTeacherAcknowledgement: false,
+        isSelfAcknowledged: false
     }, {
         id: 19,
         course: 'Maths',
@@ -310,7 +328,8 @@ export class HttpResponseService implements HttpInterceptor {
         firstName: 'Aditya',
         lastName: 'T',
         isTeacherAcknowledged: true,
-        enableTeacherAcknowledgement: false
+        enableTeacherAcknowledgement: false,
+        isSelfAcknowledged: false
     }, {
         id: 20,
         course: 'Physics',
@@ -321,7 +340,8 @@ export class HttpResponseService implements HttpInterceptor {
         firstName: 'Aditya',
         lastName: 'T',
         isTeacherAcknowledged: true,
-        enableTeacherAcknowledgement: false
+        enableTeacherAcknowledgement: false,
+        isSelfAcknowledged: false
     }, {
         id: 21,
         course: 'Chemistry',
@@ -332,7 +352,8 @@ export class HttpResponseService implements HttpInterceptor {
         firstName: 'Aditya',
         lastName: 'T',
         isTeacherAcknowledged: true,
-        enableTeacherAcknowledgement: false
+        enableTeacherAcknowledgement: false,
+        isSelfAcknowledged: false
     }, {
         id: 22,
         course: 'Maths',
@@ -343,7 +364,8 @@ export class HttpResponseService implements HttpInterceptor {
         firstName: 'Krithik',
         lastName: 'C',
         isTeacherAcknowledged: false,
-        enableTeacherAcknowledgement: true
+        enableTeacherAcknowledgement: true,
+        isSelfAcknowledged: false
     }, {
         id: 23,
         course: 'Physics',
@@ -354,7 +376,8 @@ export class HttpResponseService implements HttpInterceptor {
         firstName: 'Krithik',
         lastName: 'C',
         isTeacherAcknowledged: false,
-        enableTeacherAcknowledgement: true
+        enableTeacherAcknowledgement: true,
+        isSelfAcknowledged: true
     }, {
         id: 24,
         course: 'Chemistry',
@@ -365,7 +388,8 @@ export class HttpResponseService implements HttpInterceptor {
         firstName: 'Krithik',
         lastName: 'C',
         isTeacherAcknowledged: false,
-        enableTeacherAcknowledgement: true
+        enableTeacherAcknowledgement: true,
+        isSelfAcknowledged: true
     }, {
         id: 25,
         course: 'Maths',
@@ -376,7 +400,8 @@ export class HttpResponseService implements HttpInterceptor {
         firstName: 'Krithik',
         lastName: 'C',
         isTeacherAcknowledged: true,
-        enableTeacherAcknowledgement: false
+        enableTeacherAcknowledgement: false,
+        isSelfAcknowledged: false
     }, {
         id: 26,
         course: 'Physics',
@@ -387,7 +412,8 @@ export class HttpResponseService implements HttpInterceptor {
         firstName: 'Krithik',
         lastName: 'C',
         isTeacherAcknowledged: true,
-        enableTeacherAcknowledgement: false
+        enableTeacherAcknowledgement: false,
+        isSelfAcknowledged: false
     }, {
         id: 27,
         course: 'Chemistry',
@@ -398,7 +424,8 @@ export class HttpResponseService implements HttpInterceptor {
         firstName: 'Krithik',
         lastName: 'C',
         isTeacherAcknowledged: true,
-        enableTeacherAcknowledgement: false
+        enableTeacherAcknowledgement: false,
+        isSelfAcknowledged: false
     }, {
         id: 28,
         course: 'Maths',
@@ -409,7 +436,8 @@ export class HttpResponseService implements HttpInterceptor {
         firstName: 'Krithik',
         lastName: 'C',
         isTeacherAcknowledged: true,
-        enableTeacherAcknowledgement: false
+        enableTeacherAcknowledgement: false,
+        isSelfAcknowledged: false
     }, {
         id: 29,
         course: 'Physics',
@@ -420,7 +448,8 @@ export class HttpResponseService implements HttpInterceptor {
         firstName: 'Krithik',
         lastName: 'C',
         isTeacherAcknowledged: true,
-        enableTeacherAcknowledgement: false
+        enableTeacherAcknowledgement: false,
+        isSelfAcknowledged: false
     }, {
         id: 30,
         course: 'Chemistry',
@@ -431,7 +460,8 @@ export class HttpResponseService implements HttpInterceptor {
         firstName: 'Krithik',
         lastName: 'C',
         isTeacherAcknowledged: false,
-        enableTeacherAcknowledgement: true
+        enableTeacherAcknowledgement: false,
+        isSelfAcknowledged: false
     }, {
         id: 31,
         course: 'Maths',
@@ -442,7 +472,8 @@ export class HttpResponseService implements HttpInterceptor {
         firstName: 'Krithik',
         lastName: 'C',
         isTeacherAcknowledged: false,
-        enableTeacherAcknowledgement: true
+        enableTeacherAcknowledgement: false,
+        isSelfAcknowledged: false
     }, {
         id: 32,
         course: 'Physics',
@@ -453,7 +484,8 @@ export class HttpResponseService implements HttpInterceptor {
         firstName: 'Krithik',
         lastName: 'C',
         isTeacherAcknowledged: false,
-        enableTeacherAcknowledgement: true
+        enableTeacherAcknowledgement: false,
+        isSelfAcknowledged: false
     }, {
         id: 33,
         course: 'Chemistry',
@@ -464,7 +496,8 @@ export class HttpResponseService implements HttpInterceptor {
         firstName: 'Krithik',
         lastName: 'C',
         isTeacherAcknowledged: true,
-        enableTeacherAcknowledgement: false
+        enableTeacherAcknowledgement: false,
+        isSelfAcknowledged: false
     }, {
         id: 34,
         course: 'Maths',
@@ -475,7 +508,8 @@ export class HttpResponseService implements HttpInterceptor {
         firstName: 'Krithik',
         lastName: 'C',
         isTeacherAcknowledged: true,
-        enableTeacherAcknowledgement: false
+        enableTeacherAcknowledgement: false,
+        isSelfAcknowledged: false
     }, {
         id: 35,
         course: 'Physics',
@@ -486,7 +520,8 @@ export class HttpResponseService implements HttpInterceptor {
         firstName: 'Krithik',
         lastName: 'C',
         isTeacherAcknowledged: true,
-        enableTeacherAcknowledgement: false
+        enableTeacherAcknowledgement: false,
+        isSelfAcknowledged: false
     }, {
         id: 36,
         course: 'Chemistry',
@@ -497,7 +532,8 @@ export class HttpResponseService implements HttpInterceptor {
         firstName: 'Krithik',
         lastName: 'C',
         isTeacherAcknowledged: true,
-        enableTeacherAcknowledgement: false
+        enableTeacherAcknowledgement: false,
+        isSelfAcknowledged: false
     }, {
         id: 37,
         course: 'Maths',
@@ -508,7 +544,8 @@ export class HttpResponseService implements HttpInterceptor {
         firstName: 'Krithik',
         lastName: 'C',
         isTeacherAcknowledged: true,
-        enableTeacherAcknowledgement: false
+        enableTeacherAcknowledgement: false,
+        isSelfAcknowledged: false
     }, {
         id: 38,
         course: 'Physics',
@@ -519,7 +556,8 @@ export class HttpResponseService implements HttpInterceptor {
         firstName: 'Krithik',
         lastName: 'C',
         isTeacherAcknowledged: true,
-        enableTeacherAcknowledgement: false
+        enableTeacherAcknowledgement: false,
+        isSelfAcknowledged: false
     }, {
         id: 39,
         course: 'Chemistry',
@@ -530,7 +568,8 @@ export class HttpResponseService implements HttpInterceptor {
         firstName: 'Krithik',
         lastName: 'C',
         isTeacherAcknowledged: true,
-        enableTeacherAcknowledgement: false
+        enableTeacherAcknowledgement: false,
+        isSelfAcknowledged: false
     }, {
         id: 40,
         course: 'Maths',
@@ -541,7 +580,8 @@ export class HttpResponseService implements HttpInterceptor {
         firstName: 'Krithik',
         lastName: 'C',
         isTeacherAcknowledged: true,
-        enableTeacherAcknowledgement: false
+        enableTeacherAcknowledgement: false,
+        isSelfAcknowledged: false
     }, {
         id: 41,
         course: 'Physics',
@@ -552,7 +592,8 @@ export class HttpResponseService implements HttpInterceptor {
         firstName: 'Krithik',
         lastName: 'C',
         isTeacherAcknowledged: true,
-        enableTeacherAcknowledgement: false
+        enableTeacherAcknowledgement: false,
+        isSelfAcknowledged: false
     }, {
         id: 42,
         course: 'Chemistry',
@@ -563,7 +604,8 @@ export class HttpResponseService implements HttpInterceptor {
         firstName: 'Krithik',
         lastName: 'C',
         isTeacherAcknowledged: true,
-        enableTeacherAcknowledgement: false
+        enableTeacherAcknowledgement: false,
+        isSelfAcknowledged: false
     }];
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         return this.handleRoute(req, next);
@@ -844,6 +886,7 @@ export class HttpResponseService implements HttpInterceptor {
         const history = this.attendanceHistory.find(t => t.id === body.id);
         history.enableAcknowledgement = false;
         history.isAcknowledged = body.isAcknowledged;
+        history.isSelfAcknowledged = false;
         return of(new HttpResponse({
             status: 200,
             body: 'Your acknowledgement is received and attendance information is updated successfully'
@@ -861,6 +904,7 @@ export class HttpResponseService implements HttpInterceptor {
         history.enableAcknowledgement = true;
         history.isTeacherAcknowledged = body.isTeacherAcknowledged;
         history.enableTeacherAcknowledgement = false;
+        history.isSelfAcknowledged = false;
         const user = this.users.find(t => t.userId === history.userId);
         return of(new HttpResponse({
             status: 200,

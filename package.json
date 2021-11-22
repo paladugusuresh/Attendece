@@ -30,6 +30,8 @@
     "@ionic-native/core": "^5.36.0",
     "@ionic/angular": "^5.5.2",
     "chart.js": "^2.9.4",
+    "ion2-calendar": "^3.5.0",
+    "moment": "^2.29.1",
     "ng2-charts": "^2.4.3",
     "rxjs": "~6.6.0",
     "tslib": "^2.2.0",

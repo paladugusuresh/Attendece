@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { NavController } from '@ionic/angular';
 import { AttendanceService, CourseService, SharedService } from '../../../services';
+import { ToastController } from '@ionic/angular';
+import { Response } from '../../../models';
 
 @Component({
   selector: 'app-dashboard',
@@ -19,6 +21,10 @@ export class DashboardPage implements OnInit {
   attendanceHistory = [];
   profile = null;
   historyDates = [];
+  academicId = '';
+  segment = 'weekly';
+  isPageLoading = true;
+  courseId = '0';
   slideOptions = {
     speed: 400,
     spaceBetween: 0,
@@ -26,11 +32,13 @@ export class DashboardPage implements OnInit {
   };
   constructor(private attendanceService: AttendanceService, private courseService: CourseService,
     private sharedService: SharedService, private router: Router, private activatedRoute: ActivatedRoute,
-    private navController: NavController) { }
+    private navController: NavController, private toastCtrl: ToastController) { }
 
   ngOnInit() { }
 
   ionViewWillEnter() {
+    this.segment = 'weekly';
+    this.academicId = '';
     this.profile = this.sharedService.activeProfile;
     this.getCoursesByStudentId();
     this.getLastDayAttendanceByStudentId();
@@ -39,15 +47,16 @@ export class DashboardPage implements OnInit {
 
   getAcademicYears() {
     this.academicYears = [{
-      name: 'Sep\'21-Jun\'22',
+      name: '2021 - 2022',
       id: 1
     }, {
-      name: 'Sep\'20-June\'21',
+      name: '2020 - 2021',
       id: 2
     }, {
-      name: 'Sep\'19-June\'20',
+      name: '2019 - 2020',
       id: 3
     }];
+    this.academicId = this.academicYears[0].id + '';
   }
 
   getCoursesByStudentId() {
@@ -79,7 +88,7 @@ export class DashboardPage implements OnInit {
           this.totalDays = res.result.totalDays;
           this.daysPresent = res.result.daysPresent;
           this.daysAbsent = res.result.daysAbsent;
-          this.populateAttendaceHistory();
+          //this.populateAttendaceHistory();
         }
       });
   }
@@ -96,16 +105,79 @@ export class DashboardPage implements OnInit {
   }
 
   navigateToCourseWiseAttendance(courseId: number) {
-    this.router.navigate(['/student/attendance/course-wise-attendance'], {
-      queryParams: { courseId },
-      relativeTo: this.activatedRoute
+    // this.router.navigate(['/student/attendance/course-wise-attendance'], {
+      //   queryParams: { courseId },
+      //   relativeTo: this.activatedRoute
+      // });
+      this.courseId = courseId?.toString();
+      this.getAttendanceByStudentIdandCourse(null);
+  }
+
+  getAttendanceByStudentIdandCourse(event: any) {
+    this.isPageLoading = true;
+    if (this.courseId === '0') { return false; }
+    this.attendanceService.getAttendanceByStudentIdandCourseId(this.sharedService.activeProfile.userId, +this.courseId)
+        .subscribe((res) => {
+          if (res.failure) {
+            this.attendanceHistory = [];
+          } else {
+            this.attendanceHistory = res.result.history;
+          }
     });
   }
 
   onAcademicYearChange(ev: any) {}
 
   navigateToReport() {
-    this.router.navigate(['/student/attendance-report'], { relativeTo: this.activatedRoute });
+    if (!this.isPageLoading) {
+      this.router.navigate(['/student/attendance-report'], { relativeTo: this.activatedRoute });
+    }
+  }
+
+  onCalendarOptionChange(option: string) {
+    const date = new Date();
+    this.isPageLoading = true;
+    if (option === 'weekly') {
+      this.getLastDayAttendanceByStudentId();
+    } else {
+      this.getLastDayAttendanceByStudentId();
+    }
+  }
+
+  onFocus() {
+    this.isPageLoading = false;
+  }
+
+  async updateAcknowledgement(history: any) {
+    const toast = await this.toastCtrl.create({
+      message: '',
+      duration: 3000,
+      position: 'top',
+      color: 'danger',
+      cssClass: 'custom-toast',
+      buttons: [
+        {
+          side: 'end',
+          icon: 'close',
+          text: '',
+          role: 'cancel',
+          handler: () => {
+          }
+        }
+      ]
+    });
+    if (!this.isPageLoading && history.isAcknowledged) {
+      this.attendanceService.updateAcknowledement(history).subscribe((res: Response) => {
+        if (res.failure) {
+          console.log(res.error);
+        } else {
+          toast.color = 'success';
+          toast.message = res.result;
+          toast.present();
+          this.getAttendanceByStudentIdandCourse(null);
+        }
+      });
+    }
   }
 
 }
