@@ -41,7 +41,7 @@ ion-img {
 
 .welcome-msg {
     font-family: 'Red Hat Display';
-    font-size: 36px !important;
+    font-size: 30px !important;
     color: #030303;
 }
 
@@ -49,7 +49,8 @@ ion-img {
     --background: #166186;
     color: #ffffff;
     font-family: 'Red Hat Display';
-    padding-bottom: 2.8rem;
+    padding-bottom: 1rem;
+    margin: 10px 5px;
     ion-item {
         --background: #166186;
         --border-color: #166186;
@@ -75,6 +76,13 @@ ion-img {
 
 .grade-card-content {
     font-size: 36px;
+}
+
+.school-year {
+    font-family: 'Red Hat Display';
+    font-size: 20px;
+    margin-bottom: -1%;
+    font-weight: bold;
 }
 
 ion-select {

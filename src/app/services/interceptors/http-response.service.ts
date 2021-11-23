@@ -14,7 +14,8 @@ export class HttpResponseService implements HttpInterceptor {
         role: 'Teacher',
         email: 'sureshp@gmail.com',
         dob: new Date(1989, 5, 5),
-        school: 'Princeton School'
+        school: 'Princeton School',
+        contactSettings: 'internalMessaging'
     }, {
         userId: 2,
         firstName: 'Aditya',
@@ -23,7 +24,8 @@ export class HttpResponseService implements HttpInterceptor {
         role: 'Student',
         email: 'stummala@gmail.com',
         school: '',
-        dob: new Date(1991, 8, 16)
+        dob: new Date(1991, 8, 16),
+        contactSettings: 'internalMessaging'
     }, {
         userId: 3,
         firstName: 'Krithik',
@@ -32,7 +34,8 @@ export class HttpResponseService implements HttpInterceptor {
         role: 'Student',
         school: '',
         email: 'krithik.c@gmail.com',
-        dob: new Date(2011, 11, 20)
+        dob: new Date(2011, 11, 20),
+        contactSettings: 'internalMessaging'
     }, {
         userId: 4,
         firstName: 'Abhishek',
@@ -41,7 +44,8 @@ export class HttpResponseService implements HttpInterceptor {
         role: 'Student',
         school: '',
         email: 'abhishek.c@gmail.com',
-        dob: new Date(2011, 11, 20)
+        dob: new Date(2011, 11, 20),
+        contactSettings: 'internalMessaging'
     }, {
         userId: 5,
         firstName: 'Abhishek',
@@ -50,7 +54,8 @@ export class HttpResponseService implements HttpInterceptor {
         role: 'Student',
         school: '',
         email: 'abhishek.k@gmail.com',
-        dob: new Date(2011, 11, 20)
+        dob: new Date(2011, 11, 20),
+        contactSettings: 'internalMessaging'
     }, {
         userId: 6,
         firstName: 'Abhi',
@@ -59,7 +64,8 @@ export class HttpResponseService implements HttpInterceptor {
         role: 'Student',
         school: '',
         email: 'abhi.m@gmail.com',
-        dob: new Date(2011, 11, 20)
+        dob: new Date(2011, 11, 20),
+        contactSettings: 'internalMessaging'
     }, {
         userId: 7,
         firstName: 'Krishna',
@@ -68,7 +74,8 @@ export class HttpResponseService implements HttpInterceptor {
         role: 'Student',
         school: '',
         email: 'krishna.c@gmail.com',
-        dob: new Date(2011, 11, 20)
+        dob: new Date(2011, 11, 20),
+        contactSettings: 'internalMessaging'
     }];
     attendance = [{
         userId: 2,
@@ -607,6 +614,53 @@ export class HttpResponseService implements HttpInterceptor {
         enableTeacherAcknowledgement: false,
         isSelfAcknowledged: false
     }];
+
+    constructor() {
+        let count = 0;
+        const dateDifference = this.date.getDate() - 1 > 0 ? this.date.getDate() : this.date.getDate() === 1 ? 1 : this.date.getDate();
+        for (let index = 7; index < dateDifference; index++) {
+            this.attendanceHistory.push({
+                id: 42 + (++count),
+                course: 'Maths',
+                attendedDate: this.populateDate(new Date(new Date().setDate(this.date.getDate() - index))),
+                isAcknowledged: true,
+                enableAcknowledgement: false,
+                userId: 2,
+                firstName: 'Aditya',
+                lastName: 'T',
+                isTeacherAcknowledged: true,
+                enableTeacherAcknowledgement: false,
+                isSelfAcknowledged: false
+            });
+            this.attendanceHistory.push({
+                id: 42 + (++count),
+                course: 'Physics',
+                attendedDate: this.populateDate(new Date(new Date().setDate(this.date.getDate() - index))),
+                isAcknowledged: true,
+                enableAcknowledgement: false,
+                userId: 2,
+                firstName: 'Aditya',
+                lastName: 'T',
+                isTeacherAcknowledged: true,
+                enableTeacherAcknowledgement: false,
+                isSelfAcknowledged: false
+            });
+            this.attendanceHistory.push({
+                id: 42 + (++count),
+                course: 'Chemistry',
+                attendedDate: this.populateDate(new Date(new Date().setDate(this.date.getDate() - index))),
+                isAcknowledged: true,
+                enableAcknowledgement: false,
+                userId: 2,
+                firstName: 'Aditya',
+                lastName: 'T',
+                isTeacherAcknowledged: true,
+                enableTeacherAcknowledgement: false,
+                isSelfAcknowledged: false
+            });
+        }
+    }
+
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         return this.handleRoute(req, next);
     }
@@ -735,10 +789,13 @@ export class HttpResponseService implements HttpInterceptor {
     }
 
     getLastDayAttendanceByStudentId(req: HttpRequest<any>): Observable<HttpResponse<any>> {
+        const date = new Date();
+        const id = +req.url.split('/').splice(-1);
         const result = {
             averageAttendance: 74.5,
             grade: 84,
-            history: this.attendanceHistory,
+            history: this.attendanceHistory.filter((item) =>
+             item.userId === id).slice(0, 3*6),
             totalDays: 64,
             daysPresent: 50,
             daysAbsent: 14
@@ -835,7 +892,8 @@ export class HttpResponseService implements HttpInterceptor {
             history: courseName !== ''
                 ? this.attendanceHistory
                     .filter((history) => history.course === courseName && history.userId === +studentId)
-                : []
+                : this.attendanceHistory
+                    .filter((history) => history.userId === +studentId)
         };
         return of(new HttpResponse({ status: 200, body: result }));
     }
@@ -845,7 +903,7 @@ export class HttpResponseService implements HttpInterceptor {
         const studentId = req.url.split('?')[1].split('&')[0].split('=')[1];
         const courseId = req.url.split('&')[1].split('=')[1];
         let courseName = '';
-        let history = [];
+        let history = studentId ? this.attendanceHistory.filter(t => t.userId === +studentId) : [];
         switch (courseId) {
             case '2': courseName = 'Maths'; break;
             case '3': courseName = 'Physics'; break;
@@ -854,9 +912,9 @@ export class HttpResponseService implements HttpInterceptor {
         }
         if (courseName) {
             // eslint-disable-next-line @typescript-eslint/no-shadow
-            history = date ? this.attendanceHistory.filter((history) =>
+            history = date && date !== 'null' ? this.attendanceHistory.filter((history) =>
                 history.attendedDate === date && history.course === courseName && history.userId === +studentId)
-                : [];
+                : history;
         }
         const result = {
             // eslint-disable-next-line @typescript-eslint/no-shadow
@@ -914,6 +972,7 @@ export class HttpResponseService implements HttpInterceptor {
 
     getStudentsAttendanceByCourseandDate(req: HttpRequest<any>): Observable<HttpResponse<any>> {
         const date = req.url.split('&')[1].split('=')[1];
+        const studentId = req.url.split('?')[1].split('&')[0].split('=')[1];
         const courseId = req.url.split('?')[1].split('&')[0].split('=')[1];
         let courseName = '';
         let history = [];
@@ -927,7 +986,7 @@ export class HttpResponseService implements HttpInterceptor {
             // eslint-disable-next-line @typescript-eslint/no-shadow
             history = date ? this.attendanceHistory.filter((history) =>
                 history.attendedDate === date && history.course === courseName)
-                : [];
+                : history;
         }
         const result = {
             // eslint-disable-next-line @typescript-eslint/no-shadow

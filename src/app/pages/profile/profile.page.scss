@@ -15,6 +15,14 @@
             margin-bottom: 1rem;
         }
 
+        .profile-image {
+            height: 180px !important;
+        }
+
+        .link-label {
+            font-family: 'Red Hat Display';
+        }
+
         ion-item {
             --border-width: 2px;
             --border-color: var(--border-color, var(--border-color,#ededed));
@@ -36,6 +44,24 @@
             font-size: 14px !important;
             color: #030303 !important;
             font-family: Poppins;
+        }
+
+        ion-list-header {
+            margin: 0 0 -10px -10px;
+        }
+
+        .radio-item {
+            --background: #ffffff;
+            --border-color: #ffffff;
+            display: inline-flex;
+            margin-inline-start: -1rem;
+            .radio-label {
+                font-family: 'Red Hat Display';
+                font-size: 14px;
+            }
+            ion-radio {
+                margin-inline-end: 15px;
+            }
         }
 
         .btn-reset {

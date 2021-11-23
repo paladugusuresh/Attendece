@@ -21,11 +21,12 @@ export class ProfilePage implements OnInit {
     this.profileForm = this.fb.group({
       userId: new FormControl(''),
       userName: new FormControl('', Validators.required),
-      firstName: new FormControl('', Validators.required),
-      lastName: new FormControl('', Validators.required),
+      firstName: new FormControl({value: '', disabled: true}, Validators.required),
+      lastName: new FormControl({value: '', disabled: true}, Validators.required),
       dob: new FormControl(''),
-      email: new FormControl('', [Validators.required,
+      email: new FormControl({value: '', disabled: true}, [Validators.required,
         Validators.pattern(/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/)]),
+      contactSettings: new FormControl('internalMessaging')
     });
   }
 
@@ -54,7 +55,7 @@ export class ProfilePage implements OnInit {
       ]
     });
     if (this.profileForm.valid) {
-      const user = this.profileForm.value;
+      const user = this.profileForm.getRawValue();
       user.createdBy = user.userId;
       this.authService.updateProfile(user).subscribe((res) => {
         if (res.success) {
@@ -68,6 +69,7 @@ export class ProfilePage implements OnInit {
           profile.fullName = `${user.firstName} ${user.lastName}`;
           profile.dob = user.dob;
           profile.email = user.email;
+          profile.contactSettings = user.contactSettings;
           this.sharedService.setProfile(profile);
         } else {
           this.errorMsg = 'Unable to update profile';

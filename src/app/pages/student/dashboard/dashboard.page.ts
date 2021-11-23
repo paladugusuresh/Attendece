@@ -55,6 +55,9 @@ export class DashboardPage implements OnInit {
     }, {
       name: '2019 - 2020',
       id: 3
+    }, {
+      name: '2019 - 2018',
+      id: 4
     }];
     this.academicId = this.academicYears[0].id + '';
   }
@@ -106,27 +109,27 @@ export class DashboardPage implements OnInit {
 
   navigateToCourseWiseAttendance(courseId: number) {
     // this.router.navigate(['/student/attendance/course-wise-attendance'], {
-      //   queryParams: { courseId },
-      //   relativeTo: this.activatedRoute
-      // });
-      this.courseId = courseId?.toString();
-      this.getAttendanceByStudentIdandCourse(null);
+    //   queryParams: { courseId },
+    //   relativeTo: this.activatedRoute
+    // });
+    this.courseId = courseId?.toString();
+    this.getAttendanceByStudentIdandCourse(null);
   }
 
   getAttendanceByStudentIdandCourse(event: any) {
     this.isPageLoading = true;
     if (this.courseId === '0') { return false; }
     this.attendanceService.getAttendanceByStudentIdandCourseId(this.sharedService.activeProfile.userId, +this.courseId)
-        .subscribe((res) => {
-          if (res.failure) {
-            this.attendanceHistory = [];
-          } else {
-            this.attendanceHistory = res.result.history;
-          }
-    });
+      .subscribe((res) => {
+        if (res.failure) {
+          this.attendanceHistory = [];
+        } else {
+          this.attendanceHistory = res.result.history;
+        }
+      });
   }
 
-  onAcademicYearChange(ev: any) {}
+  onAcademicYearChange(ev: any) { }
 
   navigateToReport() {
     if (!this.isPageLoading) {
@@ -135,12 +138,18 @@ export class DashboardPage implements OnInit {
   }
 
   onCalendarOptionChange(option: string) {
-    const date = new Date();
     this.isPageLoading = true;
     if (option === 'weekly') {
       this.getLastDayAttendanceByStudentId();
     } else {
-      this.getLastDayAttendanceByStudentId();
+      this.attendanceService.getAttendanceByStudentCourseandDate(this.sharedService.activeProfile.userId, +this.courseId, null)
+        .subscribe((res) => {
+          if (res.failure) {
+            this.attendanceHistory = [];
+          } else {
+            this.attendanceHistory = res.result.history;
+          }
+        });;
     }
   }
 
@@ -174,7 +183,7 @@ export class DashboardPage implements OnInit {
           toast.color = 'success';
           toast.message = res.result;
           toast.present();
-          this.getAttendanceByStudentIdandCourse(null);
+          this.onCalendarOptionChange(this.segment);
         }
       });
     }
