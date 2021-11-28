@@ -120,7 +120,10 @@ export class HttpResponseService implements HttpInterceptor {
         lastName: 'T',
         isTeacherAcknowledged: false,
         enableTeacherAcknowledgement: true,
-        isSelfAcknowledged: false
+        isSelfAcknowledged: false,
+        latitude: '36.7783',
+        longitude: '119.4179',
+        distance: '5 miles'
     }, {
         id: 2,
         course: 'Physics',
@@ -132,7 +135,10 @@ export class HttpResponseService implements HttpInterceptor {
         lastName: 'T',
         isTeacherAcknowledged: false,
         enableTeacherAcknowledgement: true,
-        isSelfAcknowledged: true
+        isSelfAcknowledged: true,
+        latitude: '36.7783',
+        longitude: '119.4179',
+        distance: '5 miles'
     }, {
         id: 3,
         course: 'Chemistry',
@@ -144,7 +150,10 @@ export class HttpResponseService implements HttpInterceptor {
         lastName: 'T',
         isTeacherAcknowledged: false,
         enableTeacherAcknowledgement: true,
-        isSelfAcknowledged: true
+        isSelfAcknowledged: true,
+        latitude: '36.7783',
+        longitude: '119.4179',
+        distance: '5 miles'
     }, {
         id: 4,
         course: 'Maths',
@@ -156,7 +165,10 @@ export class HttpResponseService implements HttpInterceptor {
         lastName: 'T',
         isTeacherAcknowledged: true,
         enableTeacherAcknowledgement: false,
-        isSelfAcknowledged: false
+        isSelfAcknowledged: false,
+        latitude: '36.7783',
+        longitude: '119.4179',
+        distance: '5 miles'
     }, {
         id: 5,
         course: 'Physics',
@@ -168,7 +180,10 @@ export class HttpResponseService implements HttpInterceptor {
         lastName: 'T',
         isTeacherAcknowledged: true,
         enableTeacherAcknowledgement: false,
-        isSelfAcknowledged: false
+        isSelfAcknowledged: false,
+        latitude: '36.7783',
+        longitude: '119.4179',
+        distance: '5 miles'
     }, {
         id: 6,
         course: 'Chemistry',
@@ -180,7 +195,10 @@ export class HttpResponseService implements HttpInterceptor {
         lastName: 'T',
         isTeacherAcknowledged: true,
         enableTeacherAcknowledgement: false,
-        isSelfAcknowledged: false
+        isSelfAcknowledged: false,
+        latitude: '36.7783',
+        longitude: '119.4179',
+        distance: '5 miles'
     }, {
         id: 7,
         course: 'Maths',
@@ -192,7 +210,10 @@ export class HttpResponseService implements HttpInterceptor {
         lastName: 'T',
         isTeacherAcknowledged: true,
         enableTeacherAcknowledgement: false,
-        isSelfAcknowledged: false
+        isSelfAcknowledged: false,
+        latitude: '36.7783',
+        longitude: '119.4179',
+        distance: '5 miles'
     }, {
         id: 8,
         course: 'Physics',
@@ -204,7 +225,10 @@ export class HttpResponseService implements HttpInterceptor {
         lastName: 'T',
         isTeacherAcknowledged: true,
         enableTeacherAcknowledgement: false,
-        isSelfAcknowledged: false
+        isSelfAcknowledged: false,
+        latitude: '36.7783',
+        longitude: '119.4179',
+        distance: '5 miles'
     }, {
         id: 9,
         course: 'Chemistry',
@@ -216,7 +240,10 @@ export class HttpResponseService implements HttpInterceptor {
         lastName: 'T',
         isTeacherAcknowledged: false,
         enableTeacherAcknowledgement: false,
-        isSelfAcknowledged: false
+        isSelfAcknowledged: false,
+        latitude: '36.7783',
+        longitude: '119.4179',
+        distance: '5 miles'
     }, {
         id: 10,
         course: 'Maths',
@@ -228,7 +255,10 @@ export class HttpResponseService implements HttpInterceptor {
         lastName: 'T',
         isTeacherAcknowledged: false,
         enableTeacherAcknowledgement: false,
-        isSelfAcknowledged: false
+        isSelfAcknowledged: false,
+        latitude: '36.7783',
+        longitude: '119.4179',
+        distance: '5 miles'
     }, {
         id: 11,
         course: 'Physics',
@@ -240,7 +270,10 @@ export class HttpResponseService implements HttpInterceptor {
         lastName: 'T',
         isTeacherAcknowledged: false,
         enableTeacherAcknowledgement: false,
-        isSelfAcknowledged: false
+        isSelfAcknowledged: false,
+        latitude: '36.7783',
+        longitude: '119.4179',
+        distance: '5 miles'
     }, {
         id: 12,
         course: 'Chemistry',
@@ -252,7 +285,10 @@ export class HttpResponseService implements HttpInterceptor {
         lastName: 'T',
         isTeacherAcknowledged: true,
         enableTeacherAcknowledgement: false,
-        isSelfAcknowledged: false
+        isSelfAcknowledged: false,
+        latitude: '36.7783',
+        longitude: '119.4179',
+        distance: '5 miles'
     }, {
         id: 13,
         course: 'Maths',
@@ -264,7 +300,10 @@ export class HttpResponseService implements HttpInterceptor {
         lastName: 'T',
         isTeacherAcknowledged: true,
         enableTeacherAcknowledgement: false,
-        isSelfAcknowledged: false
+        isSelfAcknowledged: false,
+        latitude: '36.7783',
+        longitude: '119.4179',
+        distance: '5 miles'
     }, {
         id: 14,
         course: 'Physics',
@@ -276,7 +315,10 @@ export class HttpResponseService implements HttpInterceptor {
         lastName: 'T',
         isTeacherAcknowledged: true,
         enableTeacherAcknowledgement: false,
-        isSelfAcknowledged: false
+        isSelfAcknowledged: false,
+        latitude: '36.7783',
+        longitude: '119.4179',
+        distance: '5 miles'
     }, {
         id: 15,
         course: 'Chemistry',
@@ -288,7 +330,10 @@ export class HttpResponseService implements HttpInterceptor {
         lastName: 'T',
         isTeacherAcknowledged: true,
         enableTeacherAcknowledgement: false,
-        isSelfAcknowledged: false
+        isSelfAcknowledged: false,
+        latitude: '36.7783',
+        longitude: '119.4179',
+        distance: '5 miles'
     }, {
         id: 16,
         course: 'Maths',
@@ -300,7 +345,10 @@ export class HttpResponseService implements HttpInterceptor {
         lastName: 'T',
         isTeacherAcknowledged: true,
         enableTeacherAcknowledgement: false,
-        isSelfAcknowledged: false
+        isSelfAcknowledged: false,
+        latitude: '36.7783',
+        longitude: '119.4179',
+        distance: '5 miles'
     }, {
         id: 17,
         course: 'Physics',
@@ -312,7 +360,10 @@ export class HttpResponseService implements HttpInterceptor {
         lastName: 'T',
         isTeacherAcknowledged: true,
         enableTeacherAcknowledgement: false,
-        isSelfAcknowledged: false
+        isSelfAcknowledged: false,
+        latitude: '36.7783',
+        longitude: '119.4179',
+        distance: '5 miles'
     }, {
         id: 18,
         course: 'Chemistry',
@@ -324,7 +375,10 @@ export class HttpResponseService implements HttpInterceptor {
         lastName: 'T',
         isTeacherAcknowledged: true,
         enableTeacherAcknowledgement: false,
-        isSelfAcknowledged: false
+        isSelfAcknowledged: false,
+        latitude: '36.7783',
+        longitude: '119.4179',
+        distance: '5 miles'
     }, {
         id: 19,
         course: 'Maths',
@@ -336,7 +390,10 @@ export class HttpResponseService implements HttpInterceptor {
         lastName: 'T',
         isTeacherAcknowledged: true,
         enableTeacherAcknowledgement: false,
-        isSelfAcknowledged: false
+        isSelfAcknowledged: false,
+        latitude: '36.7783',
+        longitude: '119.4179',
+        distance: '5 miles'
     }, {
         id: 20,
         course: 'Physics',
@@ -348,7 +405,10 @@ export class HttpResponseService implements HttpInterceptor {
         lastName: 'T',
         isTeacherAcknowledged: true,
         enableTeacherAcknowledgement: false,
-        isSelfAcknowledged: false
+        isSelfAcknowledged: false,
+        latitude: '36.7783',
+        longitude: '119.4179',
+        distance: '5 miles'
     }, {
         id: 21,
         course: 'Chemistry',
@@ -360,7 +420,10 @@ export class HttpResponseService implements HttpInterceptor {
         lastName: 'T',
         isTeacherAcknowledged: true,
         enableTeacherAcknowledgement: false,
-        isSelfAcknowledged: false
+        isSelfAcknowledged: false,
+        latitude: '36.7783',
+        longitude: '119.4179',
+        distance: '5 miles'
     }, {
         id: 22,
         course: 'Maths',
@@ -372,7 +435,10 @@ export class HttpResponseService implements HttpInterceptor {
         lastName: 'C',
         isTeacherAcknowledged: false,
         enableTeacherAcknowledgement: true,
-        isSelfAcknowledged: false
+        isSelfAcknowledged: false,
+        latitude: '36.7783',
+        longitude: '119.4179',
+        distance: '5 miles'
     }, {
         id: 23,
         course: 'Physics',
@@ -384,7 +450,10 @@ export class HttpResponseService implements HttpInterceptor {
         lastName: 'C',
         isTeacherAcknowledged: false,
         enableTeacherAcknowledgement: true,
-        isSelfAcknowledged: true
+        isSelfAcknowledged: true,
+        latitude: '36.7783',
+        longitude: '119.4179',
+        distance: '5 miles'
     }, {
         id: 24,
         course: 'Chemistry',
@@ -396,7 +465,10 @@ export class HttpResponseService implements HttpInterceptor {
         lastName: 'C',
         isTeacherAcknowledged: false,
         enableTeacherAcknowledgement: true,
-        isSelfAcknowledged: true
+        isSelfAcknowledged: true,
+        latitude: '36.7783',
+        longitude: '119.4179',
+        distance: '5 miles'
     }, {
         id: 25,
         course: 'Maths',
@@ -408,7 +480,10 @@ export class HttpResponseService implements HttpInterceptor {
         lastName: 'C',
         isTeacherAcknowledged: true,
         enableTeacherAcknowledgement: false,
-        isSelfAcknowledged: false
+        isSelfAcknowledged: false,
+        latitude: '36.7783',
+        longitude: '119.4179',
+        distance: '5 miles'
     }, {
         id: 26,
         course: 'Physics',
@@ -420,7 +495,10 @@ export class HttpResponseService implements HttpInterceptor {
         lastName: 'C',
         isTeacherAcknowledged: true,
         enableTeacherAcknowledgement: false,
-        isSelfAcknowledged: false
+        isSelfAcknowledged: false,
+        latitude: '36.7783',
+        longitude: '119.4179',
+        distance: '5 miles'
     }, {
         id: 27,
         course: 'Chemistry',
@@ -432,7 +510,10 @@ export class HttpResponseService implements HttpInterceptor {
         lastName: 'C',
         isTeacherAcknowledged: true,
         enableTeacherAcknowledgement: false,
-        isSelfAcknowledged: false
+        isSelfAcknowledged: false,
+        latitude: '36.7783',
+        longitude: '119.4179',
+        distance: '5 miles'
     }, {
         id: 28,
         course: 'Maths',
@@ -444,7 +525,10 @@ export class HttpResponseService implements HttpInterceptor {
         lastName: 'C',
         isTeacherAcknowledged: true,
         enableTeacherAcknowledgement: false,
-        isSelfAcknowledged: false
+        isSelfAcknowledged: false,
+        latitude: '36.7783',
+        longitude: '119.4179',
+        distance: '5 miles'
     }, {
         id: 29,
         course: 'Physics',
@@ -456,7 +540,10 @@ export class HttpResponseService implements HttpInterceptor {
         lastName: 'C',
         isTeacherAcknowledged: true,
         enableTeacherAcknowledgement: false,
-        isSelfAcknowledged: false
+        isSelfAcknowledged: false,
+        latitude: '36.7783',
+        longitude: '119.4179',
+        distance: '5 miles'
     }, {
         id: 30,
         course: 'Chemistry',
@@ -468,7 +555,10 @@ export class HttpResponseService implements HttpInterceptor {
         lastName: 'C',
         isTeacherAcknowledged: false,
         enableTeacherAcknowledgement: false,
-        isSelfAcknowledged: false
+        isSelfAcknowledged: false,
+        latitude: '36.7783',
+        longitude: '119.4179',
+        distance: '5 miles'
     }, {
         id: 31,
         course: 'Maths',
@@ -480,7 +570,10 @@ export class HttpResponseService implements HttpInterceptor {
         lastName: 'C',
         isTeacherAcknowledged: false,
         enableTeacherAcknowledgement: false,
-        isSelfAcknowledged: false
+        isSelfAcknowledged: false,
+        latitude: '36.7783',
+        longitude: '119.4179',
+        distance: '5 miles'
     }, {
         id: 32,
         course: 'Physics',
@@ -492,7 +585,10 @@ export class HttpResponseService implements HttpInterceptor {
         lastName: 'C',
         isTeacherAcknowledged: false,
         enableTeacherAcknowledgement: false,
-        isSelfAcknowledged: false
+        isSelfAcknowledged: false,
+        latitude: '36.7783',
+        longitude: '119.4179',
+        distance: '5 miles'
     }, {
         id: 33,
         course: 'Chemistry',
@@ -504,7 +600,10 @@ export class HttpResponseService implements HttpInterceptor {
         lastName: 'C',
         isTeacherAcknowledged: true,
         enableTeacherAcknowledgement: false,
-        isSelfAcknowledged: false
+        isSelfAcknowledged: false,
+        latitude: '36.7783',
+        longitude: '119.4179',
+        distance: '5 miles'
     }, {
         id: 34,
         course: 'Maths',
@@ -516,7 +615,10 @@ export class HttpResponseService implements HttpInterceptor {
         lastName: 'C',
         isTeacherAcknowledged: true,
         enableTeacherAcknowledgement: false,
-        isSelfAcknowledged: false
+        isSelfAcknowledged: false,
+        latitude: '36.7783',
+        longitude: '119.4179',
+        distance: '5 miles'
     }, {
         id: 35,
         course: 'Physics',
@@ -528,7 +630,10 @@ export class HttpResponseService implements HttpInterceptor {
         lastName: 'C',
         isTeacherAcknowledged: true,
         enableTeacherAcknowledgement: false,
-        isSelfAcknowledged: false
+        isSelfAcknowledged: false,
+        latitude: '36.7783',
+        longitude: '119.4179',
+        distance: '5 miles'
     }, {
         id: 36,
         course: 'Chemistry',
@@ -540,7 +645,10 @@ export class HttpResponseService implements HttpInterceptor {
         lastName: 'C',
         isTeacherAcknowledged: true,
         enableTeacherAcknowledgement: false,
-        isSelfAcknowledged: false
+        isSelfAcknowledged: false,
+        latitude: '36.7783',
+        longitude: '119.4179',
+        distance: '5 miles'
     }, {
         id: 37,
         course: 'Maths',
@@ -552,7 +660,10 @@ export class HttpResponseService implements HttpInterceptor {
         lastName: 'C',
         isTeacherAcknowledged: true,
         enableTeacherAcknowledgement: false,
-        isSelfAcknowledged: false
+        isSelfAcknowledged: false,
+        latitude: '36.7783',
+        longitude: '119.4179',
+        distance: '5 miles'
     }, {
         id: 38,
         course: 'Physics',
@@ -564,7 +675,10 @@ export class HttpResponseService implements HttpInterceptor {
         lastName: 'C',
         isTeacherAcknowledged: true,
         enableTeacherAcknowledgement: false,
-        isSelfAcknowledged: false
+        isSelfAcknowledged: false,
+        latitude: '36.7783',
+        longitude: '119.4179',
+        distance: '5 miles'
     }, {
         id: 39,
         course: 'Chemistry',
@@ -576,7 +690,10 @@ export class HttpResponseService implements HttpInterceptor {
         lastName: 'C',
         isTeacherAcknowledged: true,
         enableTeacherAcknowledgement: false,
-        isSelfAcknowledged: false
+        isSelfAcknowledged: false,
+        latitude: '36.7783',
+        longitude: '119.4179',
+        distance: '5 miles'
     }, {
         id: 40,
         course: 'Maths',
@@ -588,7 +705,10 @@ export class HttpResponseService implements HttpInterceptor {
         lastName: 'C',
         isTeacherAcknowledged: true,
         enableTeacherAcknowledgement: false,
-        isSelfAcknowledged: false
+        isSelfAcknowledged: false,
+        latitude: '36.7783',
+        longitude: '119.4179',
+        distance: '5 miles'
     }, {
         id: 41,
         course: 'Physics',
@@ -600,7 +720,10 @@ export class HttpResponseService implements HttpInterceptor {
         lastName: 'C',
         isTeacherAcknowledged: true,
         enableTeacherAcknowledgement: false,
-        isSelfAcknowledged: false
+        isSelfAcknowledged: false,
+        latitude: '36.7783',
+        longitude: '119.4179',
+        distance: '5 miles'
     }, {
         id: 42,
         course: 'Chemistry',
@@ -612,7 +735,10 @@ export class HttpResponseService implements HttpInterceptor {
         lastName: 'C',
         isTeacherAcknowledged: true,
         enableTeacherAcknowledgement: false,
-        isSelfAcknowledged: false
+        isSelfAcknowledged: false,
+        latitude: '36.7783',
+        longitude: '119.4179',
+        distance: '5 miles'
     }];
 
     constructor() {
@@ -630,7 +756,10 @@ export class HttpResponseService implements HttpInterceptor {
                 lastName: 'T',
                 isTeacherAcknowledged: true,
                 enableTeacherAcknowledgement: false,
-                isSelfAcknowledged: false
+                isSelfAcknowledged: false,
+                latitude: '36.7783',
+                longitude: '119.4179',
+                distance: '5 miles'
             });
             this.attendanceHistory.push({
                 id: 42 + (++count),
@@ -643,7 +772,10 @@ export class HttpResponseService implements HttpInterceptor {
                 lastName: 'T',
                 isTeacherAcknowledged: true,
                 enableTeacherAcknowledgement: false,
-                isSelfAcknowledged: false
+                isSelfAcknowledged: false,
+                latitude: '36.7783',
+                longitude: '119.4179',
+                distance: '5 miles'
             });
             this.attendanceHistory.push({
                 id: 42 + (++count),
@@ -656,7 +788,10 @@ export class HttpResponseService implements HttpInterceptor {
                 lastName: 'T',
                 isTeacherAcknowledged: true,
                 enableTeacherAcknowledgement: false,
-                isSelfAcknowledged: false
+                isSelfAcknowledged: false,
+                latitude: '36.7783',
+                longitude: '119.4179',
+                distance: '5 miles'
             });
         }
     }

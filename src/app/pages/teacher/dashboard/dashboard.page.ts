@@ -25,11 +25,10 @@ export class DashboardPage implements OnInit {
   isAttendanceDataLoadingCompleted = false;
   loadingEvent: any;
   totalPages = 0;
-  slideOptions = {
-    speed: 400,
-    spaceBetween: 0,
-    autoPlay: false
-  };
+  displayPrevIcon = false;
+  displayNextIcon = true;
+  currSchoolDisplayingIndex = 0;
+  allowSelfMarking = false;
 
   constructor(private courseService: CourseService,
     private sharedService: SharedService, private router: Router,
@@ -112,6 +111,17 @@ export class DashboardPage implements OnInit {
       this.schoolName = (this.schools.find(t => t.id === +this.schoolId) || {}).name;
       this.isDataLoading = true;
       this.attendedDate = this.maxDate;
+      this.currSchoolDisplayingIndex = this.schools.findIndex(t => t.id === +this.schoolId);
+      if (this.currSchoolDisplayingIndex <= 0) {
+        this.displayPrevIcon = false;
+      } else {
+        this.displayPrevIcon = true;
+      }
+      if (this.currSchoolDisplayingIndex === (this.schools.length - 1)) {
+        this.displayNextIcon = false;
+      } else {
+        this.displayNextIcon = true;
+      }
       if (this.courseId > 0) {
         this.courseId = 0;
         this.isAttendanceDataLoadingCompleted = false;
@@ -142,6 +152,28 @@ export class DashboardPage implements OnInit {
     } else {
       this.getAttendanceByStudentCourseandDate(this.courseId);
     }
+  }
+
+  schoolDetailsOnPrevClick() {
+    --this.currSchoolDisplayingIndex;
+      this.displayNextIcon = true;
+      this.schoolId = this.schools[this.currSchoolDisplayingIndex].id + '';
+      if (this.currSchoolDisplayingIndex <= 0) {
+        this.displayPrevIcon = false;
+        return;
+      }
+      this.displayPrevIcon = true;
+  }
+
+  schoolDetailsOnNextClick() {
+    this.displayPrevIcon = true;
+    ++this.currSchoolDisplayingIndex;
+    this.schoolId = this.schools[this.currSchoolDisplayingIndex].id + '';
+    if (this.currSchoolDisplayingIndex === (this.schools.length - 1)) {
+      this.displayNextIcon = false;
+      return;
+    }
+    this.displayNextIcon = true;
   }
 
   async updateStudentAttendanceByTeacher(history: any) {
