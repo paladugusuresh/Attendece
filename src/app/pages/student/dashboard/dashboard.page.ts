@@ -7,10 +7,10 @@ import { Response } from '../../../models';
 
 @Component({
   selector: 'app-dashboard',
-  templateUrl: './dashboard.page.html',
+  templateUrl: './student-dashboard.page.html',
   styleUrls: ['./dashboard.page.scss'],
 })
-export class DashboardPage implements OnInit {
+export class StudentDashboardPage implements OnInit {
   courses = [];
   avgAttendance = 0;
   grade = 0;
@@ -131,10 +131,10 @@ export class DashboardPage implements OnInit {
 
   onAcademicYearChange(ev: any) { }
 
-  navigateToReport() {
-    if (!this.isPageLoading) {
+  navigateToReport(event) {
+    //if (!this.isPageLoading) {
       this.router.navigate(['/student/attendance-report'], { relativeTo: this.activatedRoute });
-    }
+    //}
   }
 
   onCalendarOptionChange(option: string) {

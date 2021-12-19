@@ -57,6 +57,7 @@ ion-img {
         font-family: 'Red Hat Display';
         ion-label > p, ion-label > h2, ion-label > h1 {
             color: #ffffff !important;
+            pointer-events: none;
         }
     }
 }
@@ -140,6 +141,7 @@ ion-segment-button {
 
 .mlt {
     margin-left: -2.9em;
+    pointer-events: none;
 }
 
 ion-col .empty-data {

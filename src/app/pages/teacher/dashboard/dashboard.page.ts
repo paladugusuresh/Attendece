@@ -6,7 +6,7 @@ import { ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-dashboard',
-  templateUrl: './dashboard.page.html',
+  templateUrl: './teacher-dashboard.page.html',
   styleUrls: ['./dashboard.page.scss'],
 })
 export class DashboardPage implements OnInit {
