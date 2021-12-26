@@ -27,11 +27,11 @@ import { HttpConfigService, HttpResponseService } from './services';
       useClass: HttpConfigService,
       multi: true
     },
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: HttpResponseService,
-      multi: true
-    }
+    // {
+    //   provide: HTTP_INTERCEPTORS,
+    //   useClass: HttpResponseService,
+    //   multi: true
+    // }
   ],
   bootstrap: [AppComponent],
 })

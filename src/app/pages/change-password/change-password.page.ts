@@ -57,7 +57,7 @@ export class ChangePasswordPage implements OnInit {
             toast.message = 'Password updated successfully';
             toast.present();
             this.cpForm.reset();
-            if (this.sharedService.activeProfile.role === 'Student') {
+            if (this.sharedService.activeProfile.roleName.toLowerCase() === 'student') {
               this.router.navigate([`/student/dashboard`]);
             }
             else {

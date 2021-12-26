@@ -4,7 +4,7 @@
       <ion-content>
         <ion-list id="inbox-list">
           <ion-list-header>{{profile?.firstName + ' ' + profile?.lastName}}</ion-list-header>
-          <ion-note>{{profile?.role}}</ion-note>
+          <ion-note>{{profile?.roleName}}</ion-note>
 
           <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages; let i = index">
             <ion-item *ngIf="p.url.indexOf('/logout') === -1" routerDirection="root" [routerLink]="[p.url]" lines="none" detail="false" routerLinkActive="selected">

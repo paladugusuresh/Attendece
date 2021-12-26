@@ -11,7 +11,7 @@ export class HttpResponseService implements HttpInterceptor {
         firstName: 'Suresh',
         lastName: 'Paladugu',
         userName: 'sureshP',
-        role: 'Teacher',
+        roleName: 'Teacher',
         email: 'sureshp@gmail.com',
         dob: new Date(1989, 5, 5),
         school: 'Princeton School',
@@ -21,7 +21,7 @@ export class HttpResponseService implements HttpInterceptor {
         firstName: 'Aditya',
         lastName: 'T',
         userName: 'adityaT',
-        role: 'Student',
+        roleName: 'Student',
         email: 'stummala@gmail.com',
         school: '',
         dob: new Date(1991, 8, 16),
@@ -31,7 +31,7 @@ export class HttpResponseService implements HttpInterceptor {
         firstName: 'Krithik',
         lastName: 'C',
         userName: 'krithik234',
-        role: 'Student',
+        roleName: 'Student',
         school: '',
         email: 'krithik.c@gmail.com',
         dob: new Date(2011, 11, 20),
@@ -41,7 +41,7 @@ export class HttpResponseService implements HttpInterceptor {
         firstName: 'Abhishek',
         lastName: 'C',
         userName: 'abhishekc234',
-        role: 'Student',
+        roleName: 'Student',
         school: '',
         email: 'abhishek.c@gmail.com',
         dob: new Date(2011, 11, 20),
@@ -51,7 +51,7 @@ export class HttpResponseService implements HttpInterceptor {
         firstName: 'Abhishek',
         lastName: 'K',
         userName: 'abhishekk234',
-        role: 'Student',
+        roleName: 'Student',
         school: '',
         email: 'abhishek.k@gmail.com',
         dob: new Date(2011, 11, 20),
@@ -61,7 +61,7 @@ export class HttpResponseService implements HttpInterceptor {
         firstName: 'Abhi',
         lastName: 'M',
         userName: 'abhim234',
-        role: 'Student',
+        roleName: 'Student',
         school: '',
         email: 'abhi.m@gmail.com',
         dob: new Date(2011, 11, 20),
@@ -71,7 +71,7 @@ export class HttpResponseService implements HttpInterceptor {
         firstName: 'Krishna',
         lastName: 'C',
         userName: 'krishnac234',
-        role: 'Student',
+        roleName: 'Student',
         school: '',
         email: 'krishna.c@gmail.com',
         dob: new Date(2011, 11, 20),
@@ -802,7 +802,7 @@ export class HttpResponseService implements HttpInterceptor {
 
     handleRoute(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         switch (true) {
-            case req.url.endsWith('/ValidateUser'):
+            case req.url.endsWith('/login'):
                 return this.authenticateUser(req);
             case req.url.endsWith('/UpdateProfile'):
                 return this.updateProfile(req);
@@ -855,11 +855,11 @@ export class HttpResponseService implements HttpInterceptor {
 
     authenticateUser(req: HttpRequest<any>): Observable<HttpResponse<any>> {
         const { body } = req;
-        const { userName, password } = body;
+        const { userId, password } = body;
         let res = null;
-        if (this.users.findIndex(t => t.userName === userName) > -1) {
-            res = this.users.find(t => t.userName === userName);
-            res.token = 'sergt4gg3';
+        if (this.users.findIndex(t => t.userName === userId) > -1) {
+            res = { result: this.users.find(t => t.userName === userId) };
+            res.result.token = 'sergt4gg3';
         } else {
             res = 'No users found with given details';
         }

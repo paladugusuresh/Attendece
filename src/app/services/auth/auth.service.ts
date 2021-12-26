@@ -6,6 +6,7 @@ import { ApiService } from '../api.service';
 import { catchError, map } from 'rxjs/operators';
 import { Response } from '../../models';
 import { HttpErrorResponse } from '@angular/common/http';
+import { Storage } from '@capacitor/storage';
 
 @Injectable({
   providedIn: 'root'
@@ -18,14 +19,13 @@ export class AuthService {
   constructor(private apiService: ApiService) { }
 
   isLoggedIn(): Promise<boolean> {
-    const val = localStorage.getItem('token');
-    return Promise.resolve(!!val);
+    return Promise.resolve(!!this.token);
   }
 
-  login(userName: string, password: string): Observable<any> {
+  login(userId: string, password: string): Observable<any> {
     const url = environment.apiPrefix + ApiResources.login;
     const request = {
-      userName,
+      userId,
       password
     };
     const response: Response = {
@@ -36,12 +36,12 @@ export class AuthService {
         response.error = result.message || result.error;
         response.failure = true;
       } else {
-        result.userName = userName;
-        result.fullName = result.fullName || `${result.firstName} ${result.lastName || ''}`;
+        result.result.userName = userId;
+        result.result.fullName = result.fullName || `${result.firstName} ${result.lastName || ''}`;
         response.success = true;
-        response.result = result;
-        localStorage.setItem('sessionData', JSON.stringify(result));
-        this.sessionData = result;
+        response.result = result.result;
+        Storage.set({key: 'sessionData', value: JSON.stringify(result.result) });
+        this.sessionData = result.result;
       }
       return response;
     }), catchError((err: HttpErrorResponse) => {
@@ -168,11 +168,16 @@ export class AuthService {
   }
 
   setToken(token: string) {
-    localStorage.setItem('token', token);
+    Storage.set({ key: 'token', value: token }).then(() => {});
+    this.token = token;
   }
 
   getToken() {
-    this.token = localStorage.getItem('token');
     return this.token;
+  }
+
+  updateAuthData(sessionData: string, token: string) {
+    this.token = token;
+    this.sessionData = sessionData;
   }
 }

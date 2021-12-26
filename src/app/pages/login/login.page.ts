@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms'
 import { Router } from '@angular/router';
 import { AppConfig } from '../../constants';
 import { AuthService, SharedService } from '../../services';
+import { Storage } from '@capacitor/storage';
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
@@ -19,8 +20,6 @@ export class LoginPage implements OnInit {
       userName: new FormControl('', Validators.required),
       password: new FormControl('', Validators.required)
     });
-    localStorage.clear();
-    this.sharedService.clear();
   }
 
   ngOnInit() {
@@ -39,7 +38,7 @@ export class LoginPage implements OnInit {
         if (res.success) {
           this.sharedService.activeProfile = res.result;
           this.authService.setToken(res.result.token);
-          if (res.result.role === 'Student') {
+          if (res.result.roleName.toLowerCase() === 'student') {
             this.sharedService.activeAppPages = AppConfig.sideMenu.student;
             this.authService.userLoggedIn.next(true);
             this.router.navigate([`/student/dashboard`]);

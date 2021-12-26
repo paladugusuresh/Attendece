@@ -1,5 +1,5 @@
 export const apiResources = {
-    login: 'ValidateUser',
+    login: 'login',
     registerUser: 'RegisterUser',
     changePassword: 'ChangePassword',
     updateProfile: 'UpdateProfile',
