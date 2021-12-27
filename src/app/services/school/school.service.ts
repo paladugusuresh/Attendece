@@ -15,7 +15,7 @@ export class SchoolService {
   constructor(private apiService: ApiService) { }
 
   getSchoolsMappedToTeacher(id: number) {
-    const url = `${environment.apiPrefix}${ApiResources.getSchoolsMappedToTeacher}?id=${id}`;
+    const url = `${environment.apiPrefix}${ApiResources.getSchoolsMappedToTeacher}?teacherId=${id}`;
     const response: Response = {
       failure: false, success: false
     };

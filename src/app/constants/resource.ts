@@ -15,7 +15,7 @@ export const apiResources = {
     getAllHolidays: 'GetAllHolidays',
     getAttendanceByStudentIdandCourseId: 'GetAttendanceByStudentIdandCourseId',
     getAttendanceByStudentIdandDate: 'GetAttendanceByStudentIdandDate',
-    getSchoolsMappedToTeacher: 'GetSchoolsMappedToTeacher',
+    getSchoolsMappedToTeacher: 'teacher/school/list',
     updateStudentAcknowledgement: 'UpdateAcknowledgement',
     getAttendanceReportData: 'GetAttendanceReportData',
     getStudentsAttendanceByCourseandDate: 'GetStudentsAttendanceByCourseandDate',
