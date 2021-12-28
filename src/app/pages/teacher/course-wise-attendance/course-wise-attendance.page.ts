@@ -16,6 +16,7 @@ export class CourseWiseAttendancePage implements OnInit {
   courseId = '0';
   isDataLoading = true;
   currentDate = null;
+  schoolId: string;
   constructor(private courseService: CourseService, private attendanceService: AttendanceService, private sharedService: SharedService,
     private activatedRouter: ActivatedRoute, private toastCtrl: ToastController) { }
 
@@ -30,11 +31,12 @@ export class CourseWiseAttendancePage implements OnInit {
     this.activatedRouter.queryParams.pipe(filter(param => param.courseId)).subscribe((param: Params) => {
       this.courseId = param.courseId ? `${param.courseId}` : '0';
     });
+    this.schoolId = `${this.sharedService.teacherPreferredSchoolId || 0}`;
     this.getCoursesByTeacherId();
   }
 
   getCoursesByTeacherId() {
-    this.courseService.getCoursesByTeacherId(this.sharedService.activeProfile.userId)
+    this.courseService.getCoursesByTeacherId(this.sharedService.activeProfile.userId, +this.schoolId)
       .subscribe((res) => {
         if (res.failure) {
           this.courses = [];

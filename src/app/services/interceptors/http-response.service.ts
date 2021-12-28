@@ -814,7 +814,7 @@ export class HttpResponseService implements HttpInterceptor {
                 return this.getLastDayAttendanceByStudentId(req);
             case req.url.indexOf('/GetCoursesById') > -1:
                 return this.getCoursesByStudentId(req);
-            case req.url.indexOf('/GetCoursesByTeacherId') > -1:
+            case req.url.indexOf('/teacher/school/course/list') > -1:
                 return this.getCoursesByTeacherId(req);
             case req.url.indexOf('/GetStudentsByTeacherId') > -1:
                 return this.getStudentsByTeacherId(req);
@@ -824,7 +824,7 @@ export class HttpResponseService implements HttpInterceptor {
                 return this.getAttendanceByStudentIdandCourse(req);
             case req.url.indexOf('/GetAttendanceByStudentIdandDate') > -1:
                 return this.getAttendanceByStudentIdandDate(req);
-            case req.url.indexOf('/GetSchoolsMappedToTeacher') > -1:
+            case req.url.indexOf('/teacher/school/list') > -1:
                 return this.getSchoolsMappedToTeacher(req);
             case req.url.indexOf('/ChangePassword') > -1:
                 return of(new HttpResponse({ status: 200, body: 'Password updated successfully' }));
@@ -930,7 +930,7 @@ export class HttpResponseService implements HttpInterceptor {
             averageAttendance: 74.5,
             grade: 84,
             history: this.attendanceHistory.filter((item) =>
-             item.userId === id).slice(0, 3*6),
+                item.userId === id).slice(0, 3 * 6),
             totalDays: 64,
             daysPresent: 50,
             daysAbsent: 14
@@ -959,19 +959,22 @@ export class HttpResponseService implements HttpInterceptor {
     }
 
     getCoursesByTeacherId(req: HttpRequest<any>): Observable<HttpResponse<any>> {
-        const result = [{
-            name: 'Maths',
-            image: '/assets/imgs/maths.jpeg',
-            id: 2
-        }, {
-            id: 3,
-            name: 'Physics',
-            image: '/assets/imgs/physics.jpeg'
-        }, {
-            id: 4,
-            name: 'Chemistry',
-            image: '/assets/imgs/chemistry.jpeg'
-        }];
+        const result = {
+            status: 200,
+            result: [{
+                name: 'Maths',
+                image: '/assets/imgs/maths.jpeg',
+                courseId: 2
+            }, {
+                courseId: 3,
+                name: 'Physics',
+                image: '/assets/imgs/physics.jpeg'
+            }, {
+                courseId: 4,
+                name: 'Chemistry',
+                image: '/assets/imgs/chemistry.jpeg'
+            }]
+        };
         return of(new HttpResponse({ status: 200, body: result }));
     }
 
@@ -1061,16 +1064,19 @@ export class HttpResponseService implements HttpInterceptor {
     }
 
     getSchoolsMappedToTeacher(req: HttpRequest<any>): Observable<HttpResponse<any>> {
-        const mappedSchools = [{
-            id: 1,
-            name: 'Princeton School'
-        }, {
-            id: 2,
-            name: 'St. Georgia School'
-        }, {
-            id: 3,
-            name: 'St. Mary\'s School'
-        }];
+        const mappedSchools = {
+            status: 200,
+            result: [{
+                schoolId: 1,
+                name: 'Princeton School'
+            }, {
+                schoolId: 2,
+                name: 'St. Georgia School'
+            }, {
+                schoolId: 3,
+                name: 'St. Mary\'s School'
+            }]
+        };
         return of(new HttpResponse({ status: 200, body: mappedSchools }));
     }
 

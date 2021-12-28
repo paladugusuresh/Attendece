@@ -19,12 +19,12 @@ export class SchoolService {
     const response: Response = {
       failure: false, success: false
     };
-    return this.apiService.getData(url, null).pipe(map((result) => {
-      if (result instanceof HttpErrorResponse || result.error) {
-        response.error = result.message || result.error;
+    return this.apiService.getData(url, null).pipe(map((res) => {
+      if (res instanceof HttpErrorResponse || res.error) {
+        response.error = res.message || res.error;
         response.failure = true;
       } else {
-        response.result = result;
+        response.result = res.result;
         response.success = true;
       }
       return response;

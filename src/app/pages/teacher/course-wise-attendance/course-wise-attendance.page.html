@@ -18,7 +18,7 @@
       <ion-item>
         <ion-select interface="popover" [(ngModel)]="courseId" (ionChange)="getStudentsAttendanceByCourseandDate($event)"
           placeholder="Select Course">
-          <ion-select-option [value]="course.id + ''" *ngFor="let course of courses">{{course.name}}</ion-select-option>
+          <ion-select-option [value]="course.courseId + ''" *ngFor="let course of courses">{{course.name}}</ion-select-option>
         </ion-select>
       </ion-item>
     </ion-col>

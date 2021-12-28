@@ -51,7 +51,7 @@
     <ion-col size="12">
       <div class="course-img-wrapper mb-5">
         <div class="course-img-container" *ngFor="let course of courses"
-          (click)="getAttendanceByStudentCourseandDate(course.id)">
+          (click)="getAttendanceByStudentCourseandDate(course.courseId)">
           <ion-img [src]="course.image || ''"></ion-img>
         </div>
       </div>

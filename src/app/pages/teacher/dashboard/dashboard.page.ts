@@ -45,12 +45,11 @@ export class DashboardPage implements OnInit {
     this.attendedDate = this.maxDate = `${date.getFullYear()}-${month}-${day}`;
     this.profile = this.sharedService.activeProfile;
     this.schoolId = `${this.sharedService.teacherPreferredSchoolId}`;
-    this.getCoursesByTeacher();
     this.getSchoolsMappedToTeacher();
   }
 
   getCoursesByTeacher() {
-    this.courseService.getCoursesByTeacherId(this.sharedService.activeProfile.userId)
+    this.courseService.getCoursesByTeacherId(this.sharedService.activeProfile.userId, +this.schoolId)
       .subscribe((res) => {
         if (res.failure) {
           this.courses = [];
@@ -69,10 +68,12 @@ export class DashboardPage implements OnInit {
           this.schoolName = '';
         } else {
           this.schools = response.result;
+          this.getCoursesByTeacher();
           if (this.schoolId && this.schoolId !== '0') {
-            this.schoolName = (this.schools.find(t => t.id === +this.schoolId) || {}).name;
+            this.schoolName = (this.schools.find(t => t.schoolId === +this.schoolId) || {}).name;
+            this.updateCourseDisplayIcons();
           } else {
-            this.schoolId = `${this.schools.length > 0 ? this.schools[0].id : ''}`;
+            this.schoolId = `${this.schools.length > 0 ? this.schools[0].schoolId : ''}`;
             this.onSchoolChange(null);
           }
         }
@@ -106,22 +107,12 @@ export class DashboardPage implements OnInit {
   }
 
   onSchoolChange(event: any) {
-    if (this.schoolId) {
+    if (this.schoolId && this.schools.length > 0) {
       this.sharedService.teacherPreferredSchoolId = +this.schoolId;
-      this.schoolName = (this.schools.find(t => t.id === +this.schoolId) || {}).name;
+      this.schoolName = (this.schools.find(t => t.schoolId === +this.schoolId) || {}).name;
       this.isDataLoading = true;
       this.attendedDate = this.maxDate;
-      this.currSchoolDisplayingIndex = this.schools.findIndex(t => t.id === +this.schoolId);
-      if (this.currSchoolDisplayingIndex <= 0) {
-        this.displayPrevIcon = false;
-      } else {
-        this.displayPrevIcon = true;
-      }
-      if (this.currSchoolDisplayingIndex === (this.schools.length - 1)) {
-        this.displayNextIcon = false;
-      } else {
-        this.displayNextIcon = true;
-      }
+      this.updateCourseDisplayIcons();
       if (this.courseId > 0) {
         this.courseId = 0;
         this.isAttendanceDataLoadingCompleted = false;
@@ -156,13 +147,13 @@ export class DashboardPage implements OnInit {
 
   schoolDetailsOnPrevClick() {
     --this.currSchoolDisplayingIndex;
-      this.displayNextIcon = true;
-      this.schoolId = this.schools[this.currSchoolDisplayingIndex].id + '';
-      if (this.currSchoolDisplayingIndex <= 0) {
-        this.displayPrevIcon = false;
-        return;
-      }
-      this.displayPrevIcon = true;
+    this.displayNextIcon = true;
+    this.schoolId = this.schools[this.currSchoolDisplayingIndex].id + '';
+    if (this.currSchoolDisplayingIndex <= 0) {
+      this.displayPrevIcon = false;
+      return;
+    }
+    this.displayPrevIcon = true;
   }
 
   schoolDetailsOnNextClick() {
@@ -205,6 +196,20 @@ export class DashboardPage implements OnInit {
           this.getAttendanceByStudentCourseandDate(this.courseId);
         }
       });
+    }
+  }
+
+  private updateCourseDisplayIcons() {
+    this.currSchoolDisplayingIndex = this.schools.findIndex(t => t.schoolId === +this.schoolId);
+    if (this.currSchoolDisplayingIndex <= 0) {
+      this.displayPrevIcon = false;
+    } else {
+      this.displayPrevIcon = true;
+    }
+    if (this.currSchoolDisplayingIndex === (this.schools.length - 1)) {
+      this.displayNextIcon = false;
+    } else {
+      this.displayNextIcon = true;
     }
   }
 }

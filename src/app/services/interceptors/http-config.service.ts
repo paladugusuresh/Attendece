@@ -16,7 +16,7 @@ export class HttpConfigService implements HttpInterceptor {
     if (this.authService.token) {
       req = req.clone({
         setHeaders: {
-          authorization: this.authService.token,
+          //authorization: this.authService.token,
           'content-type': 'application/json'
         }
       });

@@ -35,17 +35,21 @@ export class CourseService {
     }));
   }
 
-  getCoursesByTeacherId(id: number): Observable<Response> {
-    const url = environment.apiPrefix + ApiResources.getCoursesByTeacherId + '/' + id;
+  getCoursesByTeacherId(id: number, schoolId: number): Observable<Response> {
+    const url = environment.apiPrefix + ApiResources.getCoursesByTeacherId;
     const response: Response = {
       failure: false, success: false
     };
-    return this.apiService.getData(url, null).pipe(map((result) => {
+    const request = {
+      teacherId: id,
+      schoolId
+    }
+    return this.apiService.postData(url, request).pipe(map((result) => {
       if (result instanceof HttpErrorResponse || result.error) {
         response.error = result.message || result.error;
         response.failure = true;
       } else {
-        response.result = result;
+        response.result = result.result;
         response.success = true;
       }
       return response;
