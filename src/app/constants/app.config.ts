@@ -67,5 +67,6 @@ export const appConfig = {
     teacherSearchPageTabs: {
         students: 'students',
         schools: 'schools'
-    }
+    },
+    pageSize: 50
 };

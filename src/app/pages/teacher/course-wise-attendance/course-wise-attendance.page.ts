@@ -4,6 +4,7 @@ import { filter } from 'rxjs/operators';
 import { Response } from '../../../models';
 import { CourseService, AttendanceService, SharedService } from '../../../services';
 import { ToastController } from '@ionic/angular';
+import { AppConfig } from '../../../constants';
 
 @Component({
   selector: 'app-course-wise-attendance',
@@ -16,6 +17,7 @@ export class CourseWiseAttendancePage implements OnInit {
   courseId = '0';
   isDataLoading = true;
   currentDate = null;
+  startDate = null;
   schoolId: string;
   constructor(private courseService: CourseService, private attendanceService: AttendanceService, private sharedService: SharedService,
     private activatedRouter: ActivatedRoute, private toastCtrl: ToastController) { }
@@ -31,6 +33,8 @@ export class CourseWiseAttendancePage implements OnInit {
     this.activatedRouter.queryParams.pipe(filter(param => param.courseId)).subscribe((param: Params) => {
       this.courseId = param.courseId ? `${param.courseId}` : '0';
     });
+    const startDateMonth = `${date.getMonth()-2 < 10 ? ('0' + (date.getMonth() - 2)) : date.getMonth() - 2}`;
+    this.startDate = `${date.getFullYear()}-${startDateMonth}-01`;
     this.schoolId = `${this.sharedService.teacherPreferredSchoolId || 0}`;
     this.getCoursesByTeacherId();
   }
@@ -50,7 +54,13 @@ export class CourseWiseAttendancePage implements OnInit {
   getStudentsAttendanceByCourseandDate(event: any) {
     this.isDataLoading = true;
     if (this.courseId !== '0') {
-      this.attendanceService.getStudentsAttendanceByCourseandDate(+this.courseId, this.currentDate)
+      this.attendanceService
+      .getStudentsAttendanceByCourseandDate(
+        this.sharedService.activeProfile.userId,
+        +this.schoolId,
+        +this.courseId,
+        this.startDate,
+        this.currentDate, 1, AppConfig.pageSize)
         .subscribe((res) => {
           if (res.failure) {
             console.log(res.error);

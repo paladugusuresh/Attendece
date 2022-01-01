@@ -119,17 +119,27 @@ export class AttendanceService {
     }));
   }
 
-  getStudentsAttendanceByCourseandDate(courseId: number, date: string): Observable<Response> {
-    const url = `${environment.apiPrefix}${ApiResources.getStudentsAttendanceByCourseandDate}?courseId=${courseId}&date=${date}`;
+  getStudentsAttendanceByCourseandDate(id: number, schoolId: number, courseId: number,
+    startDate: string, endDate: string, pageIndex: number, pageSize: number): Observable<Response> {
+    const url = `${environment.apiPrefix}${ApiResources.getStudentsAttendanceByCourseandDate}`;
     const response: Response = {
       failure: false, success: false
     };
-    return this.apiService.getData(url, null).pipe(map((result) => {
-      if (result instanceof HttpErrorResponse || result.error) {
-        response.error = result.message || result.error;
+    const req = {
+      schoolId,
+      courseId: courseId,
+      teacherId: id,
+      startDate,
+      endDate,
+      pageIndex,
+      pageSize
+    };
+    return this.apiService.postData(url, req).pipe(map((res) => {
+      if (res instanceof HttpErrorResponse || res.error) {
+        response.error = res.message || res.error;
         response.failure = true;
       } else {
-        response.result = result;
+        response.result = res.result;
         response.success = true;
       }
       return response;

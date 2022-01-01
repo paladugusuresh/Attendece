@@ -14,9 +14,10 @@
   <ion-row>
     <ion-col>
       <ion-item>
-        <ion-select interface="popover" [(ngModel)]="schoolId" (ionChange)="onSchoolChange($event)"
-          placeholder="Select School" [mode]="'ios'">
-          <ion-select-option [value]="school.schoolId + ''" *ngFor="let school of schools">{{school.name}}</ion-select-option>
+        <ion-select interface="popover" *ngIf="schools && schools.length > 0" [(ngModel)]="schoolId"
+          (ionChange)="onSchoolChange($event)" placeholder="Select School" [mode]="'ios'">
+          <ion-select-option [value]="school.schoolId + ''" *ngFor="let school of schools">{{school.name}}
+          </ion-select-option>
         </ion-select>
       </ion-item>
     </ion-col>
@@ -27,7 +28,8 @@
         <ion-card-content>
           <ion-row>
             <ion-col size="1">
-              <ion-icon name="chevron-back-outline" *ngIf="displayPrevIcon" class="resize-icon ml-1" (click)="schoolDetailsOnPrevClick()"></ion-icon>
+              <ion-icon name="chevron-back-outline" *ngIf="displayPrevIcon" class="resize-icon ml-1"
+                (click)="schoolDetailsOnPrevClick()"></ion-icon>
             </ion-col>
             <ion-col size="9">
               <ion-label class="pre-align">
@@ -35,7 +37,8 @@
               </ion-label>
             </ion-col>
             <ion-col size="1">
-              <ion-icon name="chevron-forward-outline" *ngIf="displayNextIcon" class="resize-icon mr-1" (click)="schoolDetailsOnNextClick()"></ion-icon>
+              <ion-icon name="chevron-forward-outline" *ngIf="displayNextIcon" class="resize-icon mr-1"
+                (click)="schoolDetailsOnNextClick()"></ion-icon>
             </ion-col>
           </ion-row>
         </ion-card-content>
@@ -48,20 +51,30 @@
     </ion-col>
   </ion-row>
   <ion-row>
-    <ion-col size="12">
+    <!-- <ion-col size="12">
       <div class="course-img-wrapper mb-5">
         <div class="course-img-container" *ngFor="let course of courses"
           (click)="getAttendanceByStudentCourseandDate(course.courseId)">
-          <ion-img [src]="course.image || ''"></ion-img>
+          <ion-img [src]="course.image || '/assets/imgs/course_default.png'"></ion-img>
+          {{course.name}}
         </div>
       </div>
+    </ion-col> -->
+    <ion-col>
+      <ion-item>
+        <ion-select interface="popover" *ngIf="courses && courses.length > 0" [(ngModel)]="courseId"
+          (ionChange)="getAttendanceByStudentCourseandDate(courseId,$event)" placeholder="Select Course" [mode]="'ios'">
+          <ion-select-option [value]="course.courseId" *ngFor="let course of courses">{{course.name}}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
     </ion-col>
   </ion-row>
   <ion-row>
     <ion-col class="dw-col mb-5">
       <ion-item>
-        <ion-datetime displayFormat="MMM DD YYYY" min="1930" [max]="maxDate" [(ngModel)]="attendedDate" placeholder="Select Date"
-          (ionChange)="onDateChange()" mode="ios"></ion-datetime>
+        <ion-datetime displayFormat="MMM DD YYYY" min="1930" [max]="maxDate" [(ngModel)]="attendedDate"
+          placeholder="Select Date" (ionChange)="onDateChange()" mode="ios"></ion-datetime>
       </ion-item>
     </ion-col>
   </ion-row>
@@ -72,8 +85,10 @@
           <ion-label class="self-marking-label">Self Marking</ion-label>
         </ion-col>
         <ion-col size="2">
-          <ion-toggle color="danger" [(ngModel)]="allowSelfMarking" [checked]="allowSelfMarking" *ngIf="allowSelfMarking"></ion-toggle>
-          <ion-toggle color="success" [(ngModel)]="allowSelfMarking" [checked]="allowSelfMarking" *ngIf="!allowSelfMarking"></ion-toggle>
+          <ion-toggle color="danger" [(ngModel)]="allowSelfMarking" [checked]="allowSelfMarking"
+            *ngIf="allowSelfMarking"></ion-toggle>
+          <ion-toggle color="success" [(ngModel)]="allowSelfMarking" [checked]="allowSelfMarking"
+            *ngIf="!allowSelfMarking"></ion-toggle>
         </ion-col>
       </ion-row>
     </ion-col>
@@ -91,12 +106,14 @@
             [lines]="index+1 === attendanceHistory.length ? 'none' : 'full'">
             <ion-label class="label label-title">
               <p>{{ history.attendedDate | date: 'MM/dd/YYYY'}}</p>
-              <h2>{{history?.firstName}} <br/>({{ history.course }})</h2>
+              <h2>{{history?.firstName}} <br />({{ history.course }})</h2>
               <p><b>Latitude:</b> {{history.latitude}}</p>
               <p><b>Longitude:</b> {{history.longitude}}</p>
               <p><b>Range:</b> {{history.distance}}</p>
             </ion-label>
-            <ion-toggle slot="end" color="success" (ionFocus)="onFocus()" (ionChange)="updateStudentAttendanceByTeacher(history)" [(ngModel)]="history.isTeacherAcknowledged" [disabled]="!history.enableTeacherAcknowledgement" [checked]="history.isTeacherAcknowledged"></ion-toggle>
+            <ion-toggle slot="end" color="success" (ionFocus)="onFocus()"
+              (ionChange)="updateStudentAttendanceByTeacher(history)" [(ngModel)]="history.isTeacherAcknowledged"
+              [disabled]="!history.enableTeacherAcknowledgement" [checked]="history.isTeacherAcknowledged"></ion-toggle>
           </ion-item>
         </ion-list>
         <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">

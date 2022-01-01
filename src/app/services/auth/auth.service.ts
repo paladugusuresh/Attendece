@@ -18,10 +18,20 @@ export class AuthService {
 
   constructor(private apiService: ApiService) { }
 
+  /**
+   * Validates the user based on the token.
+   * @returns promise object.
+   */
   isLoggedIn(): Promise<boolean> {
     return Promise.resolve(!!this.token);
   }
 
+  /**
+   * Authenticates the user using user id and password.
+   * @param userId the user id.
+   * @param password the password.
+   * @returns response model.
+   */
   login(userId: string, password: string): Observable<any> {
     const url = environment.apiPrefix + ApiResources.login;
     const request = {
@@ -51,6 +61,11 @@ export class AuthService {
     }));
   }
 
+  /**
+   * Registering the user.
+   * @param user user object.
+   * @returns response model.
+   */
   registerUser(user: any): Observable<any> {
     const url = environment.apiPrefix + ApiResources.registerUser;
     const response: Response = {
@@ -72,6 +87,14 @@ export class AuthService {
     }));
   }
 
+  /**
+   * Changes the password of the user.
+   * @param userId the user id.
+   * @param oldPwd the old password of user.
+   * @param newPwd the new password of user.
+   * @param userName the user name.
+   * @returns response model.
+   */
   changePassword(userId: number, oldPwd: string, newPwd: string, userName: string): Observable<any> {
     const url = `${environment.apiPrefix}${ApiResources.changePassword}?userId=${userId}&oldPwd=${oldPwd}&newPwd=${newPwd}`;
     const response: Response = {
@@ -99,6 +122,13 @@ export class AuthService {
     }));
   }
 
+  /**
+   * Changes the password of the unknown user based on user name. 
+   * @param oldPwd the old password of user.
+   * @param newPwd the new password of user.
+   * @param userName the user name.
+   * @returns response model.
+   */
   forgotPassword(oldPwd: string, newPwd: string, userName: string): Observable<any> {
     const url = `${environment.apiPrefix}${ApiResources.forgotPassword}`;
     const response: Response = {
@@ -125,6 +155,11 @@ export class AuthService {
     }));
   }
 
+  /**
+   * Updates the user details.
+   * @param user the user object.
+   * @returns response model.
+   */
   updateProfile(user: any): Observable<any> {
     const url = environment.apiPrefix + ApiResources.updateProfile;
     const response: Response = {
@@ -146,6 +181,10 @@ export class AuthService {
     }));
   }
 
+  /**
+   * Gets the roles.
+   * @returns response model.
+   */
   getAllRoles(): Observable<any> {
     const url = `${environment.apiPrefix}${ApiResources.getRoles}`;
     const response: Response = {
@@ -167,15 +206,28 @@ export class AuthService {
     }));
   }
 
+  /**
+   * Sets the token of logged in user into application storage.
+   * @param token the token.
+   */
   setToken(token: string) {
     Storage.set({ key: 'token', value: token }).then(() => {});
     this.token = token;
   }
 
+  /**
+   * Gets the token of the logged in user from application storage.
+   * @returns the token.
+   */
   getToken() {
     return this.token;
   }
 
+  /**
+   * Update the authorized user session details once application is loading for first time.
+   * @param sessionData the session data of the logged in user.
+   * @param token the token.
+   */
   updateAuthData(sessionData: string, token: string) {
     this.token = token;
     this.sessionData = sessionData;

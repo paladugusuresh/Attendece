@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Response } from '../../../models';
 import { AttendanceService, SharedService, CourseService } from '../../../services';
 import { ToastController } from '@ionic/angular';
+import { AppConfig } from '../../../constants';
 
 @Component({
   selector: 'app-day-wise-attendance',
@@ -13,9 +14,11 @@ export class DayWiseAttendancePage implements OnInit {
   courses = [];
   courseId = 0;
   attendedDate = null;
+  startDate = null;
   maxDate = '';
   isDataLoading = true;
   displayNoData = false;
+  schoolId: string;
   constructor(private attendanceService: AttendanceService, private sharedService: SharedService,
     private courseService: CourseService, private toastCtrl: ToastController) { }
 
@@ -27,6 +30,9 @@ export class DayWiseAttendancePage implements OnInit {
     const month = `${date.getMonth() + 1 < 10 ? ('0' + (date.getMonth() + 1)) : date.getMonth() + 1}`;
     const day = `${date.getDate() - 1 < 10 ? ('0' + (date.getDate() - 1)) : date.getDate() - 1}`;
     this.maxDate = `${date.getFullYear()}-${month}-${day}`;
+    const startDateMonth = `${date.getMonth()-2 < 10 ? ('0' + (date.getMonth() - 2)): date.getMonth() - 2}`;
+    this.startDate = `${date.getFullYear()}-${startDateMonth}-01`;
+    this.schoolId = `${this.sharedService.teacherPreferredSchoolId || 0}`;
   }
 
   getAttendanceByStudentCourseandDate(courseId: number) {
@@ -34,8 +40,12 @@ export class DayWiseAttendancePage implements OnInit {
     this.isDataLoading = true;
     this.attendanceService
       .getStudentsAttendanceByCourseandDate(
+        this.sharedService.activeProfile.userId,
+        +this.schoolId,
         courseId,
-        this.attendedDate.substr(0, this.attendedDate.indexOf('T')))
+        this.attendedDate.substr(0, this.attendedDate.indexOf('T')),
+        this.attendedDate.substr(0, this.attendedDate.indexOf('T')),
+        1, AppConfig.pageSize)
       .subscribe((res: Response) => {
         if (res.failure) {
           console.log(res.error);
@@ -50,9 +60,9 @@ export class DayWiseAttendancePage implements OnInit {
 
   getCoursesByTeacherandDate() {
     this.displayNoData = false;
-    this.courseService.getCourseByStudentIdandDate(
+    this.courseService.getCoursesByTeacherId(
       this.sharedService.activeProfile.userId,
-      this.attendedDate.substr(0, this.attendedDate.indexOf('T')))
+      +this.schoolId)
       .subscribe((res: Response) => {
         if (res.failure) {
           this.courses = [];

@@ -1,9 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Response } from '../../../models';
+import { AppConfig } from '../../../constants';
 import { CourseService, SharedService, SchoolService, AttendanceService } from '../../../services';
 import { ToastController } from '@ionic/angular';
 
+/**
+ * Dashboard page of teacher.
+ */
 @Component({
   selector: 'app-dashboard',
   templateUrl: './teacher-dashboard.page.html',
@@ -18,6 +22,7 @@ export class DashboardPage implements OnInit {
   schools = [];
   maxDate = '';
   courseId = 0;
+  startDate = null;
   attendedDate = null;
   attendanceHistory = [];
   isDataLoading = true;
@@ -43,11 +48,16 @@ export class DashboardPage implements OnInit {
     const month = `${date.getMonth() + 1 < 10 ? ('0' + (date.getMonth() + 1)) : date.getMonth() + 1}`;
     const day = `${date.getDate() < 10 ? ('0' + date.getDate()) : date.getDate()}`;
     this.attendedDate = this.maxDate = `${date.getFullYear()}-${month}-${day}`;
+    const startDateMonth = `${date.getMonth() - 2 < 10 ? date.getMonth() - 2 < 0 ? 12 - (date.getMonth() + 1) : ('0' + (date.getMonth() - 2)) : date.getMonth() - 2}`;
+    this.startDate = `${date.getMonth() - 2 < 0 ? date.getFullYear() - 1 : date.getFullYear()}-${startDateMonth}-01`;
     this.profile = this.sharedService.activeProfile;
     this.schoolId = `${this.sharedService.teacherPreferredSchoolId}`;
     this.getSchoolsMappedToTeacher();
   }
 
+  /**
+   * Gets the courses mapped to teacher.
+   */
   getCoursesByTeacher() {
     this.courseService.getCoursesByTeacherId(this.sharedService.activeProfile.userId, +this.schoolId)
       .subscribe((res) => {
@@ -56,10 +66,15 @@ export class DashboardPage implements OnInit {
           console.log(res.error);
         } else {
           this.courses = res.result;
+          this.courseId = +this.courseId === 0 ? this.courses[0].courseId : this.courseId;
+          this.getAttendanceByStudentCourseandDate(this.courseId);
         }
       });
   }
 
+  /**
+   * Gets the schools mapped to teacher.
+   */
   getSchoolsMappedToTeacher() {
     this.schoolService.getSchoolsMappedToTeacher(this.sharedService.activeProfile.userId)
       .subscribe((response) => {
@@ -68,27 +83,36 @@ export class DashboardPage implements OnInit {
           this.schoolName = '';
         } else {
           this.schools = response.result;
-          this.getCoursesByTeacher();
           if (this.schoolId && this.schoolId !== '0') {
             this.schoolName = (this.schools.find(t => t.schoolId === +this.schoolId) || {}).name;
-            this.updateCourseDisplayIcons();
+            this.updateSchoolDisplayIcons();
           } else {
             this.schoolId = `${this.schools.length > 0 ? this.schools[0].schoolId : ''}`;
             this.onSchoolChange(null);
           }
+          this.getCoursesByTeacher();
         }
       });
   }
 
+  /**
+   * Gets the attendance of students mapped to teacher based on course and date.
+   * @param courseId the course id.
+   */
   getAttendanceByStudentCourseandDate(courseId: number) {
     this.courseId = courseId;
     this.isDataLoading = true;
     this.attendanceService
       .getStudentsAttendanceByCourseandDate(
+        this.sharedService.activeProfile.userId,
+        +this.schoolId,
         courseId,
         this.attendedDate.indexOf('T') > -1
           ? this.attendedDate.substr(0, this.attendedDate.indexOf('T'))
-          : this.attendedDate)
+          : this.attendedDate,
+        this.attendedDate.indexOf('T') > -1
+          ? this.attendedDate.substr(0, this.attendedDate.indexOf('T'))
+          : this.attendedDate, 1, AppConfig.pageSize)
       .subscribe((res: Response) => {
         if (res.failure) {
           console.log(res.error);
@@ -96,8 +120,8 @@ export class DashboardPage implements OnInit {
           this.attendanceHistory = [];
         } else {
           this.displayNoData = false;
-          this.attendanceHistory = res.result.history;
-          this.totalPages = res.result.total;
+          this.attendanceHistory = res.result.history || res.result;
+          this.totalPages = res.result.total || (res.result.history || res.result).length;
           this.isAttendanceDataLoadingCompleted = this.attendanceHistory.length === res.result.total;
           if (!this.isAttendanceDataLoadingCompleted && this.loadingEvent) {
             this.loadingEvent.target.disabled = false;
@@ -106,13 +130,17 @@ export class DashboardPage implements OnInit {
       });
   }
 
+  /**
+   * This event is fired when user changes the school.
+   * @param event the change event.
+   */
   onSchoolChange(event: any) {
     if (this.schoolId && this.schools.length > 0) {
       this.sharedService.teacherPreferredSchoolId = +this.schoolId;
       this.schoolName = (this.schools.find(t => t.schoolId === +this.schoolId) || {}).name;
       this.isDataLoading = true;
       this.attendedDate = this.maxDate;
-      this.updateCourseDisplayIcons();
+      this.updateSchoolDisplayIcons();
       if (this.courseId > 0) {
         this.courseId = 0;
         this.isAttendanceDataLoadingCompleted = false;
@@ -126,14 +154,26 @@ export class DashboardPage implements OnInit {
     }
   }
 
+  /**
+   * This event is fired when user changes the date.
+   */
   onDateChange() {
-    this.getAttendanceByStudentCourseandDate(this.courseId);
+    if (this.courseId > 0) {
+      this.getAttendanceByStudentCourseandDate(this.courseId);
+    }
   }
 
+  /**
+   * This event is fired when user focus on acknowlegdement checkbox(toggle) control. 
+   */
   onFocus() {
     this.isDataLoading = false;
   }
 
+  /**
+   * Loads the data of students attendance on scrolling.
+   * @param event scrolling event.
+   */
   loadData(event: any) {
     this.loadingEvent = event;
     if (this.isAttendanceDataLoadingCompleted || this.attendanceHistory.length === this.totalPages) {
@@ -145,6 +185,9 @@ export class DashboardPage implements OnInit {
     }
   }
 
+  /**
+   * This event is triggered when user selects the previous button of school container.
+   */
   schoolDetailsOnPrevClick() {
     --this.currSchoolDisplayingIndex;
     this.displayNextIcon = true;
@@ -156,6 +199,9 @@ export class DashboardPage implements OnInit {
     this.displayPrevIcon = true;
   }
 
+  /**
+   * This event is triggered when user selects the next button of school container.
+   */
   schoolDetailsOnNextClick() {
     this.displayPrevIcon = true;
     ++this.currSchoolDisplayingIndex;
@@ -167,6 +213,10 @@ export class DashboardPage implements OnInit {
     this.displayNextIcon = true;
   }
 
+  /**
+   * Updates the student attendance history (i.e., acknowledgement) by teacher.
+   * @param history The student attendance history object.
+   */
   async updateStudentAttendanceByTeacher(history: any) {
     const toast = await this.toastCtrl.create({
       message: '',
@@ -199,7 +249,10 @@ export class DashboardPage implements OnInit {
     }
   }
 
-  private updateCourseDisplayIcons() {
+  /**
+   * Updates the school displaying icons based on school list.
+   */
+  private updateSchoolDisplayIcons() {
     this.currSchoolDisplayingIndex = this.schools.findIndex(t => t.schoolId === +this.schoolId);
     if (this.currSchoolDisplayingIndex <= 0) {
       this.displayPrevIcon = false;

@@ -14,6 +14,11 @@ export class SchoolService {
 
   constructor(private apiService: ApiService) { }
 
+  /**
+   * Gets the schools mapped to teacher.
+   * @param id the teacher id.
+   * @returns response object.
+   */
   getSchoolsMappedToTeacher(id: number) {
     const url = `${environment.apiPrefix}${ApiResources.getSchoolsMappedToTeacher}?teacherId=${id}`;
     const response: Response = {

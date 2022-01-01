@@ -18,6 +18,6 @@ export const apiResources = {
     getSchoolsMappedToTeacher: 'teacher/school/list',
     updateStudentAcknowledgement: 'UpdateAcknowledgement',
     getAttendanceReportData: 'GetAttendanceReportData',
-    getStudentsAttendanceByCourseandDate: 'GetStudentsAttendanceByCourseandDate',
+    getStudentsAttendanceByCourseandDate: 'teacher/school/course/students/list',
     updateStudentAttendanceByTeacher: 'UpdateStudentAttendanceByTeacher'
 };
