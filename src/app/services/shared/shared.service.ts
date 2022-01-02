@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Storage } from '@capacitor/storage';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { ToastController } from '@ionic/angular';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,7 @@ export class SharedService {
   loadingObserver: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   private loadingRequestMap: Map<string, boolean> = new Map<string, boolean>();
 
-  constructor() { }
+  constructor(private toastCtrl: ToastController) { }
 
   loadAppData(): Observable<{ sessionData: string; token: string }> {
     const observerable = new Observable<{ sessionData: string; token: string }>((observer) => {
@@ -77,6 +78,18 @@ export class SharedService {
   set teacherSearchPageActiveTab(activeTab: string) {
     this.teacherAppSearchPageActiveTab = activeTab;
     Storage.set({ key: 'teacherSearchPageActiveTab', value: activeTab }).then(() => { });
+  }
+
+  displayToastMessage(msg: string) {
+    this.toastCtrl.create({
+      message: msg,
+      duration: 3000,
+      position: 'top',
+      color: 'danger',
+      cssClass: 'custom-toast',
+    }).then((toastData) => {
+      toastData.present();
+    });
   }
 
   async clear() {

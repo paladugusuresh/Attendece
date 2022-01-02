@@ -48,7 +48,11 @@ export class DashboardPage implements OnInit {
     const month = `${date.getMonth() + 1 < 10 ? ('0' + (date.getMonth() + 1)) : date.getMonth() + 1}`;
     const day = `${date.getDate() < 10 ? ('0' + date.getDate()) : date.getDate()}`;
     this.attendedDate = this.maxDate = `${date.getFullYear()}-${month}-${day}`;
-    const startDateMonth = `${date.getMonth() - 2 < 10 ? date.getMonth() - 2 < 0 ? 12 - (date.getMonth() + 1) : ('0' + (date.getMonth() - 2)) : date.getMonth() - 2}`;
+    const startDateMonth = `${date.getMonth() - 2 < 10
+      ? date.getMonth() - 2 < 0
+        ? 12 - (date.getMonth() + 1)
+        : ('0' + (date.getMonth() - 2))
+      : date.getMonth() - 2}`;
     this.startDate = `${date.getMonth() - 2 < 0 ? date.getFullYear() - 1 : date.getFullYear()}-${startDateMonth}-01`;
     this.profile = this.sharedService.activeProfile;
     this.schoolId = `${this.sharedService.teacherPreferredSchoolId}`;
@@ -121,6 +125,9 @@ export class DashboardPage implements OnInit {
         } else {
           this.displayNoData = false;
           this.attendanceHistory = res.result.history || res.result;
+          if (res.error) {
+            this.sharedService.displayToastMessage(res.error);
+          }
           this.totalPages = res.result.total || (res.result.history || res.result).length;
           this.isAttendanceDataLoadingCompleted = this.attendanceHistory.length === res.result.total;
           if (!this.isAttendanceDataLoadingCompleted && this.loadingEvent) {
@@ -236,14 +243,25 @@ export class DashboardPage implements OnInit {
       ]
     });
     if (!this.isDataLoading && history.isTeacherAcknowledged) {
-      this.attendanceService.updateStudentAttendanceByTeacher(history).subscribe((res: Response) => {
+      const updateStudentHistory = {
+        courseId: this.courseId,
+        teacherId: this.sharedService.activeProfile.userId,
+        schoolId: +this.schoolId,
+        studentId: history.studentId,
+        teacherAcknowledged: history.isTeacherAcknowledged ? 'Y' : 'N',
+        userAttendanceId: history.attendanceID || 0,
+        attendanceDate: this.attendedDate.indexOf('T') > -1
+          ? this.attendedDate.substr(0, this.attendedDate.indexOf('T'))
+          : this.attendedDate
+      };
+      this.attendanceService.updateStudentAttendanceByTeacher(updateStudentHistory).subscribe((res: Response) => {
         if (res.failure) {
           console.log(res.error);
         } else {
           toast.color = 'success';
           toast.message = res.result;
           toast.present();
-          this.getAttendanceByStudentCourseandDate(this.courseId);
+          //this.getAttendanceByStudentCourseandDate(this.courseId);
         }
       });
     }

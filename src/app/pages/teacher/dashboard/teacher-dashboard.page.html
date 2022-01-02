@@ -113,7 +113,7 @@
             </ion-label>
             <ion-toggle slot="end" color="success" (ionFocus)="onFocus()"
               (ionChange)="updateStudentAttendanceByTeacher(history)" [(ngModel)]="history.isTeacherAcknowledged"
-              [disabled]="!history.enableTeacherAcknowledgement" [checked]="history.isTeacherAcknowledged"></ion-toggle>
+              [disabled]="history.selfAcknowledged" [checked]="history.teacherAcknowledged ? history.teacherAcknowledged === 'Y' ? true : false : false"></ion-toggle>
           </ion-item>
         </ion-list>
         <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">

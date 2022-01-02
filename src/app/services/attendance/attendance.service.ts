@@ -127,7 +127,7 @@ export class AttendanceService {
     };
     const req = {
       schoolId,
-      courseId: courseId,
+      courseId,
       teacherId: id,
       startDate,
       endDate,
@@ -135,11 +135,16 @@ export class AttendanceService {
       pageSize
     };
     return this.apiService.postData(url, req).pipe(map((res) => {
-      if (res instanceof HttpErrorResponse || res.error) {
-        response.error = res.message || res.error;
+      if (res instanceof HttpErrorResponse || res.message?.toLowerCase() === 'failure') {
+        response.error = res.result || res.message;
         response.failure = true;
       } else {
-        response.result = res.result;
+        if (typeof(res.result) === 'string' && res.result.indexOf('Holiday') > -1) {
+          response.result = { total: 0, history: [] };
+          response.error = this.populateHolidayResponseMessage(startDate);
+        } else {
+          response.result = res.result;
+        }
         response.success = true;
       }
       return response;
@@ -155,12 +160,12 @@ export class AttendanceService {
     const response: Response = {
       failure: false, success: false
     };
-    return this.apiService.updateData(url, req).pipe(map((result) => {
-      if (result instanceof HttpErrorResponse || result.error) {
-        response.error = result.message || result.error;
+    return this.apiService.postData(url, req).pipe(map((res) => {
+      if (res instanceof HttpErrorResponse || res.message?.toLowerCase() === 'failure') {
+        response.error = res.result || res.message;
         response.failure = true;
       } else {
-        response.result = result;
+        response.result = res.result;
         response.success = true;
       }
       return response;
@@ -169,5 +174,20 @@ export class AttendanceService {
       response.failure = true;
       return of(response);
     }));
+  }
+
+  private populateHolidayResponseMessage(fromDate: string) {
+    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    if (fromDate) {
+      const startDate = new Date(fromDate);
+      if (startDate.toDateString() === new Date().toDateString()) {
+        return '';
+      }
+      return `${months[startDate.getMonth()]} ${startDate.getDate() < 10
+        ? ('0' + startDate.getDate())
+        : startDate.getDate()}, ${startDate.getFullYear()} is Holiday`;
+    } else {
+      return 'Selected date is holiday';
+    }
   }
 }
