@@ -61,13 +61,22 @@
     </ion-col>
   </ion-row>
   <ion-row>
-    <ion-col size="12">
+    <!-- <ion-col size="12">
       <div class="course-img-wrapper">
         <div class="course-img-container" *ngFor="let course of courses"
           (click)="navigateToCourseWiseAttendance(course.id)">
           <ion-img [src]="course.image || ''"></ion-img>
         </div>
       </div>
+    </ion-col> -->
+    <ion-col>
+      <ion-item>
+        <ion-select interface="popover" *ngIf="courses && courses.length > 0" [(ngModel)]="courseId"
+          (ionChange)="navigateToCourseWiseAttendance(courseId)" placeholder="Select Course" [mode]="'ios'">
+          <ion-select-option [value]="course.courseId" *ngFor="let course of courses">{{course.name}}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
     </ion-col>
   </ion-row>
   <ion-row>
@@ -112,7 +121,9 @@
               <p>{{ history.attendedDate | date: 'MM/dd/YYYY'}}</p>
               <h2>{{ history.course }}</h2>
             </ion-label>
-            <ion-toggle slot="end" color="success" [disabled]="!history.enableAcknowledgement && !history.isSelfAcknowledged" [(ngModel)]="history.isAcknowledged" (ionFocus)="onFocus()" (ionChange)="updateAcknowledgement(history)" [checked]="history.isAcknowledged"></ion-toggle>
+            <ion-toggle slot="end" color="success" [(ngModel)]="history.isAcknowledged"
+            <!-- [disabled]="!history.enableAcknowledgement && !history.isSelfAcknowledged"   -->
+            (ionFocus)="onFocus()" (ionChange)="updateAcknowledgement(history)" [checked]="history.selfAcknowledged ? history.selfAcknowledged === 'Y' ? true : false : false"></ion-toggle>
           </ion-item>
         </ion-list>
       </ion-card>

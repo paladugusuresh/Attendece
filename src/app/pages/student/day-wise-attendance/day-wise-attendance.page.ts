@@ -35,8 +35,11 @@ export class DayWiseAttendancePage implements OnInit {
     this.attendanceService
       .getAttendanceByStudentCourseandDate(
         this.sharedService.activeProfile.userId,
+        1401,
         courseId,
-        this.attendedDate.substr(0, this.attendedDate.indexOf('T')))
+        this.attendedDate.substr(0, this.attendedDate.indexOf('T')),
+        this.attendedDate.substr(0, this.attendedDate.indexOf('T')),
+        1, 50)
       .subscribe((res: Response) => {
         if (res.failure) {
           console.log(res.error);

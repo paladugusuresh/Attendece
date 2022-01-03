@@ -29,7 +29,7 @@ export class CourseWiseAttendancePage implements OnInit {
   }
 
   getCoursesByStudentId() {
-    this.courseService.getCoursesByStudentId(this.sharedService.activeProfile.userId)
+    this.courseService.getCoursesByStudentId(this.sharedService.activeProfile.userId, 1401)
       .subscribe((res) => {
         if (res.failure) {
           this.courses = [];

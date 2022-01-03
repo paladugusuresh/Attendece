@@ -29,6 +29,7 @@ export class DashboardPage implements OnInit {
   displayNoData = false;
   isAttendanceDataLoadingCompleted = false;
   loadingEvent: any;
+  pageIndex = 1;
   totalPages = 0;
   displayPrevIcon = false;
   displayNextIcon = true;
@@ -44,6 +45,7 @@ export class DashboardPage implements OnInit {
   }
 
   ionViewWillEnter() {
+    this.courseId = 0;
     const date = new Date();
     const month = `${date.getMonth() + 1 < 10 ? ('0' + (date.getMonth() + 1)) : date.getMonth() + 1}`;
     const day = `${date.getDate() < 10 ? ('0' + date.getDate()) : date.getDate()}`;
@@ -70,7 +72,7 @@ export class DashboardPage implements OnInit {
           console.log(res.error);
         } else {
           this.courses = res.result;
-          this.courseId = +this.courseId === 0 ? this.courses[0].courseId : this.courseId;
+          this.courseId = +this.courseId === 0 && this.courses.length > 0 ? this.courses[0].courseId : this.courseId;
           this.getAttendanceByStudentCourseandDate(this.courseId);
         }
       });
@@ -116,7 +118,7 @@ export class DashboardPage implements OnInit {
           : this.attendedDate,
         this.attendedDate.indexOf('T') > -1
           ? this.attendedDate.substr(0, this.attendedDate.indexOf('T'))
-          : this.attendedDate, 1, AppConfig.pageSize)
+          : this.attendedDate, this.pageIndex, AppConfig.pageSize)
       .subscribe((res: Response) => {
         if (res.failure) {
           console.log(res.error);
@@ -124,14 +126,17 @@ export class DashboardPage implements OnInit {
           this.attendanceHistory = [];
         } else {
           this.displayNoData = false;
-          this.attendanceHistory = res.result.history || res.result;
           if (res.error) {
             this.sharedService.displayToastMessage(res.error);
           }
-          this.totalPages = res.result.total || (res.result.history || res.result).length;
-          this.isAttendanceDataLoadingCompleted = this.attendanceHistory.length === res.result.total;
-          if (!this.isAttendanceDataLoadingCompleted && this.loadingEvent) {
-            this.loadingEvent.target.disabled = false;
+          this.attendanceHistory = this.pageIndex === 1 ? res.result.history : this.attendanceHistory.concat(res.result.history);
+          this.totalPages = res.result.total || (res.result.history).length;
+          this.isAttendanceDataLoadingCompleted = this.attendanceHistory.length >= res.result.total;
+          if (this.loadingEvent) {
+            this.loadingEvent.target.complete();
+          }
+          if (this.isAttendanceDataLoadingCompleted && this.loadingEvent) {
+            this.loadingEvent.target.disabled = true;
           }
         }
       });
@@ -149,9 +154,8 @@ export class DashboardPage implements OnInit {
       this.attendedDate = this.maxDate;
       this.updateSchoolDisplayIcons();
       if (this.courseId > 0) {
-        this.courseId = 0;
         this.isAttendanceDataLoadingCompleted = false;
-        this.getAttendanceByStudentCourseandDate(0);
+        this.getCoursesByTeacher();
       }
       if (this.loadingEvent) {
         this.loadingEvent.target.disabled = false;
@@ -166,7 +170,21 @@ export class DashboardPage implements OnInit {
    */
   onDateChange() {
     if (this.courseId > 0) {
+      this.pageIndex = 1;
+      this.isAttendanceDataLoadingCompleted = false;
       this.getAttendanceByStudentCourseandDate(this.courseId);
+    }
+  }
+
+  /**
+   * This event is fired when user changes the course.
+   * @param courseId the course id.
+   */
+  onCourseChange(courseId: number) {
+    if (courseId > 0) {
+      this.pageIndex = 1;
+      this.isAttendanceDataLoadingCompleted = false;
+      this.getAttendanceByStudentCourseandDate(courseId);
     }
   }
 
@@ -188,6 +206,7 @@ export class DashboardPage implements OnInit {
       event.target.disabled = true;
       return;
     } else {
+      ++this.pageIndex;
       this.getAttendanceByStudentCourseandDate(this.courseId);
     }
   }
@@ -203,7 +222,10 @@ export class DashboardPage implements OnInit {
       this.displayPrevIcon = false;
       return;
     }
+    this.pageIndex = 1;
+    this.isAttendanceDataLoadingCompleted = false;
     this.displayPrevIcon = true;
+    this.onSchoolChange(null);
   }
 
   /**
@@ -213,11 +235,15 @@ export class DashboardPage implements OnInit {
     this.displayPrevIcon = true;
     ++this.currSchoolDisplayingIndex;
     this.schoolId = this.schools[this.currSchoolDisplayingIndex].id + '';
+    this.pageIndex = 1;
     if (this.currSchoolDisplayingIndex === (this.schools.length - 1)) {
       this.displayNextIcon = false;
       return;
     }
+    this.pageIndex = 1;
+    this.isAttendanceDataLoadingCompleted = false;
     this.displayNextIcon = true;
+    this.onSchoolChange(null);
   }
 
   /**

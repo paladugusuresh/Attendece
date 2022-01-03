@@ -4,6 +4,7 @@ import { NavController } from '@ionic/angular';
 import { AttendanceService, CourseService, SharedService } from '../../../services';
 import { ToastController } from '@ionic/angular';
 import { Response } from '../../../models';
+import { AppConfig } from '../../../constants';
 
 @Component({
   selector: 'app-dashboard',
@@ -24,7 +25,7 @@ export class StudentDashboardPage implements OnInit {
   academicId = '';
   segment = 'weekly';
   isPageLoading = true;
-  courseId = '0';
+  courseId = 0;
   slideOptions = {
     speed: 400,
     spaceBetween: 0,
@@ -41,7 +42,7 @@ export class StudentDashboardPage implements OnInit {
     this.academicId = '';
     this.profile = this.sharedService.activeProfile;
     this.getCoursesByStudentId();
-    this.getLastDayAttendanceByStudentId();
+    this.getStudentAttendanceDetails();
     this.getAcademicYears();
   }
 
@@ -62,14 +63,34 @@ export class StudentDashboardPage implements OnInit {
     this.academicId = this.academicYears[0].id + '';
   }
 
+  getStudentAttendanceDetails() {
+    this.attendanceService.getStudentAttendanceDetails(this.sharedService.activeProfile.userId).subscribe((res) => {
+      if (res.failure) {
+        console.log(res.error);
+          this.attendanceHistory = [];
+          this.avgAttendance = 0;
+          this.grade = 0;
+          this.totalDays = 0;
+          this.daysAbsent = this.daysPresent = 0;
+      } else {
+        this.avgAttendance = res.result.percentOfDaysAttended;
+          this.totalDays = res.result.totalNumberOfDays;
+          this.daysPresent = res.result.daysAttended;
+          this.daysAbsent = res.result.daysAttendedWithUnexcusedAbsence;
+      }
+    });
+  }
+
   getCoursesByStudentId() {
-    this.courseService.getCoursesByStudentId(this.sharedService.activeProfile.userId)
+    this.courseService.getCoursesByStudentId(this.sharedService.activeProfile.userId, 1401)
       .subscribe((res) => {
         if (res.failure) {
           this.courses = [];
           console.log(res.error);
         } else {
           this.courses = res.result;
+          this.courseId = this.courseId === 0 && this.courses.length > 0 ? this.courses[0].courseId : this.courseId;
+          this.getAttendanceByStudentIdandCourse(null);
         }
       });
   }
@@ -112,14 +133,15 @@ export class StudentDashboardPage implements OnInit {
     //   queryParams: { courseId },
     //   relativeTo: this.activatedRoute
     // });
-    this.courseId = courseId?.toString();
+    this.courseId = courseId;
     this.getAttendanceByStudentIdandCourse(null);
   }
 
   getAttendanceByStudentIdandCourse(event: any) {
     this.isPageLoading = true;
-    if (this.courseId === '0') { return false; }
-    this.attendanceService.getAttendanceByStudentIdandCourseId(this.sharedService.activeProfile.userId, +this.courseId)
+    if (this.courseId === 0) { return false; }
+    const { startDate, endDate } = this.populateStartEndDate(this.segment);
+    this.attendanceService.getAttendanceByStudentCourseandDate(this.sharedService.activeProfile.userId, 1401, +this.courseId, startDate, endDate, 1, AppConfig.pageSize)
       .subscribe((res) => {
         if (res.failure) {
           this.attendanceHistory = [];
@@ -129,12 +151,34 @@ export class StudentDashboardPage implements OnInit {
       });
   }
 
-  onAcademicYearChange(ev: any) { }
+  onAcademicYearChange(ev: any) {
+    this.getCoursesByStudentId();
+  }
 
   navigateToReport(event) {
     //if (!this.isPageLoading) {
-      this.router.navigate(['/student/attendance-report'], { relativeTo: this.activatedRoute });
+    this.router.navigate(['/student/attendance-report'], { relativeTo: this.activatedRoute });
     //}
+  }
+
+  populateStartEndDate(option: string) {
+    const academicYear = this.academicYears.find(t => t.id === +this.academicId);
+    const accYear = academicYear.name.split('-')[1].trim();
+    const date = new Date(accYear, new Date().getMonth());
+    if (option === 'weekly') {
+      const month = `${date.getMonth() + 1 < 10 ? ('0' + (date.getMonth() + 1)) : date.getMonth() + 1}`;
+      const startDay = `${date.getDate() < 8 ? '01' : date.getDate() - 7 < 10 ? ('0' + (date.getDate() - 7)) : date.getDate()}`;
+      const endDay = `${date.getDate() < 10 ? ('0' + date.getDate()) : date.getDate()}`;
+      const startDate = `${date.getFullYear()}-${month}-${startDay}`;
+      const endDate = `${date.getFullYear()}-${month}-${endDay}`;
+      return {startDate, endDate};
+    } else {
+      const month = `${date.getMonth() + 1 < 10 ? ('0' + (date.getMonth() + 1)) : date.getMonth() + 1}`;
+      const day = `${date.getDate() < 10 ? ('0' + date.getDate()) : date.getDate()}`;
+      const startDate = `${date.getFullYear()}-${month}-01`;
+      const endDate = `${date.getFullYear()}-${month}-${day}`;
+      return {startDate, endDate};
+    }
   }
 
   onCalendarOptionChange(option: string) {
@@ -142,14 +186,7 @@ export class StudentDashboardPage implements OnInit {
     if (option === 'weekly') {
       this.getLastDayAttendanceByStudentId();
     } else {
-      this.attendanceService.getAttendanceByStudentCourseandDate(this.sharedService.activeProfile.userId, +this.courseId, null)
-        .subscribe((res) => {
-          if (res.failure) {
-            this.attendanceHistory = [];
-          } else {
-            this.attendanceHistory = res.result.history;
-          }
-        });;
+      this.getAttendanceByStudentIdandCourse(null);
     }
   }
 

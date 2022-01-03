@@ -77,7 +77,7 @@ export class SearchSchoolPagePage implements OnInit {
 
   navigateToDashboard(school: any) {
     if (school) {
-      this.sharedService.teacherPreferredSchoolId = school.id;
+      this.sharedService.teacherPreferredSchoolId = school.schoolId;
       this.router.navigate(['/teacher/home'], { relativeTo: this.activatedRoute });
     }
   }

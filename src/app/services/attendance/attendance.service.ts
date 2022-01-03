@@ -56,17 +56,53 @@ export class AttendanceService {
     }));
   }
 
-  getAttendanceByStudentCourseandDate(id: number, courseId: number, date: string): Observable<Response> {
-    const url = `${environment.apiPrefix}${ApiResources.getAttendanceByStudentIdandDate}?studentId=${id}&courseId=${courseId}&date=${date}`;
+  getAttendanceByStudentCourseandDate(id: number, schoolId: number, courseId: number,
+    startDate: string, endDate: string, pageIndex: number, pageSize: number): Observable<Response> {
+    const url = `${environment.apiPrefix}${ApiResources.getAttendanceByStudentIdandDate}`;
     const response: Response = {
       failure: false, success: false
     };
-    return this.apiService.getData(url, null).pipe(map((result) => {
-      if (result instanceof HttpErrorResponse || result.error) {
-        response.error = result.message || result.error;
+    const req = {
+      schoolId,
+      courseId,
+      studentId: id,
+      startDate,
+      endDate,
+      pageIndex,
+      pageSize
+    };
+    return this.apiService.postData(url, req).pipe(map((res) => {
+      if (res instanceof HttpErrorResponse || res.message?.toLowerCase() === 'failure') {
+        response.error = res.result || res.message;
         response.failure = true;
       } else {
-        response.result = result;
+        if (typeof(res.result) === 'string' && res.result.indexOf('Holiday') > -1) {
+          response.result = { total: 0, history: [] };
+          response.error = this.populateHolidayResponseMessage(startDate);
+        } else {
+          response.result = res.result;
+        }
+        response.success = true;
+      }
+      return response;
+    }), catchError((err: HttpErrorResponse) => {
+      response.error = err.message;
+      response.failure = true;
+      return of(response);
+    }));
+  }
+
+  getStudentAttendanceDetails(id: number): Observable<Response> {
+    const url = `${environment.apiPrefix}${ApiResources.getStudentAttendanceDetails}?id=${id}`;
+    const response: Response = {
+      failure: false, success: false
+    };
+    return this.apiService.postData(url, null).pipe(map((res) => {
+      if (res instanceof HttpErrorResponse || res.message?.toLowerCase() === 'failure') {
+        response.error = res.result || res.message;
+        response.failure = true;
+      } else {
+        response.result = res.result;
         response.success = true;
       }
       return response;
@@ -82,12 +118,12 @@ export class AttendanceService {
     const response: Response = {
       failure: false, success: false
     };
-    return this.apiService.updateData(url, req).pipe(map((result) => {
-      if (result instanceof HttpErrorResponse || result.error) {
-        response.error = result.message || result.error;
+    return this.apiService.postData(url, req).pipe(map((res) => {
+      if (res instanceof HttpErrorResponse || res.message?.toLowerCase() === 'failure') {
+        response.error = res.result || res.message;
         response.failure = true;
       } else {
-        response.result = result;
+        response.result = res.result;
         response.success = true;
       }
       return response;

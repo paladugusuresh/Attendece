@@ -63,11 +63,16 @@
     <ion-col>
       <ion-item>
         <ion-select interface="popover" *ngIf="courses && courses.length > 0" [(ngModel)]="courseId"
-          (ionChange)="getAttendanceByStudentCourseandDate(courseId,$event)" placeholder="Select Course" [mode]="'ios'">
+          (ionChange)="onCourseChange(courseId)" placeholder="Select Course" [mode]="'ios'">
           <ion-select-option [value]="course.courseId" *ngFor="let course of courses">{{course.name}}
           </ion-select-option>
         </ion-select>
       </ion-item>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col>
+      <h3 class="pl-2 mb-5 my-courses">Attended Date</h3>
     </ion-col>
   </ion-row>
   <ion-row>
@@ -106,7 +111,7 @@
             [lines]="index+1 === attendanceHistory.length ? 'none' : 'full'">
             <ion-label class="label label-title">
               <p>{{ history.attendedDate | date: 'MM/dd/YYYY'}}</p>
-              <h2>{{history?.firstName}} <br />({{ history.course }})</h2>
+              <h2>{{history?.firstName + ' ' + history?.lastName}} <br />({{ history.course }})</h2>
               <p><b>Latitude:</b> {{history.latitude}}</p>
               <p><b>Longitude:</b> {{history.longitude}}</p>
               <p><b>Range:</b> {{history.distance}}</p>

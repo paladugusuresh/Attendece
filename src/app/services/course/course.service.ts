@@ -14,12 +14,16 @@ export class CourseService {
   courses = [];
   constructor(private apiService: ApiService) { }
 
-  getCoursesByStudentId(id: number): Observable<Response> {
-    const url = environment.apiPrefix + ApiResources.getCoursesByStudentId + '/' + id;
+  getCoursesByStudentId(id: number, schoolId: number): Observable<Response> {
+    const url = environment.apiPrefix + ApiResources.getCoursesByStudentId;
     const response: Response = {
       failure: false, success: false
     };
-    return this.apiService.getData(url, null).pipe(map((result) => {
+    const request = {
+      studentId: id,
+      schoolId
+    }
+    return this.apiService.postData(url, request).pipe(map((result) => {
       if (result instanceof HttpErrorResponse || result.error) {
         response.error = result.message || result.error;
         response.failure = true;
