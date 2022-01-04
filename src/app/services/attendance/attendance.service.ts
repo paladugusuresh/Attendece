@@ -93,7 +93,7 @@ export class AttendanceService {
   }
 
   getStudentAttendanceDetails(id: number): Observable<Response> {
-    const url = `${environment.apiPrefix}${ApiResources.getStudentAttendanceDetails}?id=${id}`;
+    const url = `${environment.apiPrefix}${ApiResources.getStudentAttendanceDetails}?studentId=${id}`;
     const response: Response = {
       failure: false, success: false
     };

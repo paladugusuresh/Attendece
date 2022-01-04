@@ -82,14 +82,14 @@ export class StudentDashboardPage implements OnInit {
   }
 
   getCoursesByStudentId() {
-    this.courseService.getCoursesByStudentId(this.sharedService.activeProfile.userId, 1401)
+    this.courseService.getCoursesByStudentId(this.sharedService.activeProfile.userId, this.sharedService.activeProfile.schoolId)
       .subscribe((res) => {
         if (res.failure) {
           this.courses = [];
           console.log(res.error);
         } else {
           this.courses = res.result;
-          this.courseId = this.courseId === 0 && this.courses.length > 0 ? this.courses[0].courseId : this.courseId;
+          this.courseId = this.courses.length > 0 ? this.courses[0].courseId : this.courseId;
           this.getAttendanceByStudentIdandCourse(null);
         }
       });
@@ -133,6 +133,7 @@ export class StudentDashboardPage implements OnInit {
     //   queryParams: { courseId },
     //   relativeTo: this.activatedRoute
     // });
+    if (this.isPageLoading) return;
     this.courseId = courseId;
     this.getAttendanceByStudentIdandCourse(null);
   }
@@ -141,7 +142,7 @@ export class StudentDashboardPage implements OnInit {
     this.isPageLoading = true;
     if (this.courseId === 0) { return false; }
     const { startDate, endDate } = this.populateStartEndDate(this.segment);
-    this.attendanceService.getAttendanceByStudentCourseandDate(this.sharedService.activeProfile.userId, 1401, +this.courseId, startDate, endDate, 1, AppConfig.pageSize)
+    this.attendanceService.getAttendanceByStudentCourseandDate(this.sharedService.activeProfile.userId, this.sharedService.activeProfile.schoolId, +this.courseId, startDate, endDate, 1, AppConfig.pageSize)
       .subscribe((res) => {
         if (res.failure) {
           this.attendanceHistory = [];
@@ -153,6 +154,7 @@ export class StudentDashboardPage implements OnInit {
 
   onAcademicYearChange(ev: any) {
     this.getCoursesByStudentId();
+    this.getStudentAttendanceDetails();
   }
 
   navigateToReport(event) {
@@ -164,18 +166,22 @@ export class StudentDashboardPage implements OnInit {
   populateStartEndDate(option: string) {
     const academicYear = this.academicYears.find(t => t.id === +this.academicId);
     const accYear = academicYear.name.split('-')[1].trim();
-    const date = new Date(accYear, new Date().getMonth());
+    const currDate = new Date();
+    let date = currDate.getFullYear().toString() !== accYear ? new Date(new Date(accYear, 7).setDate(0)) : currDate;
     if (option === 'weekly') {
       const month = `${date.getMonth() + 1 < 10 ? ('0' + (date.getMonth() + 1)) : date.getMonth() + 1}`;
       const startDay = `${date.getDate() < 8 ? '01' : date.getDate() - 7 < 10 ? ('0' + (date.getDate() - 7)) : date.getDate()}`;
-      const endDay = `${date.getDate() < 10 ? ('0' + date.getDate()) : date.getDate()}`;
       const startDate = `${date.getFullYear()}-${month}-${startDay}`;
+      const endDay = `${date.getDate() < 10 ? ('0' + date.getDate()) : date.getDate()}`;
       const endDate = `${date.getFullYear()}-${month}-${endDay}`;
       return {startDate, endDate};
     } else {
       const month = `${date.getMonth() + 1 < 10 ? ('0' + (date.getMonth() + 1)) : date.getMonth() + 1}`;
-      const day = `${date.getDate() < 10 ? ('0' + date.getDate()) : date.getDate()}`;
       const startDate = `${date.getFullYear()}-${month}-01`;
+      if (currDate.getFullYear().toString() !== accYear) {
+        date = new Date(accYear, )
+      }
+      const day = `${date.getDate() < 10 ? ('0' + date.getDate()) : date.getDate()}`;
       const endDate = `${date.getFullYear()}-${month}-${day}`;
       return {startDate, endDate};
     }
@@ -183,11 +189,7 @@ export class StudentDashboardPage implements OnInit {
 
   onCalendarOptionChange(option: string) {
     this.isPageLoading = true;
-    if (option === 'weekly') {
-      this.getLastDayAttendanceByStudentId();
-    } else {
-      this.getAttendanceByStudentIdandCourse(null);
-    }
+    this.getAttendanceByStudentIdandCourse(null);
   }
 
   onFocus() {
@@ -213,7 +215,16 @@ export class StudentDashboardPage implements OnInit {
       ]
     });
     if (!this.isPageLoading && history.isAcknowledged) {
-      this.attendanceService.updateAcknowledement(history).subscribe((res: Response) => {
+      const updateStudentHistory = {
+        courseId: this.courseId,
+        studentId: this.sharedService.activeProfile.userId,
+        schoolId: this.sharedService.activeProfile.schoolId,
+        teacherId: history.teacherId,
+        teacherAcknowledged: history.isTeacherAcknowledged ? 'Y' : 'N',
+        userAttendanceId: history.attendanceID || 0,
+        attendanceDate: history.attendedDate
+      };
+      this.attendanceService.updateAcknowledement(updateStudentHistory).subscribe((res: Response) => {
         if (res.failure) {
           console.log(res.error);
         } else {

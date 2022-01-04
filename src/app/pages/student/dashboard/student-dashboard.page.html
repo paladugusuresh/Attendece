@@ -19,8 +19,8 @@
   <ion-row>
     <ion-col>
       <ion-item>
-        <ion-select interface="popover" [(ngModel)]="academicId" (ionChange)="onAcademicYearChange($event)" class="academic-year"
-          placeholder="Select School Year" [mode]="'ios'">
+        <ion-select interface="popover" *ngIf="academicYears && academicYears.length > 0" [(ngModel)]="academicId" (ionChange)="onAcademicYearChange($event)" class="academic-year"
+          placeholder="Select School Year" [mode]="'ios'" >
           <ion-select-option [value]="academicYear.id + ''" *ngFor="let academicYear of academicYears">{{academicYear.name}}</ion-select-option>
         </ion-select>
       </ion-item>
@@ -72,7 +72,7 @@
     <ion-col>
       <ion-item>
         <ion-select interface="popover" *ngIf="courses && courses.length > 0" [(ngModel)]="courseId"
-          (ionChange)="navigateToCourseWiseAttendance(courseId)" placeholder="Select Course" [mode]="'ios'">
+          (ionChange)="navigateToCourseWiseAttendance(courseId)" placeholder="Select Course" [mode]="'ios'" (focus)="onFocus()">
           <ion-select-option [value]="course.courseId" *ngFor="let course of courses">{{course.name}}
           </ion-select-option>
         </ion-select>
@@ -122,7 +122,7 @@
               <h2>{{ history.course }}</h2>
             </ion-label>
             <ion-toggle slot="end" color="success" [(ngModel)]="history.isAcknowledged"
-            <!-- [disabled]="!history.enableAcknowledgement && !history.isSelfAcknowledged"   -->
+             [disabled]="!history.enableAcknowledgement && !history.isSelfAcknowledged"
             (ionFocus)="onFocus()" (ionChange)="updateAcknowledgement(history)" [checked]="history.selfAcknowledged ? history.selfAcknowledged === 'Y' ? true : false : false"></ion-toggle>
           </ion-item>
         </ion-list>

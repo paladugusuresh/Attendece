@@ -23,12 +23,12 @@ export class CourseService {
       studentId: id,
       schoolId
     }
-    return this.apiService.postData(url, request).pipe(map((result) => {
-      if (result instanceof HttpErrorResponse || result.error) {
-        response.error = result.message || result.error;
+    return this.apiService.postData(url, request).pipe(map((res) => {
+      if (res instanceof HttpErrorResponse || res.message?.toLowerCase() === 'failure') {
+        response.error = res.result || res.message;
         response.failure = true;
       } else {
-        response.result = result;
+        response.result = res.result;
         response.success = true;
       }
       return response;
@@ -48,12 +48,12 @@ export class CourseService {
       teacherId: id,
       schoolId
     }
-    return this.apiService.postData(url, request).pipe(map((result) => {
-      if (result instanceof HttpErrorResponse || result.error) {
-        response.error = result.message || result.error;
+    return this.apiService.postData(url, request).pipe(map((res) => {
+      if (res instanceof HttpErrorResponse || res.message?.toLowerCase() === 'failure') {
+        response.error = res.result || res.message;
         response.failure = true;
       } else {
-        response.result = result.result;
+        response.result = res.result;
         response.success = true;
       }
       return response;

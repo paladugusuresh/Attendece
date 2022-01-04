@@ -6,7 +6,7 @@ export const apiResources = {
     forgotPassword: 'ForgotPassword',
     getRoles: 'GetRoles',
     getRolesById: 'GetRoles',
-    getCoursesByStudentId: 'teacher/school/course/list',
+    getCoursesByStudentId: 'student/school/course/list',
     getAttendanceById: 'GetAttendanceById',
     getLastDayAttendanceByStudentId: 'GetLastDayAttendanceById',
     getAttendanceByCourseId: 'GetAttendanceByCourseId',
