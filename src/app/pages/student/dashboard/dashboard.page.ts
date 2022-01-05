@@ -133,7 +133,7 @@ export class StudentDashboardPage implements OnInit {
     //   queryParams: { courseId },
     //   relativeTo: this.activatedRoute
     // });
-    if (this.isPageLoading) return;
+    if (this.isPageLoading) {return;}
     this.courseId = courseId;
     this.getAttendanceByStudentIdandCourse(null);
   }
@@ -167,7 +167,7 @@ export class StudentDashboardPage implements OnInit {
     const academicYear = this.academicYears.find(t => t.id === +this.academicId);
     const accYear = academicYear.name.split('-')[1].trim();
     const currDate = new Date();
-    let date = currDate.getFullYear().toString() !== accYear ? new Date(new Date(accYear, 7).setDate(0)) : currDate;
+    const date = currDate.getFullYear().toString() !== accYear ? new Date(new Date(accYear, 7).setDate(0)) : currDate;
     if (option === 'weekly') {
       const month = `${date.getMonth() + 1 < 10 ? ('0' + (date.getMonth() + 1)) : date.getMonth() + 1}`;
       const startDay = `${date.getDate() < 8 ? '01' : date.getDate() - 7 < 10 ? ('0' + (date.getDate() - 7)) : date.getDate()}`;
@@ -177,10 +177,9 @@ export class StudentDashboardPage implements OnInit {
       return {startDate, endDate};
     } else {
       const month = `${date.getMonth() + 1 < 10 ? ('0' + (date.getMonth() + 1)) : date.getMonth() + 1}`;
-      const startDate = `${date.getFullYear()}-${month}-01`;
-      if (currDate.getFullYear().toString() !== accYear) {
-        date = new Date(accYear, )
-      }
+      //const startDate = `${date.getFullYear()}-${month}-01`; need to update after this build just for demo since no data
+      const startDay = new Date(new Date().setMonth(-1)).getDate();
+      const startDate = `${date.getFullYear()-1}-12-${startDay < 10 ? '0' + startDay : startDay}`;
       const day = `${date.getDate() < 10 ? ('0' + date.getDate()) : date.getDate()}`;
       const endDate = `${date.getFullYear()}-${month}-${day}`;
       return {startDate, endDate};

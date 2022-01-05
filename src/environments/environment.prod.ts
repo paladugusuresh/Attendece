@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiPrefix: 'http://localhost:8100/api/'
+  apiPrefix: 'https://learnnow-qa.edisonlearning.com/mobile-services/'
 };
