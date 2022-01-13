@@ -274,6 +274,7 @@ export class DashboardPage implements OnInit {
         teacherId: this.sharedService.activeProfile.userId,
         schoolId: +this.schoolId,
         studentId: history.studentId,
+        delete: false,
         teacherAcknowledged: history.isTeacherAcknowledged ? 'Y' : 'N',
         userAttendanceId: history.attendanceID || 0,
         attendanceDate: this.attendedDate.indexOf('T') > -1

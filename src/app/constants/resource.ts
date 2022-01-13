@@ -20,5 +20,6 @@ export const apiResources = {
     updateStudentAcknowledgement: 'student/course/attendance/mark',
     getAttendanceReportData: 'GetAttendanceReportData',
     getStudentsAttendanceByCourseandDate: 'teacher/school/course/students/list',
-    updateStudentAttendanceByTeacher: 'teacher/school/course/attendance/mark'
+    updateStudentAttendanceByTeacher: 'teacher/school/course/attendance/mark',
+    updateProfilePic: 'student/upload/profile'
 };

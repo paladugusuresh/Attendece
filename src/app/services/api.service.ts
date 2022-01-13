@@ -19,6 +19,11 @@ export class ApiService {
         return this.http.post(url, body, { headers: this.postheaders }).pipe((response) => response, (error) => error);
     }
 
+    uploadFile(url: string, body: any): Observable<any> {
+        const headers = {};
+        return this.http.post(url, body, { headers }).pipe((response) => response, (error) => error);
+    }
+
     updateData(url: string, body: any): Observable<any> {
         return this.http.put(url, body).pipe((response) => response, (error) => error);
     }

@@ -16,9 +16,12 @@
         </ion-col>
       </ion-row>
       <ion-row>
-        <ion-col class="ion-padding-top">
+        <ion-col class="ion-padding-top" *ngIf="role === 'student'">
+          <ion-img [src]="profilePic ?? 'assets/imgs/avatar.svg'" class="profile-image"></ion-img>
+          <a href="javascript:void(0)" (click)="addUpdateProfilePic()" class="link-label">Update Picture</a>
+        </ion-col>
+        <ion-col class="ion-padding-top" *ngIf="role === 'teacher'">
           <ion-img src="assets/imgs/avatar.svg" class="profile-image"></ion-img>
-          <a href="javascript:void(0)" class="link-label">Update Picture</a>
         </ion-col>
       </ion-row>
       <ion-row>
@@ -43,9 +46,9 @@
                 <ion-input type="text" formControlName="email" name="email" placeholder="Email" required></ion-input>
               </ion-item>
               <br/>
-              <ion-radio-group formControlName="contactSettings">
+              <!-- <ion-radio-group formControlName="contactSettings">
                 <ion-list-header>
-                  <ion-label align="left" class="input-label">{{ 'Role'}}</ion-label>
+                  <ion-label align="left" class="input-label">{{ 'Communication Option'}}</ion-label>
                 </ion-list-header>
                 <ion-item class="radio-item">
                   <ion-label class="radio-label">Internal Messaging</ion-label>
@@ -55,10 +58,10 @@
                   <ion-label class="radio-label">Email</ion-label>
                   <ion-radio value="email" slot="start"></ion-radio>
                 </ion-item>
-              </ion-radio-group>
+              </ion-radio-group> -->
             </ion-list>
-            <div class="ion-padding-top">
-              <ion-button type="submit" class="btn-reset" expand="block">Update</ion-button>
+            <div class="ion-padding-bottom">
+              <!-- <ion-button type="submit" class="btn-reset" expand="block">Update</ion-button> -->
             </div>
           </form>
         </ion-col>

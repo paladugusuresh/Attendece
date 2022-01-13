@@ -11,7 +11,7 @@
       <h1 class="fs-2 pl-2 welcome-msg">Welcome back {{ profile?.firstName }}</h1>
     </ion-col>
   </ion-row>
-  <ion-row>
+  <!-- <ion-row>
     <ion-col>
       <h3 class="school-year">School Year</h3>
     </ion-col>
@@ -25,7 +25,7 @@
         </ion-select>
       </ion-item>
     </ion-col>
-  </ion-row>
+  </ion-row> -->
   <ion-row>
     <ion-col size="12">
       <ion-card class="attendance-card" (focus)="onFocus()">
@@ -56,9 +56,9 @@
     </ion-col> -->
   </ion-row>
   <ion-row>
-    <ion-col>
+    <!-- <ion-col>
       <h3 class="pl-2 mb-5 my-courses">My Courses</h3>
-    </ion-col>
+    </ion-col> -->
   </ion-row>
   <ion-row>
     <!-- <ion-col size="12">
@@ -69,7 +69,7 @@
         </div>
       </div>
     </ion-col> -->
-    <ion-col>
+    <!-- <ion-col>
       <ion-item>
         <ion-select interface="popover" *ngIf="courses && courses.length > 0" [(ngModel)]="courseId"
           (ionChange)="navigateToCourseWiseAttendance(courseId)" placeholder="Select Course" [mode]="'ios'" (focus)="onFocus()">
@@ -77,7 +77,7 @@
           </ion-select-option>
         </ion-select>
       </ion-item>
-    </ion-col>
+    </ion-col> -->
   </ion-row>
   <ion-row>
     <ion-col>
@@ -106,6 +106,13 @@
     </ion-calendar>
     </ion-col>
   </ion-row> -->
+  <ion-row *ngIf="displayMultiCourseWarningMsg">
+    <ion-col size="12">
+      <ion-label class="label-title note-msg">
+        <b>Note:</b> Multiple courses mapped to you. Please contact your administrator for more information.
+      </ion-label>
+    </ion-col>
+  </ion-row>
   <ion-row>
     <ion-col *ngIf="attendanceHistory.length > 0">
       <!-- <ion-slides [options]="slideOptions" [mode]="'ios'" [pager]="true">
@@ -118,11 +125,13 @@
           <ion-item *ngFor="let history of attendanceHistory; let index = index"
             [lines]="index+1 === attendanceHistory.length ? 'none' : 'full'">
             <ion-label class="label label-title">
-              <p>{{ history.attendedDate | date: 'MM/dd/YYYY'}}</p>
+              <p>{{ history.attendanceDate | date: 'MM/dd/YYYY'}}</p>
               <h2>{{ history.course }}</h2>
             </ion-label>
+            <!-- <ion-toggle slot="end" color="success" [(ngModel)]="history.isAcknowledged"
+             [disabled]="(history.teacherAcknowledged === 'Y') || !history.isSelfAcknowledged"
+            (ionFocus)="onFocus()" (ionChange)="updateAcknowledgement(history)" [checked]="history.selfAcknowledged ? history.selfAcknowledged === 'Y' ? true : false : false"></ion-toggle> -->
             <ion-toggle slot="end" color="success" [(ngModel)]="history.isAcknowledged"
-             [disabled]="!history.enableAcknowledgement && !history.isSelfAcknowledged"
             (ionFocus)="onFocus()" (ionChange)="updateAcknowledgement(history)" [checked]="history.selfAcknowledged ? history.selfAcknowledged === 'Y' ? true : false : false"></ion-toggle>
           </ion-item>
         </ion-list>

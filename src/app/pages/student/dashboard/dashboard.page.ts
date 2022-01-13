@@ -26,6 +26,7 @@ export class StudentDashboardPage implements OnInit {
   segment = 'weekly';
   isPageLoading = true;
   courseId = 0;
+  displayMultiCourseWarningMsg = false;
   slideOptions = {
     speed: 400,
     spaceBetween: 0,
@@ -44,6 +45,7 @@ export class StudentDashboardPage implements OnInit {
     this.getCoursesByStudentId();
     this.getStudentAttendanceDetails();
     this.getAcademicYears();
+    this.getAttendanceByStudentIdandCourse(null);
   }
 
   getAcademicYears() {
@@ -67,16 +69,16 @@ export class StudentDashboardPage implements OnInit {
     this.attendanceService.getStudentAttendanceDetails(this.sharedService.activeProfile.userId).subscribe((res) => {
       if (res.failure) {
         console.log(res.error);
-          this.attendanceHistory = [];
-          this.avgAttendance = 0;
-          this.grade = 0;
-          this.totalDays = 0;
-          this.daysAbsent = this.daysPresent = 0;
+        this.attendanceHistory = [];
+        this.avgAttendance = 0;
+        this.grade = 0;
+        this.totalDays = 0;
+        this.daysAbsent = this.daysPresent = 0;
       } else {
         this.avgAttendance = res.result.percentOfDaysAttended;
-          this.totalDays = res.result.totalNumberOfDays;
-          this.daysPresent = res.result.daysAttended;
-          this.daysAbsent = res.result.daysAttendedWithUnexcusedAbsence;
+        this.totalDays = res.result.totalNumberOfDays;
+        this.daysPresent = res.result.daysAttended;
+        this.daysAbsent = res.result.daysAttendedWithUnexcusedAbsence;
       }
     });
   }
@@ -90,7 +92,13 @@ export class StudentDashboardPage implements OnInit {
         } else {
           this.courses = res.result;
           this.courseId = this.courses.length > 0 ? this.courses[0].courseId : this.courseId;
-          this.getAttendanceByStudentIdandCourse(null);
+          //this.getAttendanceByStudentIdandCourse(null);
+          const course = this.courses.length > 0 ? this.courses[0].name : '';
+          if (course && this.courses.some((t: any) => t.name && t.name !== course)) {
+            this.displayMultiCourseWarningMsg = true;
+          } else {
+            this.displayMultiCourseWarningMsg = false;
+          }
         }
       });
   }
@@ -133,16 +141,22 @@ export class StudentDashboardPage implements OnInit {
     //   queryParams: { courseId },
     //   relativeTo: this.activatedRoute
     // });
-    if (this.isPageLoading) {return;}
+    if (this.isPageLoading) { return; }
     this.courseId = courseId;
     this.getAttendanceByStudentIdandCourse(null);
   }
 
   getAttendanceByStudentIdandCourse(event: any) {
     this.isPageLoading = true;
-    if (this.courseId === 0) { return false; }
     const { startDate, endDate } = this.populateStartEndDate(this.segment);
-    this.attendanceService.getAttendanceByStudentCourseandDate(this.sharedService.activeProfile.userId, this.sharedService.activeProfile.schoolId, +this.courseId, startDate, endDate, 1, AppConfig.pageSize)
+    this.attendanceService.getAttendanceByStudentCourseandDate(
+      this.sharedService.activeProfile.userId,
+      this.sharedService.activeProfile.schoolId,
+      +this.courseId,
+      startDate,
+      endDate,
+      1,
+      AppConfig.pageSize)
       .subscribe((res) => {
         if (res.failure) {
           this.attendanceHistory = [];
@@ -174,15 +188,15 @@ export class StudentDashboardPage implements OnInit {
       const startDate = `${date.getFullYear()}-${month}-${startDay}`;
       const endDay = `${date.getDate() < 10 ? ('0' + date.getDate()) : date.getDate()}`;
       const endDate = `${date.getFullYear()}-${month}-${endDay}`;
-      return {startDate, endDate};
+      return { startDate, endDate };
     } else {
       const month = `${date.getMonth() + 1 < 10 ? ('0' + (date.getMonth() + 1)) : date.getMonth() + 1}`;
-      //const startDate = `${date.getFullYear()}-${month}-01`; need to update after this build just for demo since no data
-      const startDay = new Date(new Date().setMonth(-1)).getDate();
-      const startDate = `${date.getFullYear()-1}-12-${startDay < 10 ? '0' + startDay : startDay}`;
+      const startDate = `${date.getFullYear()}-${month}-01`; //need to update after this build just for demo since no data
+      //const startDay = new Date(new Date().setMonth(-1)).getDate();
+      //const startDate = `${date.getFullYear() - 1}-12-${startDay < 10 ? '0' + startDay : startDay}`;
       const day = `${date.getDate() < 10 ? ('0' + date.getDate()) : date.getDate()}`;
       const endDate = `${date.getFullYear()}-${month}-${day}`;
-      return {startDate, endDate};
+      return { startDate, endDate };
     }
   }
 
@@ -213,12 +227,13 @@ export class StudentDashboardPage implements OnInit {
         }
       ]
     });
-    if (!this.isPageLoading && history.isAcknowledged) {
+    if (!this.isPageLoading) {
       const updateStudentHistory = {
         courseId: this.courseId,
         studentId: this.sharedService.activeProfile.userId,
         schoolId: this.sharedService.activeProfile.schoolId,
         teacherId: history.teacherId,
+        delete: false,
         teacherAcknowledged: history.isTeacherAcknowledged ? 'Y' : 'N',
         userAttendanceId: history.attendanceID || 0,
         attendanceDate: history.attendedDate

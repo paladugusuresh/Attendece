@@ -20,6 +20,7 @@ export class AuthService {
 
   /**
    * Validates the user based on the token.
+   *
    * @returns promise object.
    */
   isLoggedIn(): Promise<boolean> {
@@ -28,6 +29,7 @@ export class AuthService {
 
   /**
    * Authenticates the user using user id and password.
+   *
    * @param userId the user id.
    * @param password the password.
    * @returns response model.
@@ -41,17 +43,20 @@ export class AuthService {
     const response: Response = {
       failure: false, success: false
     };
-    return this.apiService.postData(url, request).pipe(map((result) => {
-      if (result instanceof HttpErrorResponse || result.error) {
-        response.error = result.message || result.error;
+    return this.apiService.postData(url, request).pipe(map((res) => {
+      if (res instanceof HttpErrorResponse || res.error) {
+        response.error = res.message || res.error;
         response.failure = true;
       } else {
-        result.result.userName = userId;
-        result.result.fullName = result.fullName || `${result.firstName} ${result.lastName || ''}`;
+        res.result.userName = userId;
+        res.result.fullName = res.result.fullName || `${res.result.firstName} ${res.result.lastName || ''}`;
         response.success = true;
-        response.result = result.result;
-        Storage.set({key: 'sessionData', value: JSON.stringify(result.result) });
-        this.sessionData = result.result;
+        res.result.profilePic = res.result.profilePic
+          ? `${environment.profilePicPrefix}${res.result.profilePic}`
+          : res.result.profilePic;
+        response.result = res.result;
+        Storage.set({ key: 'sessionData', value: JSON.stringify(res.result) });
+        this.sessionData = res.result;
       }
       return response;
     }), catchError((err: HttpErrorResponse) => {
@@ -63,6 +68,7 @@ export class AuthService {
 
   /**
    * Registering the user.
+   *
    * @param user user object.
    * @returns response model.
    */
@@ -89,6 +95,7 @@ export class AuthService {
 
   /**
    * Changes the password of the user.
+   *
    * @param userId the user id.
    * @param oldPwd the old password of user.
    * @param newPwd the new password of user.
@@ -123,7 +130,8 @@ export class AuthService {
   }
 
   /**
-   * Changes the password of the unknown user based on user name. 
+   * Changes the password of the unknown user based on user name.
+   *
    * @param oldPwd the old password of user.
    * @param newPwd the new password of user.
    * @param userName the user name.
@@ -157,6 +165,7 @@ export class AuthService {
 
   /**
    * Updates the user details.
+   *
    * @param user the user object.
    * @returns response model.
    */
@@ -182,7 +191,36 @@ export class AuthService {
   }
 
   /**
+   * Updates the user profile pic.
+   *
+   * @param formData the form data contains user profile pic.
+   * @param id the user id.
+   * @returns response model.
+   */
+  updateProfilePic(formData: any, id: number) {
+    const url = `${environment.apiPrefix}${ApiResources.updateProfilePic}?studentId=${id}`;
+    const response: Response = {
+      failure: false, success: false
+    };
+    return this.apiService.uploadFile(url, formData).pipe(map((res) => {
+      if (res instanceof HttpErrorResponse || res.error) {
+        response.error = res.message || res.error;
+        response.failure = true;
+      } else {
+        response.success = true;
+        response.result = res.result;
+      }
+      return response;
+    }), catchError((err: HttpErrorResponse) => {
+      response.error = err.message;
+      response.failure = true;
+      return of(response);
+    }));
+  }
+
+  /**
    * Gets the roles.
+   *
    * @returns response model.
    */
   getAllRoles(): Observable<any> {
@@ -208,15 +246,17 @@ export class AuthService {
 
   /**
    * Sets the token of logged in user into application storage.
+   *
    * @param token the token.
    */
   setToken(token: string) {
-    Storage.set({ key: 'token', value: token }).then(() => {});
+    Storage.set({ key: 'token', value: token }).then(() => { });
     this.token = token;
   }
 
   /**
    * Gets the token of the logged in user from application storage.
+   *
    * @returns the token.
    */
   getToken() {
@@ -225,6 +265,7 @@ export class AuthService {
 
   /**
    * Update the authorized user session details once application is loading for first time.
+   *
    * @param sessionData the session data of the logged in user.
    * @param token the token.
    */

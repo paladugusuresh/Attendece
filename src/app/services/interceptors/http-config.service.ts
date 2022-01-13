@@ -14,12 +14,15 @@ export class HttpConfigService implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     if (this.authService.token) {
-      req = req.clone({
-        setHeaders: {
-          //authorization: this.authService.token,
-          'content-type': 'application/json'
-        }
-      });
+      if (req.url.indexOf('/upload/profile') === -1) {
+        req = req.clone({
+          setHeaders: {
+            //authorization: this.authService.token,
+            //enctype: 'multipart/form-data; boundary=WebAppBoundary',
+            'content-type': 'application/json'
+          }
+        });
+      }
     }
     this.sharedService.setLoading(true, req.url);
     if (!window.navigator.onLine) {
