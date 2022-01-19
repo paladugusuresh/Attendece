@@ -2,7 +2,7 @@ export const apiResources = {
     login: 'login',
     registerUser: 'RegisterUser',
     changePassword: 'ChangePassword',
-    updateProfile: 'UpdateProfile',
+    updateProfile: '/student/profile/update',
     forgotPassword: 'ForgotPassword',
     getRoles: 'GetRoles',
     getRolesById: 'GetRoles',
@@ -21,5 +21,9 @@ export const apiResources = {
     getAttendanceReportData: 'GetAttendanceReportData',
     getStudentsAttendanceByCourseandDate: 'teacher/school/course/students/list',
     updateStudentAttendanceByTeacher: 'teacher/school/course/attendance/mark',
-    updateProfilePic: 'student/upload/profile'
+    updateProfilePic: 'student/upload/profile',
+    getAcademicYearsBySchoolId: 'student/school/academicyear/list',
+    getHolidaysBySchoolId: 'school/holidays/list',
+    enableOrDisableSelfMarking: 'teacher/school/course/attendance/selfmark',
+    getSelfMarkStatus: 'teacher/school/course/attendance/selfmark/status'
 };

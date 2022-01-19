@@ -44,8 +44,8 @@ export class AuthService {
       failure: false, success: false
     };
     return this.apiService.postData(url, request).pipe(map((res) => {
-      if (res instanceof HttpErrorResponse || res.error) {
-        response.error = res.message || res.error;
+      if (res instanceof HttpErrorResponse || res.message?.toLowerCase() === 'failure') {
+        response.error = res.result || res.message;
         response.failure = true;
       } else {
         res.result.userName = userId;
@@ -174,13 +174,13 @@ export class AuthService {
     const response: Response = {
       failure: false, success: false
     };
-    return this.apiService.postData(url, user).pipe(map((result) => {
-      if (result instanceof HttpErrorResponse || result.error) {
-        response.error = result.message || result.error;
+    return this.apiService.postData(url, user).pipe(map((res) => {
+      if (res instanceof HttpErrorResponse || res.message?.toLowerCase() === 'failure') {
+        response.error = res.result || res.message;
         response.failure = true;
       } else {
         response.success = true;
-        response.result = result;
+        response.result = res.result;
       }
       return response;
     }), catchError((err: HttpErrorResponse) => {
@@ -272,5 +272,12 @@ export class AuthService {
   updateAuthData(sessionData: string, token: string) {
     this.token = token;
     this.sessionData = sessionData;
+  }
+
+  /**
+   * Clears the token.
+   */
+  clearToken() {
+    this.token = null;
   }
 }

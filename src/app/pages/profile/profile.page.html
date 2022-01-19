@@ -60,8 +60,8 @@
                 </ion-item>
               </ion-radio-group> -->
             </ion-list>
-            <div class="ion-padding-bottom">
-              <!-- <ion-button type="submit" class="btn-reset" expand="block">Update</ion-button> -->
+            <div class="ion-padding-bottom" *ngIf="role === 'student'">
+              <ion-button type="submit" class="btn-reset" expand="block">Update</ion-button>
             </div>
           </form>
         </ion-col>

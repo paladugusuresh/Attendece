@@ -20,6 +20,24 @@ ion-item {
     font-family: 'Red Hat Display';
 }
 
+.attended-border {
+    border: 1pt solid #B6B674;
+    background-color: #9AD09A;
+    padding-right: 20px;
+}
+
+.holiday-border {
+    border: 1pt solid #B6B674;
+    background-color: #D3D3D3;
+    padding-right: 20px;
+}
+
+.unexcused-absence-border {
+    border: 1pt solid #B6B674;
+    background-color: #fff;
+    padding-right: 20px; 
+}
+
 .label-title {
     opacity: 1 !important;
     p, h2 {
@@ -40,4 +58,42 @@ ion-col .empty-data {
     font-size: 17px !important;
     color: #030303 !important;
     text-align: center;
+}
+
+.attendance-card {
+    --background: #166186;
+    color: #ffffff;
+    font-family: 'Red Hat Display';
+    padding-bottom: 1rem;
+    margin: 10px 5px;
+    ion-item {
+        --background: #166186;
+        --border-color: #166186;
+        font-family: 'Red Hat Display';
+        ion-label > p, ion-label > h2, ion-label > h1 {
+            color: #ffffff !important;
+            pointer-events: none;
+        }
+    }
+}
+
+.grade-card-heading {
+    font-size: 18px;
+    text-align: left;
+    margin-bottom: 0.5rem;
+}
+
+.grade-card-content {
+    font-size: 36px;
+}
+
+.mlt {
+    margin-left: -4.9em;
+    pointer-events: none;
+}
+
+@media (max-width: 370px) {
+    .mlt {
+        margin-left: -5.9em;
+    }
 }

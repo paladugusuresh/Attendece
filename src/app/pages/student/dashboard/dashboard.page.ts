@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { NavController } from '@ionic/angular';
-import { AttendanceService, CourseService, SharedService } from '../../../services';
+import { Geolocation } from '@capacitor/geolocation';
+import { AttendanceService, CourseService, SharedService, StudentService } from '../../../services';
 import { ToastController } from '@ionic/angular';
 import { Response } from '../../../models';
 import { AppConfig } from '../../../constants';
@@ -18,15 +19,16 @@ export class StudentDashboardPage implements OnInit {
   totalDays = 0;
   daysPresent = 0;
   daysAbsent = 0;
-  academicYears = [];
   attendanceHistory = [];
   profile = null;
   historyDates = [];
-  academicId = '';
   segment = 'weekly';
   isPageLoading = true;
   courseId = 0;
+  selfMarkEnabled = false;
+  teacherId = 0;
   displayMultiCourseWarningMsg = false;
+  currentDate = this.sharedService.currentDate;
   slideOptions = {
     speed: 400,
     spaceBetween: 0,
@@ -34,41 +36,21 @@ export class StudentDashboardPage implements OnInit {
   };
   constructor(private attendanceService: AttendanceService, private courseService: CourseService,
     private sharedService: SharedService, private router: Router, private activatedRoute: ActivatedRoute,
-    private navController: NavController, private toastCtrl: ToastController) { }
+    private navController: NavController, private toastCtrl: ToastController, private studentService: StudentService) { }
 
   ngOnInit() { }
 
   ionViewWillEnter() {
     this.segment = 'weekly';
-    this.academicId = '';
     this.profile = this.sharedService.activeProfile;
     this.getCoursesByStudentId();
     this.getStudentAttendanceDetails();
-    this.getAcademicYears();
     this.getAttendanceByStudentIdandCourse(null);
-  }
-
-  getAcademicYears() {
-    this.academicYears = [{
-      name: '2021 - 2022',
-      id: 1
-    }, {
-      name: '2020 - 2021',
-      id: 2
-    }, {
-      name: '2019 - 2020',
-      id: 3
-    }, {
-      name: '2019 - 2018',
-      id: 4
-    }];
-    this.academicId = this.academicYears[0].id + '';
   }
 
   getStudentAttendanceDetails() {
     this.attendanceService.getStudentAttendanceDetails(this.sharedService.activeProfile.userId).subscribe((res) => {
       if (res.failure) {
-        console.log(res.error);
         this.attendanceHistory = [];
         this.avgAttendance = 0;
         this.grade = 0;
@@ -160,15 +142,14 @@ export class StudentDashboardPage implements OnInit {
       .subscribe((res) => {
         if (res.failure) {
           this.attendanceHistory = [];
+          this.selfMarkEnabled = false;
+          this.teacherId = 0;
         } else {
           this.attendanceHistory = res.result.history;
+          this.selfMarkEnabled = res.result.selfMarkEnabled || false;
+          this.teacherId = res.result.teacherId || 0;
         }
       });
-  }
-
-  onAcademicYearChange(ev: any) {
-    this.getCoursesByStudentId();
-    this.getStudentAttendanceDetails();
   }
 
   navigateToReport(event) {
@@ -178,22 +159,18 @@ export class StudentDashboardPage implements OnInit {
   }
 
   populateStartEndDate(option: string) {
-    const academicYear = this.academicYears.find(t => t.id === +this.academicId);
-    const accYear = academicYear.name.split('-')[1].trim();
-    const currDate = new Date();
-    const date = currDate.getFullYear().toString() !== accYear ? new Date(new Date(accYear, 7).setDate(0)) : currDate;
+    const date = new Date();
     if (option === 'weekly') {
-      const month = `${date.getMonth() + 1 < 10 ? ('0' + (date.getMonth() + 1)) : date.getMonth() + 1}`;
-      const startDay = `${date.getDate() < 8 ? '01' : date.getDate() - 7 < 10 ? ('0' + (date.getDate() - 7)) : date.getDate()}`;
-      const startDate = `${date.getFullYear()}-${month}-${startDay}`;
+      const weekStartDate = new Date(new Date().setDate(date.getDate() - date.getDay() + (date.getDay() === 0 ? 0 : 1)));
+      const month = `${weekStartDate.getMonth() + 1 < 10 ? ('0' + (weekStartDate.getMonth() + 1)) : weekStartDate.getMonth() + 1}`;
+      const startDay = `${weekStartDate.getDate() < 10  ? ('0' + weekStartDate.getDate()) : weekStartDate.getDate()}`;
+      const startDate = `${weekStartDate.getFullYear()}-${month}-${startDay}`;
       const endDay = `${date.getDate() < 10 ? ('0' + date.getDate()) : date.getDate()}`;
       const endDate = `${date.getFullYear()}-${month}-${endDay}`;
       return { startDate, endDate };
     } else {
       const month = `${date.getMonth() + 1 < 10 ? ('0' + (date.getMonth() + 1)) : date.getMonth() + 1}`;
-      const startDate = `${date.getFullYear()}-${month}-01`; //need to update after this build just for demo since no data
-      //const startDay = new Date(new Date().setMonth(-1)).getDate();
-      //const startDate = `${date.getFullYear() - 1}-12-${startDay < 10 ? '0' + startDay : startDay}`;
+      const startDate = `${date.getFullYear()}-${month}-01`;
       const day = `${date.getDate() < 10 ? ('0' + date.getDate()) : date.getDate()}`;
       const endDate = `${date.getFullYear()}-${month}-${day}`;
       return { startDate, endDate };
@@ -232,12 +209,21 @@ export class StudentDashboardPage implements OnInit {
         courseId: this.courseId,
         studentId: this.sharedService.activeProfile.userId,
         schoolId: this.sharedService.activeProfile.schoolId,
-        teacherId: history.teacherId,
+        teacherId: this.teacherId,
         delete: false,
-        teacherAcknowledged: history.isTeacherAcknowledged ? 'Y' : 'N',
+        selfAcknowledged: history.isAcknowledged ? 'Y' : 'N',
         userAttendanceId: history.attendanceID || 0,
-        attendanceDate: history.attendedDate
+        attendanceDate: history.attendanceDate,
+        studentLatitude: null,
+        studentLongitude: null
       };
+      try {
+        const coordinates = await Geolocation.getCurrentPosition();
+        if (coordinates && coordinates.coords) {
+          updateStudentHistory.studentLatitude = coordinates.coords.latitude;
+          updateStudentHistory.studentLongitude = coordinates.coords.longitude;
+        }
+      } catch (error) { }
       this.attendanceService.updateAcknowledement(updateStudentHistory).subscribe((res: Response) => {
         if (res.failure) {
           console.log(res.error);

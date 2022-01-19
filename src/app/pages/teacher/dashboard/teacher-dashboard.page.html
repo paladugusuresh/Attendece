@@ -90,10 +90,7 @@
           <ion-label class="self-marking-label">Self Marking</ion-label>
         </ion-col>
         <ion-col size="2">
-          <ion-toggle color="danger" [(ngModel)]="allowSelfMarking" [checked]="allowSelfMarking"
-            *ngIf="allowSelfMarking"></ion-toggle>
-          <ion-toggle color="success" [(ngModel)]="allowSelfMarking" [checked]="allowSelfMarking"
-            *ngIf="!allowSelfMarking"></ion-toggle>
+          <ion-toggle [color]="allowSelfMarking ? 'danger' : 'success'" (click)="onSelfMarkingControlFocus()" (ionChange)="enableOrDisableSelfMark()" [(ngModel)]="allowSelfMarking" [checked]="allowSelfMarking"></ion-toggle>
         </ion-col>
       </ion-row>
     </ion-col>
@@ -112,13 +109,13 @@
             <ion-label class="label label-title">
               <p>{{ history.attendedDate | date: 'MM/dd/YYYY'}}</p>
               <h2>{{history?.firstName + ' ' + history?.lastName}} <br />({{ history.course }})</h2>
-              <p><b>Latitude:</b> {{history.latitude}}</p>
-              <p><b>Longitude:</b> {{history.longitude}}</p>
-              <p><b>Range:</b> {{history.distance}}</p>
+              <p><b>Latitude:</b> {{history.isTeacherAcknowledged ? history.teacherLatitude : history.isAcknowledged ? history.studentLatitude : ''}}</p>
+              <p><b>Longitude:</b> {{history.isTeacherAcknowledged ? history.teacherLongitude : history.isAcknowledged ? history.studentLongitude : ''}}</p>
+              <p><b>Range:</b> {{(history.isTeacherAcknowledged || history.isAcknowledged) && history.distance ? (history.distance*0.621371 | decimal: 2) + ' miles' : ''}}</p>
             </ion-label>
-            <ion-toggle slot="end" color="success" (ionFocus)="onFocus()"
+            <ion-toggle slot="end" color="success" (click)="onFocus()"
               (ionChange)="updateStudentAttendanceByTeacher(history)" [(ngModel)]="history.isTeacherAcknowledged"
-              [disabled]="history.selfAcknowledged" [checked]="history.teacherAcknowledged ? history.teacherAcknowledged === 'Y' ? true : false : false"></ion-toggle>
+              [disabled]="history.holiday || history.selfAcknowledged" [checked]="history.teacherAcknowledged ? history.teacherAcknowledged === 'Y' ? true : false : false"></ion-toggle>
           </ion-item>
         </ion-list>
         <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">

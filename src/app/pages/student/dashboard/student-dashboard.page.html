@@ -132,7 +132,8 @@
              [disabled]="(history.teacherAcknowledged === 'Y') || !history.isSelfAcknowledged"
             (ionFocus)="onFocus()" (ionChange)="updateAcknowledgement(history)" [checked]="history.selfAcknowledged ? history.selfAcknowledged === 'Y' ? true : false : false"></ion-toggle> -->
             <ion-toggle slot="end" color="success" [(ngModel)]="history.isAcknowledged"
-            (ionFocus)="onFocus()" (ionChange)="updateAcknowledgement(history)" [checked]="history.selfAcknowledged ? history.selfAcknowledged === 'Y' ? true : false : false"></ion-toggle>
+            [disabled]= "(history.holiday || history.isTeacherAcknowledged || !selfMarkEnabled) || (currentDate !== (history.attendanceDate | date: 'YYYY-MM-dd'))" (click)="onFocus()" (ionChange)="updateAcknowledgement(history)" 
+            [checked]="history.selfAcknowledged ? history.selfAcknowledged === 'Y' ? true : false : false"></ion-toggle>
           </ion-item>
         </ion-list>
       </ion-card>

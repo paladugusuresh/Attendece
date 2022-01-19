@@ -34,4 +34,31 @@ export class StudentService {
       return of(response);
     }));
   }
+
+  /**
+   * Gets the academic years of school
+   *
+   * @param id the school id.
+   * @returns response model.
+   */
+  getAcademicYearsBySchoolId(id: number): Observable<Response> {
+    const url = `${environment.apiPrefix}${ApiResources.getAcademicYearsBySchoolId}?schoolId=${id}`;
+    const response: Response = {
+      failure: false, success: false
+    };
+    return this.apiService.postData(url, null).pipe(map((res) => {
+      if (res instanceof HttpErrorResponse || res.message?.toLowerCase() === 'failure') {
+        response.error = res.result || res.message;
+        response.failure = true;
+      } else {
+        response.result = res.result;
+        response.success = true;
+      }
+      return response;
+    }), catchError((err: HttpErrorResponse) => {
+      response.error = err.message;
+      response.failure = true;
+      return of(response);
+    }));
+  }
 }

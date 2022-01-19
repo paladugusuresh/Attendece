@@ -55,7 +55,7 @@ export class AppComponent implements OnInit, OnDestroy {
     this.platform.backButton.subscribeWithPriority(1000, async () => {
       if ((this.router.url !== '/login' && this.router.url.indexOf('dashboard') === -1)) {
         if (!this.authService.getToken() && this.router.url !== '/login') {
-          this.router.navigate(['/login']);
+          await this.logout();
         } else if (this.authService.getToken() && this.router.url.indexOf('dashboard') === -1) {
           this.navigateToHomePage();
         }
@@ -106,6 +106,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   async logout() {
     document.getElementById('main-content').className = document.getElementById('main-content').className.replace('menu-content-open', '');
+    this.authService.clearToken();
     await this.sharedService.clear();
     this.router.navigate(['/login']);
   }

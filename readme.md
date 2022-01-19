@@ -32,4 +32,40 @@ Below are the commands to install native storage to install native storage for i
   Signing Key alias name is focalpoint
   Key user name is FPAdmin@123.
 </pre>
+<pre>
+  Permissions required for below plugins to work
+  Android: (android/app/src/main/AndroidManifest.xml)
+   1. <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+<uses-feature android:name="android.hardware.location.gps" />
+  2.  <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+  IOS: (ios/App/App/Info.plist)
+  1. <key>NSCameraUsageDescription</key>
+	   <string>To capture images</string>
+	   <key>NSPhotoLibraryAddUsageDescription</key>
+	   <string>To add images</string>
+	   <key>NSPhotoLibraryUsageDescription</key>
+	   <string>To store images</string>
+  2. <key>NSLocationAlwaysUsageDescription</key>
+     <string>To get the geolocation of the user for attendance marking.</string>
+     <key>NSLocationWhenInUseUsageDescription</key>
+     <string>To get the geolocation of the user for attendance marking.</string>
+</pre>
+<pre>
+  App Icon/Splash Screen Generation:
+  1. Cordova-res cli need to install in the machine
+     npm install cordova-res -g
+  2. cordova-res pulls the icon/splash image from resources folder
+      Resource folder
+      -android
+        --icon-foregroung.png(432*432 => 288*288 center image + remaining area with white border).
+      -icon.png(1024*1024)
+      -splash.png(2732*2732)
+  3. Add below build script in package.json (Only for the first time)
+      "resources": "cordova-res ios --skip-config --copy && cordova-res android --skip-config --copy --icon-background-source '#FFFFFF'"
+  4. Use the below urls for resizing or adding white border space to images
+       Resizing: https://www.iloveimg.com/resize-image#resize-options,pixels
+       Adding white border: https://www5.lunapic.com/editor/?action=border
+</pre>
 </div>

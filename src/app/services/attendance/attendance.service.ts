@@ -81,6 +81,7 @@ export class AttendanceService {
           response.error = this.populateHolidayResponseMessage(startDate);
         } else {
           response.result = res.result;
+          response.result.history = this.populateAttendanceResponse(response.result.history);
         }
         response.success = true;
       }
@@ -180,6 +181,7 @@ export class AttendanceService {
           response.error = this.populateHolidayResponseMessage(startDate);
         } else {
           response.result = res.result;
+          response.result.history = this.populateAttendanceResponse(response.result.history);
         }
         response.success = true;
       }
@@ -212,6 +214,52 @@ export class AttendanceService {
     }));
   }
 
+  enableOrDisableSelfMarking(id: number, courseId: number, isEnable: boolean): Observable<Response> {
+    const url = `${environment.apiPrefix}${ApiResources.enableOrDisableSelfMarking}/${isEnable ? 'enable' : 'disable'}`;
+    const req = {
+      teacherId: id,
+      courseId
+    };
+    const response: Response = {
+      failure: false, success: false
+    };
+    return this.apiService.postData(url, req).pipe(map((res) => {
+      if (res instanceof HttpErrorResponse || res.message?.toLowerCase() === 'failure') {
+        response.error = res.result || res.message;
+        response.failure = true;
+      } else {
+        response.result = res.result;
+        response.success = true;
+      }
+      return response;
+    }), catchError((err: HttpErrorResponse) => {
+      response.error = err.message;
+      response.failure = true;
+      return of(response);
+    }));
+  }
+
+  getSelfMarkStatus(id: number, schoolId: number, courseId: number): Observable<Response> {
+    const url = `${environment.apiPrefix}${ApiResources.getSelfMarkStatus}?courseId=${courseId}`;
+    const response: Response = {
+      failure: false, success: false
+    };
+    return this.apiService.getData(url, null).pipe(map((res) => {
+      if (res instanceof HttpErrorResponse || res.message?.toLowerCase() === 'failure') {
+        response.error = res.result || res.message;
+        response.failure = true;
+      } else {
+        response.result = res.result;
+        response.success = true;
+      }
+      return response;
+    }), catchError((err: HttpErrorResponse) => {
+      response.error = err.message;
+      response.failure = true;
+      return of(response);
+    }));
+  }
+
   private populateHolidayResponseMessage(fromDate: string) {
     const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
     if (fromDate) {
@@ -225,5 +273,13 @@ export class AttendanceService {
     } else {
       return 'Selected date is holiday';
     }
+  }
+
+  private populateAttendanceResponse(attendanceHistory: Array<any>) {
+    attendanceHistory.forEach((val: any) => {
+      val.isTeacherAcknowledged = val.teacherAcknowledged === 'Y' ? true : false;
+      val.isAcknowledged = val.selfAcknowledged === 'Y' ? true : val.isTeacherAcknowledged;
+    });
+    return attendanceHistory;
   }
 }

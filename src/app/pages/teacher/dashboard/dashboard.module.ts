@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 
 import { DashboardPageRoutingModule } from './dashboard-routing.module';
-
+import { DecimalPipe } from '../../../pipes';
 import { DashboardPage } from './dashboard.page';
 
 @NgModule({
@@ -15,6 +15,6 @@ import { DashboardPage } from './dashboard.page';
     IonicModule,
     DashboardPageRoutingModule
   ],
-  declarations: [DashboardPage]
+  declarations: [DecimalPipe, DashboardPage]
 })
 export class DashboardPageModule {}

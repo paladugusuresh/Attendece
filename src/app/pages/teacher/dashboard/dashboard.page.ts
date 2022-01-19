@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
+import { Geolocation } from '@capacitor/geolocation';
 import { Response } from '../../../models';
 import { AppConfig } from '../../../constants';
 import { CourseService, SharedService, SchoolService, AttendanceService } from '../../../services';
@@ -35,6 +36,7 @@ export class DashboardPage implements OnInit {
   displayNextIcon = true;
   currSchoolDisplayingIndex = 0;
   allowSelfMarking = false;
+  isCourseChanged = false;
 
   constructor(private courseService: CourseService,
     private sharedService: SharedService, private router: Router,
@@ -74,6 +76,7 @@ export class DashboardPage implements OnInit {
           this.courses = res.result;
           this.courseId = +this.courseId === 0 && this.courses.length > 0 ? this.courses[0].courseId : this.courseId;
           this.getAttendanceByStudentCourseandDate(this.courseId);
+          this.getSelfMarkStatus();
         }
       });
   }
@@ -102,7 +105,22 @@ export class DashboardPage implements OnInit {
   }
 
   /**
+   * Gets the self mark status mapped to course.
+   */
+  getSelfMarkStatus() {
+    this.attendanceService.getSelfMarkStatus(+this.sharedService.activeProfile.userId, +this.schoolId, this.courseId)
+      .subscribe((res: Response) => {
+        if (res.failure) {
+          this.allowSelfMarking = false;
+        } else {
+          this.allowSelfMarking = res.result;
+        }
+      });
+  }
+
+  /**
    * Gets the attendance of students mapped to teacher based on course and date.
+   *
    * @param courseId the course id.
    */
   getAttendanceByStudentCourseandDate(courseId: number) {
@@ -144,6 +162,7 @@ export class DashboardPage implements OnInit {
 
   /**
    * This event is fired when user changes the school.
+   *
    * @param event the change event.
    */
   onSchoolChange(event: any) {
@@ -178,25 +197,33 @@ export class DashboardPage implements OnInit {
 
   /**
    * This event is fired when user changes the course.
+   *
    * @param courseId the course id.
    */
   onCourseChange(courseId: number) {
     if (courseId > 0) {
       this.pageIndex = 1;
       this.isAttendanceDataLoadingCompleted = false;
+      this.isCourseChanged = true;
       this.getAttendanceByStudentCourseandDate(courseId);
+      this.getSelfMarkStatus();
     }
   }
 
   /**
-   * This event is fired when user focus on acknowlegdement checkbox(toggle) control. 
+   * This event is fired when user focus on acknowlegdement checkbox(toggle) control.
    */
   onFocus() {
     this.isDataLoading = false;
   }
 
+  onSelfMarkingControlFocus() {
+    this.isCourseChanged = false;
+  }
+
   /**
    * Loads the data of students attendance on scrolling.
+   *
    * @param event scrolling event.
    */
   loadData(event: any) {
@@ -247,7 +274,45 @@ export class DashboardPage implements OnInit {
   }
 
   /**
+   * Enable or disable the self marking by teacher for a course.
+   */
+  async enableOrDisableSelfMark() {
+    if (!this.isCourseChanged) {
+      const toast = await this.toastCtrl.create({
+        message: '',
+        duration: 3000,
+        position: 'top',
+        color: 'danger',
+        cssClass: 'custom-toast',
+        buttons: [
+          {
+            side: 'end',
+            icon: 'close',
+            text: '',
+            role: 'cancel',
+            handler: () => {
+            }
+          }
+        ]
+      });
+      this.attendanceService.enableOrDisableSelfMarking(+this.sharedService.activeProfile.userId, this.courseId, this.allowSelfMarking)
+      .subscribe((res: Response) => {
+        if (res.failure) {
+          this.allowSelfMarking = !this.allowSelfMarking;
+          toast.message = res.error;
+          toast.present();
+        } else {
+          toast.color = 'success';
+          toast.message = res.result;
+          toast.present();
+        }
+      });
+    }
+  }
+
+  /**
    * Updates the student attendance history (i.e., acknowledgement) by teacher.
+   *
    * @param history The student attendance history object.
    */
   async updateStudentAttendanceByTeacher(history: any) {
@@ -268,7 +333,7 @@ export class DashboardPage implements OnInit {
         }
       ]
     });
-    if (!this.isDataLoading && history.isTeacherAcknowledged) {
+    if (!this.isDataLoading) {
       const updateStudentHistory = {
         courseId: this.courseId,
         teacherId: this.sharedService.activeProfile.userId,
@@ -279,8 +344,18 @@ export class DashboardPage implements OnInit {
         userAttendanceId: history.attendanceID || 0,
         attendanceDate: this.attendedDate.indexOf('T') > -1
           ? this.attendedDate.substr(0, this.attendedDate.indexOf('T'))
-          : this.attendedDate
+          : this.attendedDate,
+        teacherLatitude: null,
+        teacherLongitude: null
       };
+      try {
+        const coordinates = await Geolocation.getCurrentPosition();
+        if (coordinates && coordinates.coords) {
+          updateStudentHistory.teacherLatitude = coordinates.coords.latitude;
+          updateStudentHistory.teacherLongitude = coordinates.coords.longitude;
+        }
+        console.log(coordinates);
+      } catch (error) { }
       this.attendanceService.updateStudentAttendanceByTeacher(updateStudentHistory).subscribe((res: Response) => {
         if (res.failure) {
           console.log(res.error);

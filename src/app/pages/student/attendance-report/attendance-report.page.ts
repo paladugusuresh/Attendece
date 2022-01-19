@@ -1,8 +1,10 @@
 /* eslint-disable no-underscore-dangle */
 import { Component, OnInit } from '@angular/core';
+import { CalendarComponentOptions, DayConfig } from 'ion2-calendar';
 import { Color, Label } from 'ng2-charts';
+import { AppConfig } from '../../../constants';
 import { Response } from '../../../models';
-import { AttendanceService, SharedService, CourseService } from '../../../services';
+import { AttendanceService, SharedService, CourseService, StudentService, HolidayService } from '../../../services';
 
 @Component({
   selector: 'app-attendance-report',
@@ -11,7 +13,19 @@ import { AttendanceService, SharedService, CourseService } from '../../../servic
 })
 export class AttendanceReportPage implements OnInit {
   courses = [];
+  academicYears = [];
+  holidayList = [];
+  academicId = 0;
+  totalDays = 0;
+  daysPresent = 0;
+  daysAbsent = 0;
+  attendancePercent = 0;
   attendanceHistory = [];
+  calendarDate = '';
+  calenderDateType: 'string';
+  calendarOptions: CalendarComponentOptions = {
+    pickMode: 'single'
+  };
   public lineChartData = [{ data: [], label: 'Attendance' }];
   public lineChartLabels: Label[] = [
     'January', 'February', 'March', 'April',
@@ -29,13 +43,74 @@ export class AttendanceReportPage implements OnInit {
   public lineChartLegend = true;
   public lineChartPlugins = [];
 
-  constructor(private attendanceService: AttendanceService, private courseService: CourseService, private sharedService: SharedService) { }
+  constructor(private attendanceService: AttendanceService, private courseService: CourseService,
+    private sharedService: SharedService, private studentService: StudentService,
+    private holidayService: HolidayService) { }
 
   ngOnInit() {
   }
 
   ionViewWillEnter() {
-    this.getAttendanceReportData();
+    //this.getAttendanceReportData();
+    this.getAcademicYearsBySchoolId();
+  }
+
+  getAcademicYearsBySchoolId() {
+    this.studentService.getAcademicYearsBySchoolId(+this.sharedService.activeProfile.schoolId)
+      .subscribe((res: Response) => {
+        if (res.failure) {
+          this.academicYears = [];
+        } else {
+          this.academicYears = res.result || [
+            { schoolYear: '2021 - 2022 chamber', id: 490, startDate: '2021-08-01', endDate: '2022-07-31' }];
+          if (this.academicYears.length > 0) {
+            this.academicId = this.academicYears[0].id;
+            this.onAcademicYearChange(null);
+          }
+        }
+      });
+  }
+
+  onAcademicYearChange(event: any) {
+    if (this.academicId > 0) {
+      const academicYear = this.academicYears.find(t => t.id === +this.academicId);
+      const startDate: string = academicYear.startDate;
+      const endDay = new Date(new Date(new Date(startDate).setMonth(new Date(startDate).getMonth() + 1)).setDate(0));
+      // eslint-disable-next-line max-len
+      const endDate = `${endDay.getFullYear()}-${endDay.getMonth() + 1 < 10 ? '0' + (endDay.getMonth() + 1) : endDay.getMonth() + 1}-${endDay.getDate() < 10 ? '0' + endDay.getDate() : endDay.getDate()}`;
+      this.getStudentAttendance(startDate, endDate, academicYear);
+    }
+  }
+
+  onDateChange(event: any) {
+    if (this.academicId > 0) {
+      const academicYear = this.academicYears.find(t => t.id === +this.academicId);
+      const academicStartDate = new Date(academicYear.startDate);
+      const academicEndDate = new Date(academicYear.endDate);
+      if (academicStartDate.getFullYear() === event.newMonth.years || academicEndDate.getFullYear() === event.newMonth.years) {
+        const startDate = (event.newMonth.months === academicStartDate.getMonth() + 1)
+          && academicStartDate.getFullYear() === event.newMonth.years
+          ? academicYear.startDate
+          : event.newMonth.string;
+        const endDay = (event.newMonth.months === academicEndDate.getMonth() + 1) && academicEndDate.getFullYear() === event.newMonth.years
+          ? academicEndDate
+          : new Date(new Date(new Date(startDate).setMonth(event.newMonth.months)).setDate(0));
+        // eslint-disable-next-line max-len
+        const endDate = `${endDay.getFullYear()}-${endDay.getMonth() + 1 < 10 ? '0' + (endDay.getMonth() + 1) : endDay.getMonth() + 1}-${endDay.getDate() < 10 ? '0' + endDay.getDate() : endDay.getDate()}`;
+        this.getStudentAttendance(startDate, endDate, academicYear);
+      }
+    }
+  }
+
+  getHolidaysBySchoolId() {
+    this.holidayService.getHolidaysBySchoolId(+this.sharedService.activeProfile.schoolId)
+      .subscribe((res: Response) => {
+        if (res.failure) {
+          this.holidayList = [];
+        } else {
+          this.holidayList = res.result;
+        }
+      });
   }
 
   getAttendanceReportData() {
@@ -111,6 +186,61 @@ export class AttendanceReportPage implements OnInit {
   collapsePanel(course: any) {
     course.isExpandable = false;
     this.attendanceHistory = [];
+  }
+
+  private getStudentAttendance(startDate: string, endDate: string, academicYear: any) {
+    this.attendanceService.getAttendanceByStudentCourseandDate(
+      this.sharedService.activeProfile.userId,
+      this.sharedService.activeProfile.schoolId,
+      0,
+      startDate,
+      endDate,
+      1,
+      AppConfig.pageSize)
+      .subscribe((res) => {
+        if (res.failure) {
+          this.attendanceHistory = [];
+          this.totalDays = 0;
+          this.daysPresent = 0;
+          this.daysAbsent = 0;
+          this.attendancePercent = 0;
+        } else {
+          this.attendanceHistory = res.result.history;
+          this.totalDays = res.result.totalNumberOfDays || 0;
+          this.daysPresent = res.result.daysAttended || 0;
+          this.daysAbsent = res.result.daysAttendedWithUnexcusedAbsence || 0;
+          this.attendancePercent = res.result.percentOfDaysAttended || 0;
+          let attendance: DayConfig[] = [];
+          if (this.attendanceHistory.length > 0) {
+            attendance = this.attendanceHistory.map((value: any) => {
+              if (value.holiday) {
+                return { date: value.attendanceDate ? new Date(value.attendanceDate) : null, cssClass: 'disable-date', disable: true };
+              } else if (value.attended) {
+                return { date: value.attendanceDate ? new Date(value.attendanceDate) : null, cssClass: 'attended-date' };
+              } else if (value.attended === false) {
+                return { date: value.attendanceDate ? new Date(value.attendanceDate) : null, cssClass: '' };
+              }
+            });
+          } else {
+            const date = new Date(endDate);
+            for (let day = 1; day <= date.getDate(); day++) {
+              attendance.push({date: new Date(date.getFullYear(), date.getMonth(), day), cssClass: '' });
+            }
+          }
+          console.log(attendance);
+          const options: CalendarComponentOptions = {
+            from: new Date(academicYear.startDate),
+            to: new Date(academicYear.endDate),
+            pickMode: 'single',
+            weekStart: 0,
+            daysConfig: attendance,
+            disableWeeks: [0, 6],
+            showAdjacentMonthDay: false
+          };
+          this.calendarDate = startDate;
+          this.calendarOptions = options;
+        }
+      });
   }
 
 }

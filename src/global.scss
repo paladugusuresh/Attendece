@@ -299,3 +299,53 @@ a[small] {
     left: 0 !important;
     width: 100% !important;
 }
+
+.title .switch-btn {
+  color: #030303 !important;
+}
+
+.week-title.transparent {
+  color: #fff !important;
+  background-color: #CCCC99 !important;
+}
+
+.week-title {
+  padding: 15px 0;
+}
+
+.days-box {
+  padding: 0 0 15px 0px !important;
+}
+
+.days-btn {
+  border-radius: 0 !important;
+  background-color: #fff !important;
+  &.on-selected > p {
+    font-size: 1.2em !important;
+  }
+  &.on-selected.attended-date {
+    color: #030303 !important;
+    background-color: #9AD09A !important;
+  }
+  &:disabled {
+    color: #030303 !important;
+    background-color: #D3D3D3 !important;
+  }
+  > p {
+    color: #030303 !important;
+  }
+}
+
+.primary .days .today p {
+  font-weight: inherit !important;
+}
+
+.attended-date {
+  color: #030303 !important;
+  background-color: #9AD09A !important;
+}
+
+.disable-date {
+  color: #030303 !important;
+  background-color: #D3D3D3 !important;
+}

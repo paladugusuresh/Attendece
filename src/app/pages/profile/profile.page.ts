@@ -17,22 +17,34 @@ export class ProfilePage implements OnInit {
   profilePic = null;
   errorMsg = '';
   gender: any;
-  showDOB: boolean;
   constructor(private sharedService: SharedService, private router: Router,
     private authService: AuthService, private fb: FormBuilder,
     private toastCtrl: ToastController, private actionSheetController: ActionSheetController) {
     this.role = this.sharedService.activeProfile.roleName.toLowerCase();
     this.profilePic = this.sharedService.activeProfile.profilePic;
-    this.profileForm = this.fb.group({
-      userId: new FormControl(''),
-      userName: new FormControl('', Validators.required),
-      firstName: new FormControl({ value: '', disabled: true }, Validators.required),
-      lastName: new FormControl({ value: '', disabled: true }, Validators.required),
-      dob: new FormControl(''),
-      email: new FormControl({ value: '', disabled: true }, [Validators.required,
-      Validators.pattern(/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/)]),
-      contactSettings: new FormControl('internalMessaging')
-    });
+    if (this.role === 'student') {
+      this.profileForm = this.fb.group({
+        userId: new FormControl(''),
+        userName: new FormControl('', Validators.required),
+        firstName: new FormControl('', Validators.required),
+        lastName: new FormControl('', Validators.required),
+        dob: new FormControl(''),
+        email: new FormControl('', [Validators.required,
+        Validators.pattern(/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/)]),
+        contactSettings: new FormControl('internalMessaging')
+      });
+    } else {
+      this.profileForm = this.fb.group({
+        userId: new FormControl(''),
+        userName: new FormControl('', Validators.required),
+        firstName: new FormControl({ value: '', disabled: true }, Validators.required),
+        lastName: new FormControl({ value: '', disabled: true }, Validators.required),
+        dob: new FormControl(''),
+        email: new FormControl({ value: '', disabled: true }, [Validators.required,
+        Validators.pattern(/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/)]),
+        contactSettings: new FormControl('internalMessaging')
+      });
+    }
   }
 
   ngOnInit() {
@@ -46,24 +58,24 @@ export class ProfilePage implements OnInit {
       allowEditing: true,
       resultType: CameraResultType.Base64
     });
-    const toast = await this.toastCtrl.create({
-      message: '',
-      duration: 3000,
-      position: 'top',
-      color: 'danger',
-      cssClass: 'custom-toast',
-      buttons: [
-        {
-          side: 'end',
-          icon: 'close',
-          text: '',
-          role: 'cancel',
-          handler: () => {
-          }
-        }
-      ]
-    });
     if (image && image.base64String) {
+      const toast = await this.toastCtrl.create({
+        message: '',
+        duration: 3000,
+        position: 'top',
+        color: 'danger',
+        cssClass: 'custom-toast',
+        buttons: [
+          {
+            side: 'end',
+            icon: 'close',
+            text: '',
+            role: 'cancel',
+            handler: () => {
+            }
+          }
+        ]
+      });
       const profile = this.sharedService.getProfile();
       const fileName = profile.profilePic
         ? profile.profilePic.substring(profile.profilePic.lastIndexOf('/') + 1)

@@ -14,7 +14,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "allowedCommonJsDependencies": ["chart.js"],
+            "allowedCommonJsDependencies": ["chart.js", "ion2-calendar"],
             "outputPath": "www",
             "index": "src/index.html",
             "main": "src/main.ts",

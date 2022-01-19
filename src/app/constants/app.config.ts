@@ -44,11 +44,13 @@ const teacherMenus = [{
     title: 'Dashboard',
     url: '/teacher/home',
     icon: 'home'
-}, {
-    title: 'My Students',
-    url: '/teacher/home/search-school-page',
-    icon: 'school'
-}, {
+},
+// {
+//     title: 'My Students',
+//     url: '/teacher/home/search-school-page',
+//     icon: 'school'
+// },
+{
     title: 'Holidays',
     url: '/holidays',
     icon: 'reader'
