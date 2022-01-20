@@ -111,7 +111,7 @@
               <h2>{{history?.firstName + ' ' + history?.lastName}} <br />({{ history.course }})</h2>
               <p><b>Latitude:</b> {{history.isTeacherAcknowledged ? history.teacherLatitude : history.isAcknowledged ? history.studentLatitude : ''}}</p>
               <p><b>Longitude:</b> {{history.isTeacherAcknowledged ? history.teacherLongitude : history.isAcknowledged ? history.studentLongitude : ''}}</p>
-              <p><b>Range:</b> {{(history.isTeacherAcknowledged || history.isAcknowledged) && history.distance ? (history.distance*0.621371 | decimal: 2) + ' miles' : ''}}</p>
+              <p><b>Range:</b> {{((history.isTeacherAcknowledged && history.teacherLatitude) || (history.isAcknowledged && history.studentLatitude)) && history.distance ? (history.distance*0.621371 | decimal: 2) + ' miles' : ''}}</p>
             </ion-label>
             <ion-toggle slot="end" color="success" (click)="onFocus()"
               (ionChange)="updateStudentAttendanceByTeacher(history)" [(ngModel)]="history.isTeacherAcknowledged"

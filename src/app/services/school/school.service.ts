@@ -16,6 +16,7 @@ export class SchoolService {
 
   /**
    * Gets the schools mapped to teacher.
+   *
    * @param id the teacher id.
    * @returns response object.
    */

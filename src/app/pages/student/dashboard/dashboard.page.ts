@@ -7,6 +7,9 @@ import { ToastController } from '@ionic/angular';
 import { Response } from '../../../models';
 import { AppConfig } from '../../../constants';
 
+/**
+ * Dashboard page of student.
+ */
 @Component({
   selector: 'app-dashboard',
   templateUrl: './student-dashboard.page.html',
@@ -48,6 +51,9 @@ export class StudentDashboardPage implements OnInit {
     this.getAttendanceByStudentIdandCourse(null);
   }
 
+  /**
+   * Gets the student attendance details (need to remove in next version release).
+   */
   getStudentAttendanceDetails() {
     this.attendanceService.getStudentAttendanceDetails(this.sharedService.activeProfile.userId).subscribe((res) => {
       if (res.failure) {
@@ -65,6 +71,9 @@ export class StudentDashboardPage implements OnInit {
     });
   }
 
+  /**
+   * Gets the courses based on student id.
+   */
   getCoursesByStudentId() {
     this.courseService.getCoursesByStudentId(this.sharedService.activeProfile.userId, this.sharedService.activeProfile.schoolId)
       .subscribe((res) => {
@@ -85,6 +94,9 @@ export class StudentDashboardPage implements OnInit {
       });
   }
 
+  /**
+   * Gets current week attendance of student (need to remove in next version release).
+   */
   getLastDayAttendanceByStudentId() {
     this.attendanceService.getLastDayAttendanceByStudentId(this.sharedService.activeProfile.userId)
       .subscribe((res) => {
@@ -107,6 +119,7 @@ export class StudentDashboardPage implements OnInit {
       });
   }
 
+  // (need to remove in next version release).
   populateAttendaceHistory() {
     this.attendanceHistory.forEach((history) => {
       const existingHistory = this.historyDates.find(t => t.attendedDate === history.attendedDate);
@@ -118,6 +131,11 @@ export class StudentDashboardPage implements OnInit {
     });
   }
 
+  /**
+   * This event is fired when user changes the course (need to remove in next version release).
+   *
+   * @param courseId The course id.
+   */
   navigateToCourseWiseAttendance(courseId: number) {
     // this.router.navigate(['/student/attendance/course-wise-attendance'], {
     //   queryParams: { courseId },
@@ -128,6 +146,11 @@ export class StudentDashboardPage implements OnInit {
     this.getAttendanceByStudentIdandCourse(null);
   }
 
+  /**
+   * Gets the student attendance with the selected course.
+   *
+   * @param event The change event object.
+   */
   getAttendanceByStudentIdandCourse(event: any) {
     this.isPageLoading = true;
     const { startDate, endDate } = this.populateStartEndDate(this.segment);
@@ -152,12 +175,21 @@ export class StudentDashboardPage implements OnInit {
       });
   }
 
+  /**
+   * Navigates to attendance reporting page of student.
+   *
+   * @param event The click event object.
+   */
   navigateToReport(event) {
-    //if (!this.isPageLoading) {
     this.router.navigate(['/student/attendance-report'], { relativeTo: this.activatedRoute });
-    //}
   }
 
+  /**
+   * Populates the start and end date using current date.
+   *
+   * @param option The option use to detect weekly or monthly.
+   * @returns object contains start date & end date.
+   */
   populateStartEndDate(option: string) {
     const date = new Date();
     if (option === 'weekly') {
@@ -177,15 +209,28 @@ export class StudentDashboardPage implements OnInit {
     }
   }
 
+  /**
+   * This event is fired when user changes the date.
+   *
+   * @param option The option use to detect weekly or monthly.
+   */
   onCalendarOptionChange(option: string) {
     this.isPageLoading = true;
     this.getAttendanceByStudentIdandCourse(null);
   }
 
+  /**
+   * This event is fired when user clicks on acknowlegdement checkbox(toggle) control.
+   */
   onFocus() {
     this.isPageLoading = false;
   }
 
+  /**
+   * Updates the student attendance history (i.e., acknowledgement) by teacher.
+   *
+   * @param history The student attendance history object.
+   */
   async updateAcknowledgement(history: any) {
     const toast = await this.toastCtrl.create({
       message: '',
@@ -218,15 +263,20 @@ export class StudentDashboardPage implements OnInit {
         studentLongitude: null
       };
       try {
-        const coordinates = await Geolocation.getCurrentPosition();
-        if (coordinates && coordinates.coords) {
-          updateStudentHistory.studentLatitude = coordinates.coords.latitude;
-          updateStudentHistory.studentLongitude = coordinates.coords.longitude;
+        const canRequest = await this.sharedService.checkAndRequestToEnableGPS();
+        if (canRequest) {
+          const coordinates = await Geolocation.getCurrentPosition({ enableHighAccuracy : true, timeout: 10000 });
+          if (coordinates && coordinates.coords) {
+            updateStudentHistory.studentLatitude = coordinates.coords.latitude;
+            updateStudentHistory.studentLongitude = coordinates.coords.longitude;
+          }
         }
       } catch (error) { }
       this.attendanceService.updateAcknowledement(updateStudentHistory).subscribe((res: Response) => {
         if (res.failure) {
           console.log(res.error);
+          toast.message = 'Unable to mark the attendance. Try again or contact administrator.';
+          toast.present();
         } else {
           toast.color = 'success';
           toast.message = res.result;

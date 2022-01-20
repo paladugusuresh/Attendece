@@ -8,6 +8,7 @@ import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpConfigService, HttpResponseService } from './services';
+import { LocationAccuracy } from '@awesome-cordova-plugins/location-accuracy/ngx';
 
 @NgModule({
   declarations: [AppComponent],
@@ -21,6 +22,7 @@ import { HttpConfigService, HttpResponseService } from './services';
     AppRoutingModule
   ],
   providers: [
+    LocationAccuracy,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     {
       provide: HTTP_INTERCEPTORS,

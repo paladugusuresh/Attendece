@@ -14,6 +14,13 @@ export class CourseService {
   courses = [];
   constructor(private apiService: ApiService) { }
 
+  /**
+   * Gets the courses mapped to student.
+   *
+   * @param id The student id.
+   * @param schoolId The school id.
+   * @returns The response object.
+   */
   getCoursesByStudentId(id: number, schoolId: number): Observable<Response> {
     const url = environment.apiPrefix + ApiResources.getCoursesByStudentId;
     const response: Response = {
@@ -22,7 +29,7 @@ export class CourseService {
     const request = {
       studentId: id,
       schoolId
-    }
+    };
     return this.apiService.postData(url, request).pipe(map((res) => {
       if (res instanceof HttpErrorResponse || res.message?.toLowerCase() === 'failure') {
         response.error = res.result || res.message;
@@ -39,6 +46,13 @@ export class CourseService {
     }));
   }
 
+  /**
+   * Gets the courses mapped to teacher.
+   *
+   * @param id The student id.
+   * @param schoolId The school id.
+   * @returns The response object.
+   */
   getCoursesByTeacherId(id: number, schoolId: number): Observable<Response> {
     const url = environment.apiPrefix + ApiResources.getCoursesByTeacherId;
     const response: Response = {
@@ -47,7 +61,7 @@ export class CourseService {
     const request = {
       teacherId: id,
       schoolId
-    }
+    };
     return this.apiService.postData(url, request).pipe(map((res) => {
       if (res instanceof HttpErrorResponse || res.message?.toLowerCase() === 'failure') {
         response.error = res.result || res.message;
@@ -64,6 +78,7 @@ export class CourseService {
     }));
   }
 
+  // Need to remove in next version.
   getCourseByStudentIdandDate(id: number, date: string): Observable<Response> {
     const url = environment.apiPrefix + ApiResources.getCoursesByStudentId + '/' + id;
     const response: Response = {
@@ -85,6 +100,7 @@ export class CourseService {
     }));
   }
 
+  // Need to remove in next version.
   getCourseByStudentandMonth(id: number, month: number): Observable<Response> {
     const url = environment.apiPrefix + ApiResources.getCoursesByStudentId + '/' + id;
     const response: Response = {
@@ -106,6 +122,7 @@ export class CourseService {
     }));
   }
 
+  // Need to remove in next version.
   getCourseByTeacherandMonth(id: number, month: number): Observable<Response> {
     const url = environment.apiPrefix + ApiResources.getCoursesByStudentId + '/' + id;
     const response: Response = {

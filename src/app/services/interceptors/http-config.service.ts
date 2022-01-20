@@ -17,9 +17,7 @@ export class HttpConfigService implements HttpInterceptor {
       if (req.url.indexOf('/upload/profile') === -1) {
         req = req.clone({
           setHeaders: {
-            //authorization: this.authService.token,
-            //enctype: 'multipart/form-data; boundary=WebAppBoundary',
-            'content-type': 'application/json'
+            //authorization: this.authService.token
           }
         });
       }

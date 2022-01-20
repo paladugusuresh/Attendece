@@ -211,12 +211,15 @@ export class DashboardPage implements OnInit {
   }
 
   /**
-   * This event is fired when user focus on acknowlegdement checkbox(toggle) control.
+   * This event is fired when user clicks on acknowlegdement checkbox(toggle) control.
    */
   onFocus() {
     this.isDataLoading = false;
   }
 
+   /**
+    * This event is fired when user clicks on self marking checkbox(toggle) control.
+    */
   onSelfMarkingControlFocus() {
     this.isCourseChanged = false;
   }
@@ -349,16 +352,20 @@ export class DashboardPage implements OnInit {
         teacherLongitude: null
       };
       try {
-        const coordinates = await Geolocation.getCurrentPosition();
-        if (coordinates && coordinates.coords) {
-          updateStudentHistory.teacherLatitude = coordinates.coords.latitude;
-          updateStudentHistory.teacherLongitude = coordinates.coords.longitude;
-        }
-        console.log(coordinates);
+        const canRequest = await this.sharedService.checkAndRequestToEnableGPS();
+        if (canRequest) {
+          const coordinates = await Geolocation.getCurrentPosition({ enableHighAccuracy : true, timeout: 10000 });
+          if (coordinates && coordinates.coords) {
+            updateStudentHistory.teacherLatitude = coordinates.coords.latitude;
+            updateStudentHistory.teacherLongitude = coordinates.coords.longitude;
+          }
+        } else { console.log('GPS is not enabled'); }
       } catch (error) { }
       this.attendanceService.updateStudentAttendanceByTeacher(updateStudentHistory).subscribe((res: Response) => {
         if (res.failure) {
           console.log(res.error);
+          toast.message = 'Unable to mark the attendance. Try again or contact administrator.';
+          toast.present();
         } else {
           toast.color = 'success';
           toast.message = res.result;

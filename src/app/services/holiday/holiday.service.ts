@@ -14,6 +14,7 @@ export class HolidayService {
 
   constructor(private apiService: ApiService) { }
 
+  // Need to remove in next version.
   getAllHolidays(): Observable<Response> {
     const url = environment.apiPrefix + ApiResources.getAllHolidays;
     const response: Response = {

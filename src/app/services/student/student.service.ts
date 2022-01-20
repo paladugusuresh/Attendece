@@ -14,6 +14,7 @@ export class StudentService {
 
   constructor(private apiService: ApiService) { }
 
+  // Need to remove in next version.
   getStudentsByTeacherId(id: number): Observable<Response> {
     const url = environment.apiPrefix + ApiResources.getStudentsByTeacherId + `/${id}`;
     const response: Response = {
