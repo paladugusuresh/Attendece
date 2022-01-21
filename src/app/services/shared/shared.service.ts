@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Storage } from '@capacitor/storage';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { ToastController } from '@ionic/angular';
+import { Platform, ToastController } from '@ionic/angular';
 import { LocationAccuracy } from '@awesome-cordova-plugins/location-accuracy/ngx';
 
 @Injectable({
@@ -17,7 +17,7 @@ export class SharedService {
   loadingObserver: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   private loadingRequestMap: Map<string, boolean> = new Map<string, boolean>();
 
-  constructor(private toastCtrl: ToastController, private locationAccuracy: LocationAccuracy) { }
+  constructor(private toastCtrl: ToastController, private locationAccuracy: LocationAccuracy, private platform: Platform) { }
 
   /**
    * Loads the data from storage for first time when user opens the app.
@@ -158,11 +158,13 @@ export class SharedService {
    */
   async checkAndRequestToEnableGPS() {
     let canRequest = false;
+    if (!this.platform.is('android')) {
+      return true;
+    }
     try {
       canRequest = !!await this.locationAccuracy.canRequest();
       const res = await this.locationAccuracy.request(this.locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY);
       if (canRequest === false && res.message) {
-        console.log(canRequest);
         canRequest = (res.code === this.locationAccuracy.SUCCESS_SETTINGS_SATISFIED
           || res.code === this.locationAccuracy.SUCCESS_USER_AGREED);
       }

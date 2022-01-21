@@ -154,4 +154,7 @@ ion-col .empty-data {
     .mb-top {
         margin-top: 0.75rem !important;
     }
+    ion-col.ios.mb-top, ion-col.ios ion-toggle {
+        margin-top: 0.25rem !important;
+    }
 }

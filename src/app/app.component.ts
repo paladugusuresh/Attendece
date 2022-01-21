@@ -41,7 +41,7 @@ export class AppComponent implements OnInit, OnDestroy {
         this.sharedService.activeAppPages = this.profile.roleName.toLowerCase() === 'student' ?
           AppConfig.sideMenu.student : AppConfig.sideMenu.teacher;
         this.authService.userLoggedIn.next(true);
-        if (location.pathname === '/') {
+        if (location.pathname === '/' || location.pathname === '/login') {
           this.navigateToHomePage();
         }
       } else {
