@@ -104,7 +104,7 @@
     <ion-col *ngIf="attendanceHistory.length > 0">
       <ion-card>
         <ion-list>
-          <ion-item *ngFor="let history of attendanceHistory; let index = index"
+          <ion-item *ngFor="let history of attendanceHistory; let index = index; trackBy: trackByFn"
             [lines]="index+1 === attendanceHistory.length ? 'none' : 'full'">
             <ion-label class="label label-title">
               <p>{{ history.attendedDate | date: 'MM/dd/YYYY'}}</p>
@@ -118,8 +118,8 @@
               [disabled]="history.holiday || history.selfAcknowledged" [checked]="history.teacherAcknowledged ? history.teacherAcknowledged === 'Y' ? true : false : false"></ion-toggle>
           </ion-item>
         </ion-list>
-        <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
-          <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
+        <ion-infinite-scroll threshold="2%" (ionInfinite)="loadData($event)">
+          <ion-infinite-scroll-content loadingSpinner="null" loadingText="">
           </ion-infinite-scroll-content>
         </ion-infinite-scroll>
       </ion-card>

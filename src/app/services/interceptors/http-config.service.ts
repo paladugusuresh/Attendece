@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { AuthService } from '../auth/auth.service';
 import { SharedService } from '../shared/shared.service';
 import { Observable, throwError } from 'rxjs';
-import { map, catchError } from 'rxjs/operators';
+import { map, catchError, finalize } from 'rxjs/operators';
 import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpErrorResponse, HttpResponse, HttpEventType } from '@angular/common/http';
 
 @Injectable({
@@ -28,7 +28,7 @@ export class HttpConfigService implements HttpInterceptor {
     }
     return next.handle(req).pipe(map((event: HttpEvent<any>) => {
       if (event.type === HttpEventType.Response) {
-        this.sharedService.setLoading(false, req.url);
+        //this.sharedService.setLoading(false, req.url);
       }
       return event;
     }), catchError((error: HttpErrorResponse) => {
@@ -38,8 +38,10 @@ export class HttpConfigService implements HttpInterceptor {
         // eslint-disable-next-line @typescript-eslint/dot-notation
         error['_message'] = 'Service is not available, try after sometime';
       }
-      this.sharedService.setLoading(false, req.url);
+      //this.sharedService.setLoading(false, req.url);
       return throwError(error);
+    }),finalize(() => {
+      this.sharedService.setLoading(false, req.url);
     }));;
   }
 }

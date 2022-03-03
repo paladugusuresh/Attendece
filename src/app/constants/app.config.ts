@@ -50,11 +50,12 @@ const teacherMenus = [{
 //     url: '/teacher/home/search-school-page',
 //     icon: 'school'
 // },
+// {
+//     title: 'Holidays',
+//     url: '/holidays',
+//     icon: 'reader'
+// },
 {
-    title: 'Holidays',
-    url: '/holidays',
-    icon: 'reader'
-}, {
     title: 'Logout',
     url: '/logout',
     icon: 'log-out-outline'

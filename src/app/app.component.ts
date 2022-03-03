@@ -113,16 +113,21 @@ export class AppComponent implements OnInit, OnDestroy {
 
   async populateLoader() {
     this.loadingCtrl = await this.loadingController.create({
-      message: 'Please wait...',
+      message: 'Please wait...'
     });
   }
 
   async toggleLoader(loading: boolean) {
     if (this.loadingCtrl) {
-      if (loading) {
+      if (loading && !this.loading) {
+        this.loading = true;
+        await this.populateLoader();
         await this.loadingCtrl.present();
-      } else {
+      } else if (!loading) {
         await this.loadingCtrl.dismiss();
+        setTimeout(async () => {
+          this.loading = false;
+        }, 1000);
       }
     }
   }

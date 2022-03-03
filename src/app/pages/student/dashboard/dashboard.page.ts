@@ -44,6 +44,8 @@ export class StudentDashboardPage implements OnInit {
   ngOnInit() { }
 
   ionViewWillEnter() {
+    window.scrollTo(0, 0);
+    this.attendanceHistory = [];
     this.segment = 'weekly';
     this.profile = this.sharedService.activeProfile;
     this.getCoursesByStudentId();

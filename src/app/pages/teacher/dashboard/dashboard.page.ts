@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Geolocation } from '@capacitor/geolocation';
 import { Response } from '../../../models';
 import { AppConfig } from '../../../constants';
 import { CourseService, SharedService, SchoolService, AttendanceService } from '../../../services';
-import { ToastController } from '@ionic/angular';
+import { IonContent, ToastController } from '@ionic/angular';
 
 /**
  * Dashboard page of teacher.
@@ -36,7 +36,11 @@ export class DashboardPage implements OnInit {
   displayNextIcon = true;
   currSchoolDisplayingIndex = 0;
   allowSelfMarking = false;
+  defaultAllowSelfMarking = false;
   isCourseChanged = false;
+  scrollAmount = 0;
+  // eslint-disable-next-line @typescript-eslint/member-ordering
+  @ViewChild(IonContent, { static: true }) content: IonContent;
 
   constructor(private courseService: CourseService,
     private sharedService: SharedService, private router: Router,
@@ -47,6 +51,8 @@ export class DashboardPage implements OnInit {
   }
 
   ionViewWillEnter() {
+    window.scrollTo(0, 0);
+    this.attendanceHistory = [];
     this.courseId = 0;
     const date = new Date();
     const month = `${date.getMonth() + 1 < 10 ? ('0' + (date.getMonth() + 1)) : date.getMonth() + 1}`;
@@ -112,8 +118,10 @@ export class DashboardPage implements OnInit {
       .subscribe((res: Response) => {
         if (res.failure) {
           this.allowSelfMarking = false;
+          this.defaultAllowSelfMarking = false;
         } else {
           this.allowSelfMarking = res.result;
+          this.defaultAllowSelfMarking = res.result;
         }
       });
   }
@@ -153,11 +161,25 @@ export class DashboardPage implements OnInit {
           if (this.loadingEvent) {
             this.loadingEvent.target.complete();
           }
+          if (this.scrollAmount > 0) {
+            setTimeout(() => {
+              this.content.getScrollElement().then((scrollElement) => {
+                this.content.scrollByPoint(0, scrollElement.scrollHeight - this.scrollAmount, 10).then(() => { });
+              });
+            }, 1000);
+          }
           if (this.isAttendanceDataLoadingCompleted && this.loadingEvent) {
             this.loadingEvent.target.disabled = true;
           }
         }
       });
+  }
+
+  /**
+   * Tracking Function for *ngFor
+   */
+  trackByFn(index: any, item: any) {
+    return index;
   }
 
   /**
@@ -217,9 +239,9 @@ export class DashboardPage implements OnInit {
     this.isDataLoading = false;
   }
 
-   /**
-    * This event is fired when user clicks on self marking checkbox(toggle) control.
-    */
+  /**
+   * This event is fired when user clicks on self marking checkbox(toggle) control.
+   */
   onSelfMarkingControlFocus() {
     this.isCourseChanged = false;
   }
@@ -229,7 +251,7 @@ export class DashboardPage implements OnInit {
    *
    * @param event scrolling event.
    */
-  loadData(event: any) {
+  async loadData(event: any) {
     this.loadingEvent = event;
     if (this.isAttendanceDataLoadingCompleted || this.attendanceHistory.length === this.totalPages) {
       event.target.complete();
@@ -237,6 +259,10 @@ export class DashboardPage implements OnInit {
       return;
     } else {
       ++this.pageIndex;
+      if (this.scrollAmount === 0) {
+        const scrollElement = await this.content.getScrollElement();
+        this.scrollAmount = scrollElement.scrollHeight;
+      }
       this.getAttendanceByStudentCourseandDate(this.courseId);
     }
   }
@@ -280,7 +306,7 @@ export class DashboardPage implements OnInit {
    * Enable or disable the self marking by teacher for a course.
    */
   async enableOrDisableSelfMark() {
-    if (!this.isCourseChanged) {
+    if (!this.isCourseChanged && this.defaultAllowSelfMarking !== this.allowSelfMarking) {
       const toast = await this.toastCtrl.create({
         message: '',
         duration: 3000,
@@ -299,17 +325,18 @@ export class DashboardPage implements OnInit {
         ]
       });
       this.attendanceService.enableOrDisableSelfMarking(+this.sharedService.activeProfile.userId, this.courseId, this.allowSelfMarking)
-      .subscribe((res: Response) => {
-        if (res.failure) {
-          this.allowSelfMarking = !this.allowSelfMarking;
-          toast.message = res.error;
-          toast.present();
-        } else {
-          toast.color = 'success';
-          toast.message = res.result;
-          toast.present();
-        }
-      });
+        .subscribe((res: Response) => {
+          if (res.failure) {
+            this.allowSelfMarking = !this.allowSelfMarking;
+            toast.message = res.error;
+            toast.present();
+          } else {
+            toast.color = 'success';
+            toast.message = res.result;
+            toast.present();
+            this.defaultAllowSelfMarking = this.allowSelfMarking;
+          }
+        });
     }
   }
 
@@ -354,7 +381,7 @@ export class DashboardPage implements OnInit {
       try {
         const canRequest = await this.sharedService.checkAndRequestToEnableGPS();
         if (canRequest) {
-          const coordinates = await Geolocation.getCurrentPosition({ enableHighAccuracy : true, timeout: 10000 });
+          const coordinates = await Geolocation.getCurrentPosition({ enableHighAccuracy: true, timeout: 10000 });
           if (coordinates && coordinates.coords) {
             updateStudentHistory.teacherLatitude = coordinates.coords.latitude;
             updateStudentHistory.teacherLongitude = coordinates.coords.longitude;

@@ -235,7 +235,8 @@ export class AttendanceReportPage implements OnInit {
             weekStart: 0,
             daysConfig: attendance,
             disableWeeks: [0, 6],
-            showAdjacentMonthDay: false
+            showAdjacentMonthDay: false,
+            showMonthPicker: false
           };
           this.calendarDate = startDate;
           this.calendarOptions = options;
